@@ -25,21 +25,21 @@ export function ResultCard({ result, onClose, dict }: ResultCardProps) {
     const displayTitle = result.title;
     return (
         <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-                <div className="flex-1 min-w-0">
+            <CardHeader className="p-4 md:p-6">
+                <div className="flex items-center justify-between mb-2">
                     <CardTitle className="text-lg">{dict.result.title}</CardTitle>
-                    <p className="text-sm text-muted-foreground mt-1 break-all">
-                        {displayTitle}
-                        {result.duration != null && (
-                            <span className="ml-2 text-xs">({formatDuration(result.duration)})</span>
-                        )}
-                    </p>
+                    <Button variant="ghost" size="sm" onClick={onClose}>
+                        <X className="h-4 w-4" />
+                    </Button>
                 </div>
-                <Button variant="ghost" size="sm" onClick={onClose}>
-                    <X className="h-4 w-4" />
-                </Button>
+                <p className="text-sm text-muted-foreground break-all">
+                    {displayTitle}
+                    {result.duration != null && (
+                        <span className="ml-2 text-xs">({formatDuration(result.duration)})</span>
+                    )}
+                </p>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4 md:p-6">
                 <div className="space-y-4">
                     {isXiaohongshuImageNote ? (
                         <ImageNoteGrid
@@ -70,10 +70,10 @@ function SinglePartButtons({ result, dict }: { result: NonNullable<UnifiedParseR
 
     return (
         <>
-            <div className="flex gap-2">
+            <div className="grid grid-cols-2 gap-2">
                 <Button
                     variant="outline"
-                    className="flex-1 flex items-center justify-center gap-2"
+                    className="flex items-center justify-center gap-2"
                     onClick={() => {
                         downloadFile(result.downloadVideoUrl!)
                     }}
@@ -83,7 +83,7 @@ function SinglePartButtons({ result, dict }: { result: NonNullable<UnifiedParseR
                 {result.downloadAudioUrl && (
                     <Button
                         variant="outline"
-                        className="flex-1 flex items-center justify-center gap-2"
+                        className="flex items-center justify-center gap-2"
                         onClick={() => {
                             downloadFile(result.downloadAudioUrl!)
                         }}
@@ -99,26 +99,7 @@ function SinglePartButtons({ result, dict }: { result: NonNullable<UnifiedParseR
                         dict={dict}
                     />
                 )}
-
-                {result.originDownloadVideoUrl && (
-                    <Button
-                        variant="outline"
-                        className="flex-1 flex items-center justify-center gap-2"
-                    >
-                        <a href={result.originDownloadVideoUrl} target="_blank" rel="noopener noreferrer">
-                            {dict.result.originDownloadVideo}
-                        </a>
-                    </Button>
-                )}
             </div>
-            {result.originDownloadVideoUrl && (
-                <div className="text-xs text-muted-foreground text-center space-y-1">
-                    <p className="flex items-center justify-center gap-1">
-                        <AlertTriangle className="h-3 w-3" />
-                        {dict.douyin.apiLimitDownload}
-                    </p>
-                </div>
-            )}
         </>
     );
 }
@@ -136,22 +117,29 @@ function MultiPartList({ pages, currentPage, dict }: { pages: PageInfo[]; curren
                 {pages.map((page) => (
                     <div
                         key={page.page}
-                        className={`flex items-center gap-2 p-2 rounded-lg border ${
+                        className={`flex flex-col md:flex-row md:items-center gap-2 p-2 md:p-3 rounded-lg border ${
                             page.page === currentPage
                                 ? 'border-primary bg-primary/5'
                                 : 'border-border hover:bg-muted/50'
                         }`}
                     >
-                        <span className="text-xs font-medium text-muted-foreground shrink-0">
-                            P{page.page}
-                        </span>
-                        <span className="text-sm truncate flex-1 min-w-0" title={page.part}>
-                            {page.part}
-                        </span>
-                        <span className="text-xs text-muted-foreground shrink-0">
-                            {formatDuration(page.duration)}
-                        </span>
-                        <div className="flex gap-1 shrink-0">
+                        <div className="flex items-start md:items-center gap-2 flex-1 min-w-0">
+                            <span className="text-xs font-medium text-muted-foreground shrink-0">
+                                P{page.page}
+                            </span>
+                            <div className="flex-1 min-w-0">
+                                <div className="text-sm line-clamp-2 md:truncate break-words" title={page.part}>
+                                    {page.part}
+                                </div>
+                                <span className="text-xs text-muted-foreground md:hidden">
+                                    {formatDuration(page.duration)}
+                                </span>
+                            </div>
+                            <span className="text-xs text-muted-foreground shrink-0 hidden md:inline">
+                                {formatDuration(page.duration)}
+                            </span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 md:flex md:gap-1 md:shrink-0">
                             {page.downloadVideoUrl && (
                                 <Button
                                     variant="outline"

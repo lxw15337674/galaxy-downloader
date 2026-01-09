@@ -148,7 +148,7 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
                         {/* 中栏：主要功能区域 */}
                         <div className="xl:col-span-2 flex flex-col gap-4">
                             <Card className="shrink-0">
-                                <CardHeader>
+                                <CardHeader className="p-4 md:p-6">
                                     <h1 className="text-2xl text-center font-semibold tracking-tight">
                                         <CardTitle>{dict.unified.pageTitle}</CardTitle>
                                     </h1>
@@ -168,7 +168,7 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
                                         </a>
                                     </p>
                                 </CardHeader>
-                                <CardContent>
+                                <CardContent className="p-4 md:p-6">
                                     <form onSubmit={handleSubmit} className="space-y-6">
                                         <div className="space-y-2">
                                             <Textarea

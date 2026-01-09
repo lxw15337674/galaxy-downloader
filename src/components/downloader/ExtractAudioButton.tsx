@@ -61,12 +61,7 @@ export function ExtractAudioButton({ videoUrl, title, dict }: ExtractAudioButton
           </>
         );
       default:
-        return (
-          <>
-            <Music className="h-4 w-4" />
-            {dict.extractAudio.button}
-          </>
-        );
+        return dict.extractAudio.button;
     }
   };
 
@@ -74,7 +69,7 @@ export function ExtractAudioButton({ videoUrl, title, dict }: ExtractAudioButton
   const showProgress = (['downloading', 'converting'] as FFmpegStatus[]).includes(status);
 
   return (
-    <div className="flex-1 space-y-2">
+    <div className="space-y-2">
       <Button
         variant={status === 'error' ? 'destructive' : 'outline'}
         className="w-full flex items-center justify-center gap-2"

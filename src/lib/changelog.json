@@ -1,6 +1,21 @@
 {
   "versions": [
     {
+      "version": "1.9.0",
+      "date": "2026-01-03",
+      "changes": {
+        "zh": [
+          "全面优化移动端界面布局"
+        ],
+        "en": [
+          "Comprehensive optimization of mobile interface layout"
+        ],
+        "zh-tw": [
+          "全面最佳化行動端介面佈局"
+        ]
+      }
+    },
+    {
       "version": "1.8.0",
       "date": "2025-12-26",
       "changes": {

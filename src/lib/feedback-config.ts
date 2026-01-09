@@ -1,7 +1,7 @@
 // 反馈API配置
 export const FEEDBACK_CONFIG = {
   // API端点
-  apiUrl: 'http://127.0.0.1:8787/api/feedback',
+  apiUrl: process.env.API_BASE_URL || 'http://127.0.0.1:8787/api/feedback',
 
   // 验证规则
   validation: {

@@ -216,4 +216,40 @@ export interface Dictionary {
     changelog?: {
         title: string;
     };
+    feedback?: {
+        title: string;
+        triggerButton: string;
+        typeLabel: string;
+        typeRequired: string;
+        types: {
+            bug: string;
+            feature: string;
+            other: string;
+        };
+        contentLabel: string;
+        contentRequired: string;
+        contentPlaceholder: {
+            bug: string;
+            feature: string;
+            other: string;
+        };
+        contentCounter: string;
+        emailLabel: string;
+        emailPlaceholder: string;
+        emailInvalid: string;
+        emailHint: string;
+        cancelButton: string;
+        submitButton: string;
+        submittingButton: string;
+        closeButton: string;
+        successTitle: string;
+        successMessage: string;
+        successNote: string;
+        errorTitle: string;
+        errorMessage: string;
+        errorFallback: string;
+        retryButton: string;
+        toastSuccess: string;
+        toastError: string;
+    };
 } 

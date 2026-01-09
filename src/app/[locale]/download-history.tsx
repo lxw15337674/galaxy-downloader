@@ -103,7 +103,7 @@ export function DownloadHistory({ dict, downloadHistory, clearHistory, onRedownl
                                             className="flex flex-col md:flex-row md:items-center md:justify-between p-2 md:p-3 rounded-lg border bg-card/50 hover:bg-card/80 transition-colors gap-3"
                                         >
                                             <div className="flex-1 min-w-0">
-                                                <div className="font-medium text-sm mb-1.5 line-clamp-2 md:truncate" title={record.title} >
+                                                <div className="font-medium text-sm mb-1.5 line-clamp-2" title={record.title} >
                                                     {record.title}
                                                 </div>
                                                 <div className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap">

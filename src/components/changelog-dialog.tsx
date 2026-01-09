@@ -9,6 +9,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
+import { ScrollText } from 'lucide-react'
 import type { Locale } from '@/lib/i18n/config'
 import type { Dictionary } from '@/lib/i18n/types'
 import changelogData from '@/lib/changelog.json'
@@ -36,6 +37,7 @@ export function ChangelogDialog({ locale, dict }: ChangelogDialogProps) {
                     size="sm"
                     className="text-sm"
                 >
+                    <ScrollText className="h-4 w-4 mr-1" />
                     {title}
                 </Button>
             </DialogTrigger>

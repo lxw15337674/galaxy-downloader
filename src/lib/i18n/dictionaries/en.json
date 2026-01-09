@@ -327,5 +327,41 @@
     },
     "changelog": {
         "title": "Changelog"
+    },
+    "feedback": {
+        "title": "Feedback & Suggestions",
+        "triggerButton": "Feedback",
+        "typeLabel": "Feedback Type",
+        "typeRequired": "Please select a feedback type",
+        "types": {
+            "bug": "🐛 Bug Report",
+            "feature": "💡 Feature Request",
+            "other": "💬 Other Feedback"
+        },
+        "contentLabel": "Details",
+        "contentRequired": "Please provide details (at least 10 characters)",
+        "contentPlaceholder": {
+            "bug": "Please describe the issue, steps to reproduce, expected result...",
+            "feature": "Please describe the feature you'd like to see...",
+            "other": "Please share your thoughts..."
+        },
+        "contentCounter": "{current} / {max} characters",
+        "emailLabel": "Contact Email (Optional)",
+        "emailPlaceholder": "your@email.com",
+        "emailInvalid": "Invalid email format",
+        "emailHint": "Leave your email if you'd like us to follow up",
+        "cancelButton": "Cancel",
+        "submitButton": "Submit Feedback",
+        "submittingButton": "Submitting...",
+        "closeButton": "Close",
+        "successTitle": "Submitted Successfully!",
+        "successMessage": "Thank you for your feedback! We'll review every suggestion carefully.",
+        "successNote": "If you provided an email, we may contact you for more details.",
+        "errorTitle": "Submission Failed",
+        "errorMessage": "Failed to submit. Please check your connection and try again.",
+        "errorFallback": "You can also reach us through:",
+        "retryButton": "Retry",
+        "toastSuccess": "Feedback submitted successfully!",
+        "toastError": "Failed to submit, please try again"
     }
 }

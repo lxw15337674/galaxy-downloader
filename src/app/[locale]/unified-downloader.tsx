@@ -19,6 +19,7 @@ import { QuickStartCard } from '@/components/downloader/QuickStartCard';
 import { PlatformGuideCard } from '@/components/downloader/PlatformGuideCard';
 import { FreeSupportCard } from '@/components/downloader/FreeSupportCard';
 import { ChangelogDialog } from '@/components/changelog-dialog';
+import { FeedbackDialog } from '@/components/feedback-dialog';
 import { useLocalStorageState } from 'ahooks';
 import type { UnifiedParseResult } from '@/lib/types';
 import { Platform } from '@/lib/types';
@@ -126,6 +127,7 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
         <div className="min-h-screen flex flex-col bg-background">
             <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-3 flex justify-end items-center gap-1">
+                    <FeedbackDialog locale={locale} dict={dict} />
                     <ChangelogDialog locale={locale} dict={dict} />
                     <LanguageSwitcher currentLocale={locale} dict={dict} />
                 </div>

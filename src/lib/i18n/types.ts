@@ -32,6 +32,7 @@ export interface Dictionary {
     page: {
         feedback: string;
         feedbackLinkText: string;
+        faqLinkText: string;
         copyrightVideo: string;
         copyrightStorage: string;
         copyrightYear: string;
@@ -211,6 +212,18 @@ export interface Dictionary {
                 }>;
             };
         };
+    };
+    faqPage: {
+        metaTitle: string;
+        metaDescription: string;
+        metaOgTitle: string;
+        metaOgDescription: string;
+        title: string;
+        intro: string;
+        questions: Array<{
+            question: string;
+            answer: string;
+        }>;
     };
     result: ResultDict;
     changelog?: {

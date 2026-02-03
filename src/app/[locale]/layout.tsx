@@ -87,10 +87,9 @@ export async function generateMetadata({
         alternates: {
             canonical: `https://downloader.bhwa233.com/${locale}`,
             languages: {
-                'zh-Hans': 'https://downloader.bhwa233.com/zh',
-                'zh-Hant': 'https://downloader.bhwa233.com/zh-tw',
+                'zh-CN': 'https://downloader.bhwa233.com/zh',
                 'zh-TW': 'https://downloader.bhwa233.com/zh-tw',
-                'en': 'https://downloader.bhwa233.com/en',
+                en: 'https://downloader.bhwa233.com/en',
                 'x-default': 'https://downloader.bhwa233.com/zh',
             },
         },
@@ -107,9 +106,10 @@ export default async function RootLayout({
     const { locale: localeParam } = await params
     const locale = localeParam as Locale
     const dict = await getDictionary(locale)
+    const htmlLang = locale === 'zh' ? 'zh-CN' : locale === 'zh-tw' ? 'zh-TW' : 'en'
 
     return (
-        <html lang={locale} suppressHydrationWarning>
+        <html lang={htmlLang} suppressHydrationWarning>
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta name="theme-color" content="#000000" />

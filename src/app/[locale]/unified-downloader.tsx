@@ -4,9 +4,10 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import Link from "next/link";
 
 import { toast } from 'sonner';
-import { Loader2 } from 'lucide-react';
+import { Loader2, HelpCircle } from 'lucide-react';
 import axios from 'axios';
 import type { Dictionary } from '@/lib/i18n/types';
 import type { Locale } from "@/lib/i18n/config";
@@ -127,6 +128,12 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
         <div className="min-h-screen flex flex-col bg-background">
             <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-3 flex justify-end items-center gap-1">
+                    <Button variant="ghost" size="sm" asChild>
+                        <Link href={`/${locale}/faq`} className="flex items-center gap-1">
+                            <HelpCircle className="h-4 w-4" />
+                            <span>{dict.page.faqLinkText}</span>
+                        </Link>
+                    </Button>
                     <FeedbackDialog locale={locale} dict={dict} />
                     <ChangelogDialog locale={locale} dict={dict} />
                     <LanguageSwitcher currentLocale={locale} dict={dict} />
@@ -254,6 +261,11 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                     <div className="text-center text-xs text-muted-foreground space-y-1">
                         <p className="text-yellow-600 font-medium">{dict.page.copyrightBilibiliRestriction}</p>
+                        <p>
+                            <a className="underline" href={`/${locale}/faq`}>
+                                {dict.page.faqLinkText}
+                            </a>
+                        </p>
                         <p>{dict.page.copyrightVideo}</p>
                         <p>{dict.page.copyrightStorage}</p>
                         <p>{dict.page.copyrightYear}</p>

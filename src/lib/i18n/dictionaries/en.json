@@ -13,6 +13,7 @@
     "page": {
         "feedback": "For feedback or suggestions, please ",
         "feedbackLinkText": "submit an issue on GitHub",
+        "faqLinkText": "FAQ",
         "copyrightVideo": "Copyright Notice: Video copyrights belong to relevant websites and authors",
         "copyrightStorage": "This site does not provide or store any videos or images",
         "copyrightYear": "Copyright © 2025",
@@ -65,6 +66,64 @@
         "ogTitle": "Universal Media Downloader - Free Online Tool",
         "ogDescription": "Professional universal media download tool. Supports video and audio downloads from Bilibili, Douyin, Xiaohongshu and more platforms, auto-detect platform, one-click high-quality download.",
         "siteName": "Universal Media Downloader"
+    },
+    "faqPage": {
+        "metaTitle": "Video Download FAQ | Bilibili, Douyin, Xiaohongshu Supported",
+        "metaDescription": "FAQ for video downloads on Bilibili, Douyin, and Xiaohongshu, including no-watermark downloads, link formats, audio extraction, quality options, and parsing issues.",
+        "metaOgTitle": "Video Download FAQ | Bilibili, Douyin, Xiaohongshu Supported",
+        "metaOgDescription": "FAQ for video downloads on Bilibili, Douyin, and Xiaohongshu, including no-watermark downloads, link formats, audio extraction, quality options, and parsing issues.",
+        "title": "Video Download FAQ (Bilibili / Douyin / Xiaohongshu)",
+        "intro": "This tool supports video downloads and audio extraction for Bilibili, Douyin, and Xiaohongshu. Paste a link to auto-detect the platform and show download options.",
+        "questions": [
+            {
+                "question": "How to download Bilibili videos?",
+                "answer": "Paste the Bilibili video link, click parse, then choose video download."
+            },
+            {
+                "question": "How to download Douyin videos without watermark?",
+                "answer": "Paste the Douyin share link and the tool will provide a no-watermark download."
+            },
+            {
+                "question": "What Xiaohongshu links are supported?",
+                "answer": "Share links and short links are supported; paste to parse automatically."
+            },
+            {
+                "question": "Can I extract MP3 from Bilibili videos?",
+                "answer": "Yes. After parsing, you can choose audio download or MP3 extraction."
+            },
+            {
+                "question": "What video quality can I download?",
+                "answer": "Available quality depends on the source video and platform limits."
+            },
+            {
+                "question": "Why does parsing sometimes fail?",
+                "answer": "The link may be invalid, restricted, or blocked by platform controls."
+            },
+            {
+                "question": "Can I download paid or restricted content?",
+                "answer": "No. Copyright-restricted or paid content is not supported."
+            },
+            {
+                "question": "Do I need to register or log in?",
+                "answer": "No. Just paste the link to use the tool."
+            },
+            {
+                "question": "Does it work on mobile?",
+                "answer": "Yes. Open the site in a mobile browser and paste the link."
+            },
+            {
+                "question": "Which browsers are supported?",
+                "answer": "We recommend the latest Chrome, Edge, or Safari."
+            },
+            {
+                "question": "Do you store my download history?",
+                "answer": "No. History is stored only in your browser locally."
+            },
+            {
+                "question": "What if parsing is slow?",
+                "answer": "Check your network or try again later; some platforms throttle speed."
+            }
+        ]
     },
     "languages": {
         "zh": "简体中文",
@@ -212,7 +271,7 @@
                 "Browser-based processing"
             ],
             "zh": [
-                "提取B站视频MP3音频",
+                "提取哔哩哔哩视频MP3音频",
                 "下载抖音无水印视频",
                 "下载小红书图文笔记",
                 "下载小红书无水印视频",
@@ -245,8 +304,8 @@
             ],
             "zh": [
                 {
-                    "question": "如何下载B站音频？",
-                    "answer": "将B站视频链接粘贴到输入框中，点击下载，系统会自动提取并下载MP3音频文件。"
+                    "question": "如何下载哔哩哔哩音频？",
+                    "answer": "将哔哩哔哩视频链接粘贴到输入框中，点击下载，系统会自动提取并下载MP3音频文件。"
                 },
                 {
                     "question": "如何下载抖音无水印视频？",
@@ -265,7 +324,7 @@
         "howTo": {
             "title": {
                 "en": "How to download Bilibili, Douyin and Xiaohongshu content",
-                "zh": "如何下载B站、抖音及小红书内容"
+                "zh": "如何下载哔哩哔哩、抖音及小红书内容"
             },
             "steps": {
                 "en": [
@@ -289,7 +348,7 @@
                 "zh": [
                     {
                         "name": "复制链接",
-                        "text": "从浏览器复制B站、抖音或小红书的视频/笔记链接"
+                        "text": "从浏览器复制哔哩哔哩、抖音或小红书的视频/笔记链接"
                     },
                     {
                         "name": "粘贴链接",
@@ -297,7 +356,7 @@
                     },
                     {
                         "name": "自动识别",
-                        "text": "工具会自动识别平台（B站/抖音/小红书）"
+                        "text": "工具会自动识别平台（哔哩哔哩/抖音/小红书）"
                     },
                     {
                         "name": "下载",
@@ -365,3 +424,5 @@
         "toastError": "Failed to submit, please try again"
     }
 }
+
+

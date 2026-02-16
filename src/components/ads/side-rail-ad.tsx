@@ -56,7 +56,7 @@ export function SideRailAd({ slot, className }: SideRailAdProps) {
   }, [slot]);
 
   return (
-    <div className={cn('w-full min-h-[120px]', className)}>
+    <div className={cn('w-full', className)}>
       <ins
         ref={adRef}
         className="adsbygoogle block"

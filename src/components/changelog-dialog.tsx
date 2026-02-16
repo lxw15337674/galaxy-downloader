@@ -14,13 +14,17 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import type { Locale } from '@/lib/i18n/config'
 import type { Dictionary } from '@/lib/i18n/types'
 import changelogData from '@/lib/changelog.json'
+import { cn } from '@/lib/utils'
 
 interface ChangelogDialogProps {
     locale: Locale
     dict: Dictionary
+    triggerClassName?: string
+    triggerIconOnly?: boolean
+    onTriggerClick?: () => void
 }
 
-export function ChangelogDialog({ locale, dict }: ChangelogDialogProps) {
+export function ChangelogDialog({ locale, dict, triggerClassName, triggerIconOnly = false, onTriggerClick }: ChangelogDialogProps) {
     const [open, setOpen] = useState(false)
 
     // 获取当前语言的更新内容，如果没有则回退到英文
@@ -35,11 +39,13 @@ export function ChangelogDialog({ locale, dict }: ChangelogDialogProps) {
             <DialogTrigger asChild>
                 <Button
                     variant="ghost"
-                    size="sm"
-                    className="text-sm"
+                    size={triggerIconOnly ? 'icon' : 'sm'}
+                    className={cn('text-sm', triggerClassName)}
+                    onClick={onTriggerClick}
+                    aria-label={title}
                 >
-                    <ScrollText className="h-4 w-4 mr-1" />
-                    {title}
+                    <ScrollText className={cn('h-4 w-4', !triggerIconOnly && 'mr-1')} />
+                    {triggerIconOnly ? <span className="sr-only">{title}</span> : title}
                 </Button>
             </DialogTrigger>
             <DialogContent className="max-w-md">

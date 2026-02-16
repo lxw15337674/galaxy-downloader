@@ -33,6 +33,7 @@ export interface Dictionary {
         feedback: string;
         feedbackLinkText: string;
         faqLinkText: string;
+        openMenuLabel: string;
         copyrightVideo: string;
         copyrightStorage: string;
         copyrightYear: string;

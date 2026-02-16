@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 
 import { toast } from 'sonner';
-import { Loader2, HelpCircle } from 'lucide-react';
+import { Loader2, HelpCircle, Menu } from 'lucide-react';
 import axios from 'axios';
 import type { Dictionary } from '@/lib/i18n/types';
 import type { Locale } from "@/lib/i18n/config";
@@ -26,6 +26,13 @@ import { useLocalStorageState } from 'ahooks';
 import type { UnifiedParseResult } from '@/lib/types';
 import { Platform } from '@/lib/types';
 import { DOWNLOAD_HISTORY_MAX_COUNT, DOWNLOAD_HISTORY_STORAGE_KEY } from '@/lib/constants';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
 
 interface UnifiedDownloaderProps {
     dict: Dictionary;
@@ -37,6 +44,7 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [parseResult, setParseResult] = useState<UnifiedParseResult['data'] | null>(null);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const [downloadHistory, setDownloadHistory] = useLocalStorageState<DownloadRecord[]>(DOWNLOAD_HISTORY_STORAGE_KEY, {
         defaultValue: []
@@ -127,8 +135,52 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
 
     return (
         <div className="min-h-screen flex flex-col bg-background">
-            <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-3 flex justify-end items-center gap-1">
+            <div
+                className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur-sm"
+                style={{ paddingTop: 'env(safe-area-inset-top)' }}
+            >
+                <div className="md:hidden max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-2">
+                    <Link
+                        href={`/${locale}`}
+                        className="max-w-[56vw] truncate text-sm font-medium"
+                    >
+                        {dict.unified.pageTitle}
+                    </Link>
+                    <div className="flex items-center gap-1">
+                        <LanguageSwitcher currentLocale={locale} dict={dict} compact />
+                        <Dialog open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                            <DialogTrigger asChild>
+                                <Button variant="ghost" size="icon" aria-label={dict.page.openMenuLabel}>
+                                    <Menu className="h-5 w-5" />
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="top-auto bottom-4 left-1/2 w-[calc(100%-2rem)] max-w-sm translate-x-[-50%] translate-y-0 rounded-xl p-4">
+                                <DialogHeader>
+                                    <DialogTitle className="text-base">{dict.unified.pageTitle}</DialogTitle>
+                                </DialogHeader>
+                                <div className="space-y-2">
+                                    <Button variant="outline" className="w-full justify-start" asChild>
+                                        <Link href={`/${locale}/faq`} onClick={() => setMobileMenuOpen(false)}>
+                                            <HelpCircle className="h-4 w-4" />
+                                            <span>{dict.page.faqLinkText}</span>
+                                        </Link>
+                                    </Button>
+                                    <FeedbackDialog
+                                        locale={locale}
+                                        dict={dict}
+                                        triggerClassName="w-full justify-start"
+                                    />
+                                    <ChangelogDialog
+                                        locale={locale}
+                                        dict={dict}
+                                        triggerClassName="w-full justify-start"
+                                    />
+                                </div>
+                            </DialogContent>
+                        </Dialog>
+                    </div>
+                </div>
+                <div className="hidden md:flex max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-3 justify-end items-center gap-1">
                     <Button variant="ghost" size="sm" asChild>
                         <Link href={`/${locale}/faq`} className="flex items-center gap-1">
                             <HelpCircle className="h-4 w-4" />
@@ -226,6 +278,11 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
                                     </form>
                                 </CardContent>
                             </Card>
+
+                            <div className="xl:hidden min-h-[120px]">
+                                <SideRailAd slot="5740014745" className="h-full" />
+                            </div>
+
                             <ResultCard
                                 result={parseResult}
                                     onClose={closeParseResult}

@@ -1,5 +1,4 @@
 'use client';
-
 declare global {
   interface Window {
     adsbygoogle?: unknown[];

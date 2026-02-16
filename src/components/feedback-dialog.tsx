@@ -26,13 +26,17 @@ import type { Dictionary } from '@/lib/i18n/types'
 import type { FeedbackType } from '@/lib/feedback-config'
 import { submitFeedback, validateContent, validateEmail } from '@/lib/feedback'
 import { FEEDBACK_CONFIG } from '@/lib/feedback-config'
+import { cn } from '@/lib/utils'
 
 interface FeedbackDialogProps {
     locale: Locale
     dict: Dictionary
+    triggerClassName?: string
+    triggerIconOnly?: boolean
+    onTriggerClick?: () => void
 }
 
-export function FeedbackDialog({ locale, dict }: FeedbackDialogProps) {
+export function FeedbackDialog({ locale, dict, triggerClassName, triggerIconOnly = false, onTriggerClick }: FeedbackDialogProps) {
     const [open, setOpen] = useState(false)
     const [feedbackType, setFeedbackType] = useState<FeedbackType>('bug')
     const [content, setContent] = useState('')
@@ -236,9 +240,19 @@ export function FeedbackDialog({ locale, dict }: FeedbackDialogProps) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="ghost" size="sm" className="text-sm">
-                    <MessageSquare className="h-4 w-4 mr-1" />
-                    {dict.feedback?.triggerButton || '反馈'}
+                <Button
+                    variant="ghost"
+                    size={triggerIconOnly ? 'icon' : 'sm'}
+                    className={cn('text-sm', triggerClassName)}
+                    onClick={onTriggerClick}
+                    aria-label={dict.feedback?.triggerButton || '反馈'}
+                >
+                    <MessageSquare className={cn('h-4 w-4', !triggerIconOnly && 'mr-1')} />
+                    {triggerIconOnly ? (
+                        <span className="sr-only">{dict.feedback?.triggerButton || '反馈'}</span>
+                    ) : (
+                        dict.feedback?.triggerButton || '反馈'
+                    )}
                 </Button>
             </DialogTrigger>
             <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">

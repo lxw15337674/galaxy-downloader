@@ -19,6 +19,7 @@ import { ResultCard } from '@/components/downloader/ResultCard';
 import { QuickStartCard } from '@/components/downloader/QuickStartCard';
 import { PlatformGuideCard } from '@/components/downloader/PlatformGuideCard';
 import { FreeSupportCard } from '@/components/downloader/FreeSupportCard';
+import { SideRailAd } from '@/components/ads/side-rail-ad';
 import { ChangelogDialog } from '@/components/changelog-dialog';
 import { FeedbackDialog } from '@/components/feedback-dialog';
 import { useLocalStorageState } from 'ahooks';
@@ -147,6 +148,7 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
                         {/* 左栏：快速入门指南 (PC端显示，移动端隐藏) */}
                         <div className="hidden xl:block">
                             <div className="sticky top-20 space-y-4">
+                                <SideRailAd slot="1341604736" />
                                 <QuickStartCard dict={dict} />
                                 <FreeSupportCard dict={dict} />
                             </div>
@@ -248,7 +250,8 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
 
                         {/* 右栏：平台支持指南 (PC端显示，移动端隐藏) */}
                         <div className="hidden xl:block">
-                            <div className="sticky top-20">
+                            <div className="sticky top-20 space-y-4">
+                                <SideRailAd slot="6380909506" />
                                 <PlatformGuideCard dict={dict} />
                             </div>
                         </div>

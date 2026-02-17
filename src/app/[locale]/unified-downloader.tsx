@@ -199,7 +199,7 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
                     <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
                         {/* 左栏：快速入门指南 (PC端显示，移动端隐藏) */}
                         <div className="hidden xl:block">
-                            <div className="sticky top-20 space-y-4">
+                            <div className="sticky top-20 flex flex-col gap-4">
                                 <SideRailAd slot="1341604736" />
                                 <QuickStartCard dict={dict} />
                                 <FreeSupportCard dict={dict} />
@@ -298,7 +298,7 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
                             />
 
                             {/* 移动端帮助卡片 - 放在历史记录下方 */}
-                            <div className="xl:hidden space-y-4">
+                            <div className="xl:hidden flex flex-col gap-4">
                                 <QuickStartCard dict={dict} />
                                 <FreeSupportCard dict={dict} />
                                 <PlatformGuideCard dict={dict} />
@@ -307,7 +307,7 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
 
                         {/* 右栏：平台支持指南 (PC端显示，移动端隐藏) */}
                         <div className="hidden xl:block">
-                            <div className="sticky top-20 space-y-4">
+                            <div className="sticky top-20 flex flex-col gap-4">
                                 <SideRailAd slot="6380909506" />
                                 <PlatformGuideCard dict={dict} />
                             </div>

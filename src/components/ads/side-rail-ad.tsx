@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 declare global {
@@ -16,6 +16,7 @@ interface SideRailAdProps {
 export function SideRailAd({ slot, className }: SideRailAdProps) {
   const adRef = useRef<HTMLModElement | null>(null);
   const initializedRef = useRef(false);
+  const [adLoaded, setAdLoaded] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -40,6 +41,18 @@ export function SideRailAd({ slot, className }: SideRailAdProps) {
       try {
         adsQueue.push({});
         initializedRef.current = true;
+        // Check if the ad actually rendered with content
+        const checkRendered = () => {
+          if (cancelled) return;
+          const el = adRef.current;
+          if (el && el.offsetHeight > 0) {
+            setAdLoaded(true);
+          } else {
+            // Re-check a few times as ad rendering is async
+            window.setTimeout(checkRendered, 500);
+          }
+        };
+        window.setTimeout(checkRendered, 500);
       } catch {
         if (retryCount < maxRetries) {
           retryCount += 1;
@@ -56,7 +69,7 @@ export function SideRailAd({ slot, className }: SideRailAdProps) {
   }, [slot]);
 
   return (
-    <div className={cn('w-full', className)}>
+    <div className={cn('w-full', adLoaded ? '' : 'hidden', className)}>
       <ins
         ref={adRef}
         className="adsbygoogle block"

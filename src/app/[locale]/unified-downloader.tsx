@@ -279,7 +279,7 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
                                 </CardContent>
                             </Card>
 
-                            <div className="xl:hidden min-h-[120px]">
+                            <div className="xl:hidden">
                                 <SideRailAd slot="5740014745" className="h-full" />
                             </div>
 

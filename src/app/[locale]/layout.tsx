@@ -111,8 +111,6 @@ export default async function RootLayout({
     return (
         <html lang={htmlLang} suppressHydrationWarning>
             <head>
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1581472267398547"
-                    crossOrigin="anonymous"></script>
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta name="theme-color" content="#000000" />
                 <meta name="color-scheme" content="dark light" />
@@ -144,6 +142,12 @@ export default async function RootLayout({
                 >
                     {children}
                 </ThemeProvider>
+                <Script
+                    async
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1581472267398547"
+                    crossOrigin="anonymous"
+                    strategy="afterInteractive"
+                />
                 <Script
                     strategy="afterInteractive"
                     src="https://www.googletagmanager.com/gtag/js?id=G-0BEHLKM3W5"

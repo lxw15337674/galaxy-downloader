@@ -52,7 +52,8 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "sharp"
+      "sharp",
+      "unrs-resolver"
     ],
     "overrides": {
       "@types/react": "19.2.7",

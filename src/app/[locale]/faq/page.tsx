@@ -1,8 +1,14 @@
 import type { Metadata } from "next"
+import Link from "next/link"
 import { getDictionary } from "@/lib/i18n"
 import type { Locale } from "@/lib/i18n/config"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { FaqStructuredData } from "@/components/faq-structured-data"
+import {
+    buildLanguageAlternates,
+    buildLocaleUrl,
+    localeToOpenGraphLocale,
+} from "@/lib/seo"
 
 export async function generateMetadata({
     params,
@@ -12,8 +18,7 @@ export async function generateMetadata({
     const { locale } = await params
     const dict = await getDictionary(locale)
 
-    const baseUrl = "https://downloader.bhwa233.com"
-    const url = `${baseUrl}/${locale}/faq`
+    const url = buildLocaleUrl(locale, "/faq")
 
     return {
         title: dict.faqPage.metaTitle,
@@ -23,7 +28,7 @@ export async function generateMetadata({
             description: dict.faqPage.metaOgDescription,
             url,
             siteName: dict.metadata.siteName,
-            locale: locale === "zh" ? "zh_CN" : locale === "zh-tw" ? "zh_TW" : "en_US",
+            locale: localeToOpenGraphLocale(locale),
             type: "website",
             images: [
                 {
@@ -42,12 +47,7 @@ export async function generateMetadata({
         },
         alternates: {
             canonical: url,
-            languages: {
-                "zh-CN": `${baseUrl}/zh/faq`,
-                "zh-TW": `${baseUrl}/zh-tw/faq`,
-                en: `${baseUrl}/en/faq`,
-                "x-default": `${baseUrl}/zh/faq`,
-            },
+            languages: buildLanguageAlternates("/faq"),
         },
     }
 }
@@ -59,6 +59,7 @@ export default async function FaqPage({
 }) {
     const { locale } = await params
     const dict = await getDictionary(locale)
+    const guidesLabel = locale === "en" ? "Guides" : locale === "zh-tw" ? "下載指南" : "下载指南"
 
     return (
         <div className="min-h-screen bg-background">
@@ -70,19 +71,24 @@ export default async function FaqPage({
                     <p className="text-sm text-muted-foreground">
                         {dict.faqPage.intro}
                     </p>
+                    <p className="text-sm">
+                        <Link href={`/${locale}/guides`} className="underline">
+                            {guidesLabel}
+                        </Link>
+                    </p>
                 </header>
 
                 <section className="grid gap-4">
                     {dict.faqPage.questions.map((item, index) => (
-                        <Card key={`${item.question}-${index}`}>
-                            <CardHeader className="p-4 md:p-6">
-                                <CardTitle className="text-base md:text-lg">
-                                    {item.question}
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent className="p-4 md:p-6 pt-0 text-sm text-muted-foreground">
-                                {item.answer}
-                            </CardContent>
+                            <Card key={`${item.question}-${index}`}>
+                                <CardHeader className="p-4 md:p-6">
+                                    <h2 className="text-base md:text-lg font-semibold tracking-tight">
+                                        {item.question}
+                                    </h2>
+                                </CardHeader>
+                                <CardContent className="p-4 md:p-6 pt-0 text-sm text-muted-foreground">
+                                    {item.answer}
+                                </CardContent>
                         </Card>
                     ))}
                 </section>

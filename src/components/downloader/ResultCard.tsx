@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, X, Download, Loader2, Package } from 'lucide-react';
+import Image from "next/image";
 import type { Dictionary } from '@/lib/i18n/types';
 import { UnifiedParseResult, PageInfo } from "../../lib/types";
 import { downloadFile, formatDuration, sanitizeFilename } from "../../lib/utils";
@@ -182,6 +183,9 @@ function ImageNoteGrid({ images, title, dict }: { images: string[]; title: strin
     const blobUrlsRef = useRef<Set<string>>(new Set());
 
     useEffect(() => {
+        const currentBlobUrls = new Set<string>();
+        blobUrlsRef.current = currentBlobUrls;
+
         // 初始化加载状态
         const initialStates = new Map<number, ImageLoadState>();
         images.forEach((_, index) => {
@@ -203,7 +207,7 @@ function ImageNoteGrid({ images, title, dict }: { images: string[]; title: strin
                         const blobUrl = URL.createObjectURL(response.data);
 
                         // 存储到 ref 用于清理
-                        blobUrlsRef.current.add(blobUrl);
+                        currentBlobUrls.add(blobUrl);
 
                         // 更新状态
                         setImageStates(prev => {
@@ -227,10 +231,10 @@ function ImageNoteGrid({ images, title, dict }: { images: string[]; title: strin
 
         // 清理函数：释放所有 blob URLs
         return () => {
-            blobUrlsRef.current.forEach(blobUrl => {
+            currentBlobUrls.forEach(blobUrl => {
                 URL.revokeObjectURL(blobUrl);
             });
-            blobUrlsRef.current.clear();
+            currentBlobUrls.clear();
         };
     }, [images]);
 
@@ -366,10 +370,13 @@ function ImageNoteGrid({ images, title, dict }: { images: string[]; title: strin
                                     </div>
                                 )}
                                 {!isLoading && !hasError && blobUrl && (
-                                    <img
+                                    <Image
                                         src={blobUrl}
                                         alt={`Image ${index + 1}`}
-                                        className="w-full h-full object-cover"
+                                        fill
+                                        unoptimized
+                                        sizes="(max-width: 768px) 50vw, 33vw"
+                                        className="object-cover"
                                     />
                                 )}
                             </div>

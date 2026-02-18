@@ -7,8 +7,15 @@ import { Toaster } from "@/components/ui/sonner"
 import { getDictionary } from "@/lib/i18n"
 import type { Locale } from "@/lib/i18n/config"
 import { i18n } from "@/lib/i18n/config"
-import { StructuredData } from "@/components/structured-data"
 import { Analytics } from '@vercel/analytics/next';
+import {
+    IS_INDEXABLE,
+    SITE_URL,
+    buildLanguageAlternates,
+    buildLocaleUrl,
+    localeToHtmlLang,
+    localeToOpenGraphLocale,
+} from "@/lib/seo"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -33,6 +40,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { locale } = await params
     const dict = await getDictionary(locale)
+    const localeUrl = buildLocaleUrl(locale)
 
     return {
         title: dict.metadata.title,
@@ -49,14 +57,14 @@ export async function generateMetadata({
             address: false,
             telephone: false,
         },
-        metadataBase: new URL('https://downloader.bhwa233.com'),
+        metadataBase: new URL(SITE_URL),
         category: 'utilities',
         openGraph: {
             title: dict.metadata.ogTitle,
             description: dict.metadata.ogDescription,
-            url: `https://downloader.bhwa233.com/${locale}`,
+            url: localeUrl,
             siteName: dict.metadata.siteName,
-            locale: locale === 'zh' ? 'zh_CN' : locale === 'zh-tw' ? 'zh_TW' : 'en_US',
+            locale: localeToOpenGraphLocale(locale),
             type: 'website',
             images: [
                 {
@@ -74,24 +82,19 @@ export async function generateMetadata({
             images: ['/favicon.svg'],
         },
         robots: {
-            index: true,
-            follow: true,
+            index: IS_INDEXABLE,
+            follow: IS_INDEXABLE,
             googleBot: {
-                index: true,
-                follow: true,
+                index: IS_INDEXABLE,
+                follow: IS_INDEXABLE,
                 'max-video-preview': -1,
                 'max-image-preview': 'large',
                 'max-snippet': -1,
             },
         },
         alternates: {
-            canonical: `https://downloader.bhwa233.com/${locale}`,
-            languages: {
-                'zh-CN': 'https://downloader.bhwa233.com/zh',
-                'zh-TW': 'https://downloader.bhwa233.com/zh-tw',
-                en: 'https://downloader.bhwa233.com/en',
-                'x-default': 'https://downloader.bhwa233.com/zh',
-            },
+            canonical: localeUrl,
+            languages: buildLanguageAlternates(),
         },
     }
 }
@@ -106,7 +109,7 @@ export default async function RootLayout({
     const { locale: localeParam } = await params
     const locale = localeParam as Locale
     const dict = await getDictionary(locale)
-    const htmlLang = locale === 'zh' ? 'zh-CN' : locale === 'zh-tw' ? 'zh-TW' : 'en'
+    const htmlLang = localeToHtmlLang(locale)
 
     return (
         <html lang={htmlLang} suppressHydrationWarning>
@@ -129,7 +132,6 @@ export default async function RootLayout({
                 <link rel="manifest" href="/manifest.json" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-                <StructuredData locale={locale} dict={dict} />
             </head>
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 <Toaster />

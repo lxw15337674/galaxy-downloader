@@ -15,6 +15,11 @@ interface LanguageSwitcherProps {
     compact?: boolean
 }
 
+function setLocaleCookie(locale: Locale) {
+    const secureAttr = window.location.protocol === 'https:' ? '; Secure' : ''
+    document.cookie = `${LOCALE_COOKIE_NAME}=${locale}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE}; SameSite=Lax${secureAttr}`
+}
+
 export function LanguageSwitcher({ currentLocale, dict, compact = false }: LanguageSwitcherProps) {
     const [isOpen, setIsOpen] = useState(false)
     const pathname = usePathname()
@@ -34,8 +39,7 @@ export function LanguageSwitcher({ currentLocale, dict, compact = false }: Langu
         const newPath = `/${locale}${pathWithoutLocale}`
 
         // 设置 Cookie
-        document.cookie = `${LOCALE_COOKIE_NAME}=${locale}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE}; SameSite=Lax${window.location.protocol === 'https:' ? '; Secure' : ''
-            }`
+        setLocaleCookie(locale)
 
         // 路由跳转
         router.push(newPath)

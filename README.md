@@ -65,6 +65,29 @@ bun dev
    npm run dev
    ```
 
+## SEO 配置
+
+部署时建议配置以下环境变量，避免预发环境被收录并确保 canonical 正确：
+
+- `NEXT_PUBLIC_SITE_URL`: 当前环境站点地址（例如 `https://downloader.bhwa233.com`）
+- `SEO_INDEXABLE`: 是否允许索引，`true` / `false`
+
+默认策略：
+
+- 在 Vercel 生产环境自动允许索引
+- 在预览环境默认不允许索引
+- 可通过 `SEO_INDEXABLE` 显式覆盖
+
+## SEO 监控建议
+
+建议每周检查以下指标，持续验证本仓库内的 SEO 配置是否生效：
+
+1. Search Console 的 `索引页面` 与 `未编入索引原因`
+2. `sitemap.xml` 提交状态与抓取成功率
+3. Core Web Vitals（LCP、INP、CLS）趋势
+4. 重点页面（首页、FAQ、Guides）的展示量与点击量
+5. 多语言页面的 `hreflang` 与 canonical 是否一致
+
 ## 部署
 
 推荐使用 [Vercel 平台](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) 部署，它是 Next.js 的创建者提供的托管服务。

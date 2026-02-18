@@ -1,11 +1,13 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { getDictionary } from "@/lib/i18n"
 import { i18n, type Locale } from "@/lib/i18n/config"
 import { SEO_GUIDES, getGuideBySlug, getLocalizedGuideContent } from "@/lib/guides"
 import {
     buildLanguageAlternates,
     buildLocaleUrl,
+    buildOpenGraphLocaleAlternates,
     localeToHtmlLang,
     localeToOpenGraphLocale,
 } from "@/lib/seo"
@@ -36,24 +38,30 @@ export async function generateMetadata({
     }
 
     const content = getLocalizedGuideContent(guide, locale)
+    const dict = await getDictionary(locale)
+    const pageTitle = `${content.title} | ${dict.metadata.siteName}`
     const url = buildLocaleUrl(locale, `/guides/${slug}`)
 
     return {
-        title: content.title,
+        title: pageTitle,
         description: content.description,
         openGraph: {
-            title: content.title,
+            title: pageTitle,
             description: content.description,
             url,
+            siteName: dict.metadata.siteName,
             type: "article",
             locale: localeToOpenGraphLocale(locale),
-            images: ["/favicon.svg"],
+            alternateLocale: buildOpenGraphLocaleAlternates(locale),
+            modifiedTime: guide.updatedAt,
+            authors: [dict.metadata.siteName],
+            images: ["/og/guides.png"],
         },
         twitter: {
             card: "summary_large_image",
-            title: content.title,
+            title: pageTitle,
             description: content.description,
-            images: ["/favicon.svg"],
+            images: ["/og/guides.png"],
         },
         alternates: {
             canonical: url,
@@ -74,31 +82,38 @@ export default async function GuideDetailPage({
     }
 
     const content = getLocalizedGuideContent(guide, locale)
+    const dict = await getDictionary(locale)
     const relatedGuides = SEO_GUIDES.filter((item) => item.slug !== slug)
     const pageCopy = locale === "en"
         ? {
             home: "Home",
             guides: "Guides",
+            downloader: "Downloader",
+            faq: "FAQ",
             steps: "Steps",
             tips: "Practical Tips",
-            faq: "Quick FAQ",
+            faqSection: "Quick FAQ",
             related: "Related Guides",
         }
         : locale === "zh-tw"
           ? {
               home: "首頁",
               guides: "指南",
+              downloader: "下載器",
+              faq: "常見問題",
               steps: "操作步驟",
               tips: "實用提示",
-              faq: "常見問題",
+              faqSection: "常見問題",
               related: "相關指南",
           }
           : {
               home: "首页",
               guides: "指南",
+              downloader: "下载器",
+              faq: "常见问题",
               steps: "操作步骤",
               tips: "实用提示",
-              faq: "常见问题",
+              faqSection: "常见问题",
               related: "相关指南",
           }
 
@@ -139,6 +154,24 @@ export default async function GuideDetailPage({
             },
         ],
     }
+    const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": content.title,
+        "description": content.description,
+        "inLanguage": localeToHtmlLang(locale),
+        "datePublished": guide.publishedAt,
+        "dateModified": guide.updatedAt,
+        "mainEntityOfPage": url,
+        "author": {
+            "@type": "Organization",
+            "name": dict.metadata.siteName,
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": dict.metadata.siteName,
+        },
+    }
 
     return (
         <main className="min-h-screen bg-background">
@@ -147,6 +180,8 @@ export default async function GuideDetailPage({
                     <Link className="underline" href={`/${locale}`}>{pageCopy.home}</Link>
                     <span>/</span>
                     <Link className="underline" href={`/${locale}/guides`}>{pageCopy.guides}</Link>
+                    <span>/</span>
+                    <span>{content.title}</span>
                 </nav>
 
                 <header className="space-y-3">
@@ -178,7 +213,7 @@ export default async function GuideDetailPage({
                 </section>
 
                 <section className="space-y-3">
-                    <h2 className="text-2xl font-semibold tracking-tight">{pageCopy.faq}</h2>
+                    <h2 className="text-2xl font-semibold tracking-tight">{pageCopy.faqSection}</h2>
                     <div className="space-y-3">
                         {content.faq.map((item) => (
                             <article key={item.question} className="rounded-lg border bg-card p-4">
@@ -206,6 +241,14 @@ export default async function GuideDetailPage({
                         })}
                     </div>
                 </section>
+
+                <section className="space-y-2">
+                    <div className="text-sm text-muted-foreground">
+                        <Link className="underline" href={`/${locale}`}>{pageCopy.downloader}</Link>
+                        {' · '}
+                        <Link className="underline" href={`/${locale}/faq`}>{pageCopy.faq}</Link>
+                    </div>
+                </section>
             </div>
             <script
                 type="application/ld+json"
@@ -214,6 +257,10 @@ export default async function GuideDetailPage({
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
             />
         </main>
     )

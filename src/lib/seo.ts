@@ -25,7 +25,7 @@ export const IS_INDEXABLE = explicitIndexableFlag
     ? explicitIndexableFlag === "true"
     : isVercel
       ? process.env.VERCEL_ENV === "production"
-      : false
+      : process.env.NODE_ENV === "production"
 
 export function localeToHrefLang(locale: Locale): string {
     if (locale === "zh") return "zh-CN"
@@ -50,8 +50,7 @@ export function buildLocaleUrl(locale: Locale, path = ""): string {
 }
 
 export function buildXDefaultUrl(path = ""): string {
-    const normalizedPath = normalizePath(path)
-    return normalizedPath ? `${SITE_URL}${normalizedPath}` : SITE_URL
+    return buildLocaleUrl(i18n.defaultLocale, path)
 }
 
 export function buildLanguageAlternates(path = ""): Record<string, string> {
@@ -62,4 +61,10 @@ export function buildLanguageAlternates(path = ""): Record<string, string> {
 
     alternates["x-default"] = buildXDefaultUrl(path)
     return alternates
+}
+
+export function buildOpenGraphLocaleAlternates(locale: Locale): string[] {
+    return i18n.locales
+        .filter((item) => item !== locale)
+        .map((item) => localeToOpenGraphLocale(item))
 }

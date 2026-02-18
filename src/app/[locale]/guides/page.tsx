@@ -2,10 +2,12 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { getDictionary } from "@/lib/i18n"
 import type { Locale } from "@/lib/i18n/config"
+import { PageStructuredData } from "@/components/page-structured-data"
 import { SEO_GUIDES, getLocalizedGuideContent } from "@/lib/guides"
 import {
     buildLanguageAlternates,
     buildLocaleUrl,
+    buildOpenGraphLocaleAlternates,
     localeToOpenGraphLocale,
 } from "@/lib/seo"
 
@@ -33,14 +35,15 @@ export async function generateMetadata({
             url,
             siteName: dict.metadata.siteName,
             locale: localeToOpenGraphLocale(locale),
+            alternateLocale: buildOpenGraphLocaleAlternates(locale),
             type: "website",
-            images: ["/favicon.svg"],
+            images: ["/og/guides.png"],
         },
         twitter: {
             card: "summary_large_image",
             title: `${title} | ${dict.metadata.siteName}`,
             description,
-            images: ["/favicon.svg"],
+            images: ["/og/guides.png"],
         },
         alternates: {
             canonical: url,
@@ -61,6 +64,10 @@ export default async function GuidesPage({
             intro: "Use these pages to solve common download scenarios and improve success rate.",
             backHome: "Back to downloader",
             updatedAt: "Updated",
+            home: "Home",
+            faq: "FAQ",
+            privacy: "Privacy",
+            terms: "Terms",
         }
         : locale === "zh-tw"
           ? {
@@ -68,12 +75,20 @@ export default async function GuidesPage({
               intro: "以下教學涵蓋常見下載場景，可快速定位問題並提高解析成功率。",
               backHome: "返回下載器",
               updatedAt: "更新日期",
+              home: "首頁",
+              faq: "常見問題",
+              privacy: "隱私政策",
+              terms: "使用條款",
           }
           : {
               title: "媒体下载指南",
               intro: "以下教程覆盖常见下载场景，可快速定位问题并提高解析成功率。",
               backHome: "返回下载器",
               updatedAt: "更新日期",
+              home: "首页",
+              faq: "常见问题",
+              privacy: "隐私政策",
+              terms: "使用条款",
           }
 
     const itemListSchema = {
@@ -82,11 +97,18 @@ export default async function GuidesPage({
         "name": pageCopy.title,
         "itemListElement": SEO_GUIDES.map((guide, index) => {
             const content = getLocalizedGuideContent(guide, locale)
+            const guideUrl = buildLocaleUrl(locale, `/guides/${guide.slug}`)
             return {
                 "@type": "ListItem",
                 "position": index + 1,
                 "name": content.title,
-                "url": buildLocaleUrl(locale, `/guides/${guide.slug}`),
+                "url": guideUrl,
+                "item": {
+                    "@type": "Article",
+                    "name": content.title,
+                    "url": guideUrl,
+                    "dateModified": guide.updatedAt,
+                },
             }
         }),
     }
@@ -100,6 +122,13 @@ export default async function GuidesPage({
                     <Link href={`/${locale}`} className="text-sm underline">
                         {pageCopy.backHome}
                     </Link>
+                    <p className="text-sm text-muted-foreground">
+                        <Link className="underline" href={`/${locale}/faq`}>{pageCopy.faq}</Link>
+                        {' · '}
+                        <Link className="underline" href={`/${locale}/privacy`}>{pageCopy.privacy}</Link>
+                        {' · '}
+                        <Link className="underline" href={`/${locale}/terms`}>{pageCopy.terms}</Link>
+                    </p>
                 </header>
 
                 <section className="grid gap-4">
@@ -124,6 +153,16 @@ export default async function GuidesPage({
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+            />
+            <PageStructuredData
+                locale={locale}
+                pageTitle={pageCopy.title}
+                pageDescription={pageCopy.intro}
+                path="/guides"
+                breadcrumbs={[
+                    { name: pageCopy.home, path: "" },
+                    { name: pageCopy.title, path: "/guides" },
+                ]}
             />
         </main>
     )

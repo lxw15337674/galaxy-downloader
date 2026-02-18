@@ -12,7 +12,8 @@
       "WebFetch(domain:docs.google.com)",
       "Bash(npx shadcn@latest add:*)",
       "WebFetch(domain:127.0.0.1)",
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(ls:*)"
     ]
   }
 }

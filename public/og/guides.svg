@@ -1,0 +1,19 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0C4A6E"/>
+      <stop offset="1" stop-color="#082F49"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="72" y="72" width="1056" height="486" rx="24" fill="#06283D" stroke="#155E75" stroke-width="2"/>
+  <text x="120" y="240" fill="#ECFEFF" font-family="Arial, sans-serif" font-size="72" font-weight="700">
+    Download Guides
+  </text>
+  <text x="120" y="320" fill="#CFFAFE" font-family="Arial, sans-serif" font-size="34">
+    Step-by-step tutorials for media download
+  </text>
+  <text x="120" y="390" fill="#A5F3FC" font-family="Arial, sans-serif" font-size="28">
+    Bilibili audio, Douyin no-watermark, Xiaohongshu notes
+  </text>
+</svg>

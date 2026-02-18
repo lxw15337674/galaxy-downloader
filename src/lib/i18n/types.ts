@@ -186,6 +186,7 @@ export interface Dictionary {
         features: {
             en: string[];
             zh: string[];
+            'zh-tw': string[];
         };
         faq: {
             en: Array<{
@@ -196,11 +197,16 @@ export interface Dictionary {
                 question: string;
                 answer: string;
             }>;
+            'zh-tw': Array<{
+                question: string;
+                answer: string;
+            }>;
         };
         howTo: {
             title: {
                 en: string;
                 zh: string;
+                'zh-tw': string;
             };
             steps: {
                 en: Array<{
@@ -208,6 +214,10 @@ export interface Dictionary {
                     text: string;
                 }>;
                 zh: Array<{
+                    name: string;
+                    text: string;
+                }>;
+                'zh-tw': Array<{
                     name: string;
                     text: string;
                 }>;

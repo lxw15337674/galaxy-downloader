@@ -2,7 +2,7 @@
     "name": "社交媒体下载器",
     "short_name": "通用下载器",
     "description": "免费在线通用媒体下载工具。支持 Bilibili、抖音、小红书等平台的视频音频下载，自动识别平台，一键高清下载。",
-    "start_url": "/zh",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#000000",
     "theme_color": "#000000",

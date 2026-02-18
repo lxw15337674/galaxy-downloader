@@ -21,6 +21,7 @@ export interface GuideContent {
 
 export interface SeoGuide {
     slug: string
+    publishedAt: string
     updatedAt: string
     content: Record<Locale, GuideContent>
 }
@@ -28,6 +29,7 @@ export interface SeoGuide {
 export const SEO_GUIDES: SeoGuide[] = [
     {
         slug: "bilibili-audio-to-mp3",
+        publishedAt: "2026-02-18",
         updatedAt: "2026-02-18",
         content: {
             en: {
@@ -94,6 +96,7 @@ export const SEO_GUIDES: SeoGuide[] = [
     },
     {
         slug: "douyin-no-watermark-download",
+        publishedAt: "2026-02-18",
         updatedAt: "2026-02-18",
         content: {
             en: {
@@ -160,6 +163,7 @@ export const SEO_GUIDES: SeoGuide[] = [
     },
     {
         slug: "xiaohongshu-image-video-download",
+        publishedAt: "2026-02-18",
         updatedAt: "2026-02-18",
         content: {
             en: {

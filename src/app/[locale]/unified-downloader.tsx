@@ -49,29 +49,28 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
     const [downloadHistory, setDownloadHistory] = useLocalStorageState<DownloadRecord[]>(DOWNLOAD_HISTORY_STORAGE_KEY, {
         defaultValue: []
     });
-    const seoLocale = locale === 'en' ? 'en' : 'zh';
     const seoCopy = locale === 'en'
         ? {
-            keyFeaturesTitle: 'Key Features',
-            keyFeaturesDescription: 'This online downloader supports Bilibili, Douyin, and Xiaohongshu with automatic platform detection and one-click parsing.',
-            faqTitle: 'Common Questions',
             guidesLabel: 'Guides',
-            moreFaq: 'View full FAQ',
+            trustLabel: 'Trust & Policies',
+            privacyLabel: 'Privacy Policy',
+            termsLabel: 'Terms of Use',
+            contactLabel: 'Contact',
         }
         : locale === 'zh-tw'
           ? {
-              keyFeaturesTitle: '核心功能亮點',
-              keyFeaturesDescription: '此線上下載工具支援嗶哩嗶哩、抖音、小紅書連結，貼上後可自動識別平台並解析下載。',
-              faqTitle: '常見問題',
               guidesLabel: '使用指南',
-              moreFaq: '查看完整常見問題',
+              trustLabel: '信任與政策',
+              privacyLabel: '隱私政策',
+              termsLabel: '使用條款',
+              contactLabel: '聯絡我們',
           }
           : {
-              keyFeaturesTitle: '核心功能亮点',
-              keyFeaturesDescription: '本在线下载工具支持哔哩哔哩、抖音、小红书链接，粘贴后可自动识别平台并解析下载。',
-              faqTitle: '常见问题',
               guidesLabel: '使用指南',
-              moreFaq: '查看完整常见问题',
+              trustLabel: '信任与政策',
+              privacyLabel: '隐私政策',
+              termsLabel: '使用条款',
+              contactLabel: '联系我们',
           };
     const addToHistory = (record: DownloadRecord) => {
         setDownloadHistory(prev => [record, ...(prev || []).slice(0, DOWNLOAD_HISTORY_MAX_COUNT - 1)]);
@@ -352,67 +351,34 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
                 </div>
             </main>
 
-            <section className="border-t bg-muted/20 py-10">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 space-y-8">
-                    <article className="space-y-3">
-                        <h2 className="text-2xl font-semibold tracking-tight">{seoCopy.keyFeaturesTitle}</h2>
-                        <p className="text-sm text-muted-foreground leading-6">{seoCopy.keyFeaturesDescription}</p>
-                        <ul className="grid gap-2 sm:grid-cols-2 text-sm text-muted-foreground">
-                            {dict.seo.features[seoLocale].map((feature) => (
-                                <li key={feature} className="rounded-md border bg-background px-3 py-2">
-                                    {feature}
-                                </li>
-                            ))}
-                        </ul>
-                    </article>
-
-                    <article className="space-y-3">
-                        <h2 className="text-2xl font-semibold tracking-tight">{dict.seo.howTo.title[seoLocale]}</h2>
-                        <ol className="grid gap-3 md:grid-cols-2">
-                            {dict.seo.howTo.steps[seoLocale].map((step, index) => (
-                                <li key={step.name} className="rounded-md border bg-background p-4">
-                                    <p className="text-sm font-medium">{index + 1}. {step.name}</p>
-                                    <p className="mt-1 text-sm text-muted-foreground leading-6">{step.text}</p>
-                                </li>
-                            ))}
-                        </ol>
-                    </article>
-
-                    <article className="space-y-3">
-                        <h2 className="text-2xl font-semibold tracking-tight">{seoCopy.faqTitle}</h2>
-                        <div className="grid gap-3">
-                            {dict.seo.faq[seoLocale].map((item) => (
-                                <div key={item.question} className="rounded-md border bg-background p-4">
-                                    <h3 className="text-base font-medium">{item.question}</h3>
-                                    <p className="mt-1 text-sm text-muted-foreground leading-6">{item.answer}</p>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="flex items-center gap-4 text-sm">
-                            <Link className="underline" href={`/${locale}/faq`}>
-                                {seoCopy.moreFaq}
-                            </Link>
-                            <Link className="underline" href={`/${locale}/guides`}>
-                                {seoCopy.guidesLabel}
-                            </Link>
-                        </div>
-                    </article>
-                </div>
-            </section>
-
             {/* 页面底部版权说明 */}
             <footer className="border-t bg-muted/30 py-6 mt-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                     <div className="text-center text-xs text-muted-foreground space-y-1">
                         <p className="text-yellow-600 font-medium">{dict.page.copyrightBilibiliRestriction}</p>
                         <p>
-                            <a className="underline" href={`/${locale}/faq`}>
+                            <Link className="underline" href={`/${locale}/faq`}>
                                 {dict.page.faqLinkText}
-                            </a>
+                            </Link>
                             {' · '}
-                            <a className="underline" href={`/${locale}/guides`}>
+                            <Link className="underline" href={`/${locale}/guides`}>
                                 {seoCopy.guidesLabel}
-                            </a>
+                            </Link>
+                        </p>
+                        <p>
+                            {seoCopy.trustLabel}
+                            {': '}
+                            <Link className="underline" href={`/${locale}/privacy`}>
+                                {seoCopy.privacyLabel}
+                            </Link>
+                            {' · '}
+                            <Link className="underline" href={`/${locale}/terms`}>
+                                {seoCopy.termsLabel}
+                            </Link>
+                            {' · '}
+                            <Link className="underline" href={`/${locale}/contact`}>
+                                {seoCopy.contactLabel}
+                            </Link>
                         </p>
                         <p>{dict.page.copyrightVideo}</p>
                         <p>{dict.page.copyrightStorage}</p>

@@ -1,0 +1,19 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#1E293B"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="72" y="72" width="1056" height="486" rx="24" fill="#111827" stroke="#334155" stroke-width="2"/>
+  <text x="120" y="230" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="64" font-weight="700">
+    Universal Media Downloader
+  </text>
+  <text x="120" y="300" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="34">
+    Bilibili, Douyin, Xiaohongshu
+  </text>
+  <text x="120" y="370" fill="#94A3B8" font-family="Arial, sans-serif" font-size="28">
+    Parse links, download videos, extract MP3 audio
+  </text>
+</svg>

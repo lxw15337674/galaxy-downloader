@@ -4,9 +4,11 @@ import { getDictionary } from "@/lib/i18n"
 import type { Locale } from "@/lib/i18n/config"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { FaqStructuredData } from "@/components/faq-structured-data"
+import { PageStructuredData } from "@/components/page-structured-data"
 import {
     buildLanguageAlternates,
     buildLocaleUrl,
+    buildOpenGraphLocaleAlternates,
     localeToOpenGraphLocale,
 } from "@/lib/seo"
 
@@ -29,12 +31,13 @@ export async function generateMetadata({
             url,
             siteName: dict.metadata.siteName,
             locale: localeToOpenGraphLocale(locale),
+            alternateLocale: buildOpenGraphLocaleAlternates(locale),
             type: "website",
             images: [
                 {
-                    url: "/favicon.svg",
-                    width: 512,
-                    height: 512,
+                    url: "/og/faq.png",
+                    width: 1200,
+                    height: 630,
                     alt: dict.metadata.siteName,
                 },
             ],
@@ -43,7 +46,7 @@ export async function generateMetadata({
             card: "summary_large_image",
             title: dict.faqPage.metaOgTitle,
             description: dict.faqPage.metaOgDescription,
-            images: ["/favicon.svg"],
+            images: ["/og/faq.png"],
         },
         alternates: {
             canonical: url,
@@ -60,6 +63,10 @@ export default async function FaqPage({
     const { locale } = await params
     const dict = await getDictionary(locale)
     const guidesLabel = locale === "en" ? "Guides" : locale === "zh-tw" ? "下載指南" : "下载指南"
+    const privacyLabel = locale === "en" ? "Privacy" : locale === "zh-tw" ? "隱私政策" : "隐私政策"
+    const termsLabel = locale === "en" ? "Terms" : locale === "zh-tw" ? "使用條款" : "使用条款"
+    const contactLabel = locale === "en" ? "Contact" : locale === "zh-tw" ? "聯絡我們" : "联系我们"
+    const homeLabel = locale === "en" ? "Home" : locale === "zh-tw" ? "首頁" : "首页"
 
     return (
         <div className="min-h-screen bg-background">
@@ -74,6 +81,18 @@ export default async function FaqPage({
                     <p className="text-sm">
                         <Link href={`/${locale}/guides`} className="underline">
                             {guidesLabel}
+                        </Link>
+                        {' · '}
+                        <Link href={`/${locale}/privacy`} className="underline">
+                            {privacyLabel}
+                        </Link>
+                        {' · '}
+                        <Link href={`/${locale}/terms`} className="underline">
+                            {termsLabel}
+                        </Link>
+                        {' · '}
+                        <Link href={`/${locale}/contact`} className="underline">
+                            {contactLabel}
                         </Link>
                     </p>
                 </header>
@@ -93,6 +112,16 @@ export default async function FaqPage({
                     ))}
                 </section>
             </main>
+            <PageStructuredData
+                locale={locale}
+                pageTitle={dict.faqPage.title}
+                pageDescription={dict.faqPage.metaDescription}
+                path="/faq"
+                breadcrumbs={[
+                    { name: homeLabel, path: "" },
+                    { name: dict.faqPage.title, path: "/faq" },
+                ]}
+            />
             <FaqStructuredData locale={locale} dict={dict} />
         </div>
     )

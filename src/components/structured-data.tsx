@@ -1,6 +1,6 @@
 import type { Locale } from '@/lib/i18n/config'
 import type { Dictionary } from '@/lib/i18n/types'
-import { buildLocaleUrl, localeToHtmlLang } from '@/lib/seo'
+import { SITE_URL, buildLocaleUrl, localeToHtmlLang } from '@/lib/seo'
 
 interface StructuredDataProps {
     locale: Locale
@@ -9,6 +9,11 @@ interface StructuredDataProps {
 
 export function StructuredData({ locale, dict }: StructuredDataProps) {
     const localeUrl = buildLocaleUrl(locale)
+    const seoLocale: keyof Dictionary['seo']['features'] = locale === 'zh-tw'
+        ? 'zh-tw'
+        : locale === 'en'
+          ? 'en'
+          : 'zh'
 
     const websiteSchema = {
         "@context": "https://schema.org",
@@ -18,14 +23,6 @@ export function StructuredData({ locale, dict }: StructuredDataProps) {
         "description": dict.metadata.description,
         "url": localeUrl,
         "inLanguage": localeToHtmlLang(locale),
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-                "@type": "EntryPoint",
-                "urlTemplate": localeUrl
-            },
-            "query-input": "required name=search_term_string"
-        },
         "creator": {
             "@type": "Organization",
             "name": dict.metadata.siteName
@@ -50,7 +47,26 @@ export function StructuredData({ locale, dict }: StructuredDataProps) {
             "price": "0",
             "priceCurrency": "USD"
         },
-        "featureList": locale === 'en' ? dict.seo.features.en : dict.seo.features.zh
+        "featureList": dict.seo.features[seoLocale]
+    }
+
+    const organizationSchema = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": dict.metadata.siteName,
+        "url": SITE_URL,
+        "logo": `${SITE_URL}/favicon.ico`,
+        "sameAs": [
+            "https://github.com/lxw15337674/bilibili-audio-downloader",
+        ],
+        "contactPoint": [
+            {
+                "@type": "ContactPoint",
+                "contactType": "customer support",
+                "url": `${localeUrl}/contact`,
+                "availableLanguage": [localeToHtmlLang(locale)],
+            },
+        ],
     }
 
     return (
@@ -65,6 +81,12 @@ export function StructuredData({ locale, dict }: StructuredDataProps) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify(webApplicationSchema)
+                }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(organizationSchema)
                 }}
             />
         </>

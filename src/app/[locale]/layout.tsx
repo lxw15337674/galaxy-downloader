@@ -9,6 +9,7 @@ import type { Locale } from "@/lib/i18n/config"
 import { i18n } from "@/lib/i18n/config"
 import { Analytics } from '@vercel/analytics/next';
 import {
+    buildOpenGraphLocaleAlternates,
     IS_INDEXABLE,
     SITE_URL,
     buildLanguageAlternates,
@@ -65,12 +66,13 @@ export async function generateMetadata({
             url: localeUrl,
             siteName: dict.metadata.siteName,
             locale: localeToOpenGraphLocale(locale),
+            alternateLocale: buildOpenGraphLocaleAlternates(locale),
             type: 'website',
             images: [
                 {
-                    url: '/favicon.svg',
-                    width: 512,
-                    height: 512,
+                    url: '/og/home.png',
+                    width: 1200,
+                    height: 630,
                     alt: dict.metadata.siteName,
                 }
             ],
@@ -79,7 +81,7 @@ export async function generateMetadata({
             card: 'summary_large_image',
             title: dict.metadata.ogTitle,
             description: dict.metadata.ogDescription,
-            images: ['/favicon.svg'],
+            images: ['/og/home.png'],
         },
         robots: {
             index: IS_INDEXABLE,
@@ -148,7 +150,7 @@ export default async function RootLayout({
                     async
                     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1581472267398547"
                     crossOrigin="anonymous"
-                    strategy="afterInteractive"
+                    strategy="lazyOnload"
                 />
                 <Script
                     strategy="afterInteractive"

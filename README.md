@@ -75,7 +75,8 @@ bun dev
 默认策略：
 
 - 在 Vercel 生产环境自动允许索引
-- 在预览环境默认不允许索引
+- 在 Vercel 预览环境默认不允许索引
+- 非 Vercel 环境按 `NODE_ENV === production` 判断是否允许索引
 - 可通过 `SEO_INDEXABLE` 显式覆盖
 
 ## SEO 监控建议

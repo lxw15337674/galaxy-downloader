@@ -119,11 +119,13 @@ export interface Dictionary {
             title: string;
             bilibili: {
                 name: string;
+                summary: string;
                 features: string[];
                 limitations: string[];
             };
             douyin: {
                 name: string;
+                summary: string;
                 features: string[];
                 limitations: string[];
                 tip?: {
@@ -136,6 +138,7 @@ export interface Dictionary {
             };
             xiaohongshu: {
                 name: string;
+                summary: string;
                 features: string[];
                 limitations: string[];
             };

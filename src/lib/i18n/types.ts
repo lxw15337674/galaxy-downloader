@@ -120,14 +120,14 @@ export interface Dictionary {
             bilibili: {
                 name: string;
                 summary: string;
-                features: string[];
-                limitations: string[];
+                features?: string[];
+                limitations?: string[];
             };
             douyin: {
                 name: string;
                 summary: string;
-                features: string[];
-                limitations: string[];
+                features?: string[];
+                limitations?: string[];
                 tip?: {
                     text: string;
                     tool: {
@@ -139,15 +139,15 @@ export interface Dictionary {
             xiaohongshu: {
                 name: string;
                 summary: string;
-                features: string[];
-                limitations: string[];
+                features?: string[];
+                limitations?: string[];
             };
             audioTip?: {
                 title: string;
                 steps: string;
                 warning: string;
             };
-            urlExamples: {
+            urlExamples?: {
                 title: string;
                 bilibili: string[];
                 douyin: string[];

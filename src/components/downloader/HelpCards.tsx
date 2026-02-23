@@ -47,28 +47,21 @@ export function HelpCards({ dict }: HelpCardsProps) {
                         <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
                         <div>
                             <p className="font-medium">{dict.guide.platformSupport.bilibili.name}</p>
-                            <div className="text-sm text-muted-foreground space-y-1">
-                                {dict.guide.platformSupport.bilibili.features.map((feature, index) => (
-                                    <p key={index}>• {feature.replace('✅ ', '')}</p>
-                                ))}
-                                {dict.guide.platformSupport.bilibili.limitations.map((limitation, index) => (
-                                    <p key={index}>• {limitation.replace('⚠️ ', '')}</p>
-                                ))}
-                            </div>
+                            <p className="text-sm text-muted-foreground">{dict.guide.platformSupport.bilibili.summary}</p>
                         </div>
                     </div>
                     <div className="flex items-start gap-3">
                         <AlertCircle className="h-5 w-5 text-orange-500 flex-shrink-0 mt-0.5" />
                         <div>
                             <p className="font-medium">{dict.guide.platformSupport.douyin.name}</p>
-                            <div className="text-sm text-muted-foreground space-y-1">
-                                {dict.guide.platformSupport.douyin.features.map((feature, index) => (
-                                    <p key={index}>• {feature.replace('✅ ', '')}</p>
-                                ))}
-                                {dict.guide.platformSupport.douyin.limitations.map((limitation, index) => (
-                                    <p key={index}>• {limitation.replace('⚠️ ', '')}</p>
-                                ))}
-                            </div>
+                            <p className="text-sm text-muted-foreground">{dict.guide.platformSupport.douyin.summary}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                        <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <div>
+                            <p className="font-medium">{dict.guide.platformSupport.xiaohongshu.name}</p>
+                            <p className="text-sm text-muted-foreground">{dict.guide.platformSupport.xiaohongshu.summary}</p>
                         </div>
                     </div>
 

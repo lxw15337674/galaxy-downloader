@@ -16,3 +16,10 @@ export const TOAST_REMOVE_DELAY = 1000000;
 
 // UI 相关
 export const MULTI_PART_LIST_MAX_HEIGHT = 300; // 多P列表最大高度，单位：px
+
+// 广告相关
+export const ADSENSE_CLIENT_ID = 'ca-pub-1581472267398547';
+export const AD_LOAD_TIMEOUT = 10000; // 广告加载超时时间，单位：毫秒
+export const AD_CHECK_INTERVAL = 500; // 广告状态检查间隔，单位：毫秒
+export const AD_MAX_CHECKS = 20; // 最大检查次数
+export const AD_MIN_HEIGHT = 250; // 广告最小高度，单位：px

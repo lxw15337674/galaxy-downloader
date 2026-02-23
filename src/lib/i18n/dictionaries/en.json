@@ -168,54 +168,16 @@
         "platformSupport": {
             "title": "Platform Support Guide",
             "bilibili": {
-                "name": "Bilibili (bilibili.com)",
-                "features": [
-                    "✅ Video download supported",
-                    "✅ Audio download supported"
-                ],
-                "limitations": []
+                "name": "Bilibili",
+                "summary": "Video/audio download support"
             },
             "douyin": {
-                "name": "Douyin (douyin.com)",
-                "features": [
-                    "✅ Video download supported",
-                    "✅ Audio extraction supported (browser-side conversion)",
-                    "✅ Command parsing supported, paste share commands directly"
-                ],
-                "limitations": []
+                "name": "Douyin",
+                "summary": "Share code parsing support"
             },
             "xiaohongshu": {
-                "name": "Xiaohongshu (xiaohongshu.com)",
-                "features": [
-                    "✅ Video note download supported",
-                    "✅ Image note supported (displays image list)",
-                    "✅ Command parsing supported, paste share commands directly",
-                    "✅ Audio extraction supported (browser-side conversion)"
-                ],
-                "limitations": [
-                    "💡 Image notes will display all images, supporting individual or batch downloads"
-                ]
-            },
-            "audioTip": {
-                "title": "Audio Extraction Guide",
-                "steps": "💡 Audio extraction process: Load processor (~30MB first time) → Download video → Convert to audio",
-                "warning": "⏱️ Larger videos require longer audio extraction time, please be patient"
-            },
-            "urlExamples": {
-                "title": "🔗 Link formats:",
-                "bilibili": [
-                    "https://www.bilibili.com/video/BV1xx411c7mD",
-                    "https://b23.tv/BV1xx411c7mD"
-                ],
-                "douyin": [
-                    "https://www.douyin.com/jingxuan?modal_id=7573004270581140751",
-                    "https://www.douyin.com/video/7491698414288260387",
-                    "https://v.douyin.com/fiU6t9rA3QU"
-                ],
-                "xiaohongshu": [
-                    "https://www.xiaohongshu.com/explore/xxxxx",
-                    "https://xhslink.com/xxxxx"
-                ]
+                "name": "Xiaohongshu",
+                "summary": "Image/video note support"
             },
             "comingSoon": "🔄 More platforms coming soon..."
         },
@@ -231,7 +193,6 @@
             "douyin": {
                 "title": "🔗 Douyin link examples:",
                 "examples": [
-                    "https://www.douyin.com/jingxuan?modal_id=7573004270581140751",
                     "https://www.douyin.com/video/7491698414288260387",
                     "https://v.douyin.com/fiU6t9rA3QU"
                 ]

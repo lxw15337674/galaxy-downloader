@@ -168,54 +168,16 @@
         "platformSupport": {
             "title": "平台支持指南",
             "bilibili": {
-                "name": "哔哩哔哩 (bilibili.com)",
-                "features": [
-                    "✅ 支持视频下载",
-                    "✅ 支持音频下载"
-                ],
-                "limitations": []
+                "name": "哔哩哔哩",
+                "summary": "支持视频/音频下载"
             },
             "douyin": {
-                "name": "抖音 (douyin.com)",
-                "features": [
-                    "✅ 支持视频下载",
-                    "✅ 支持音频提取（浏览器端转换）",
-                    "✅ 支持口令解析，可直接粘贴分享口令"
-                ],
-                "limitations": []
+                "name": "抖音",
+                "summary": "支持口令解析"
             },
             "xiaohongshu": {
-                "name": "小红书 (xiaohongshu.com)",
-                "features": [
-                    "✅ 支持视频笔记下载",
-                    "✅ 支持图文笔记（显示图片列表）",
-                    "✅ 支持口令解析，可直接粘贴分享口令",
-                    "✅ 支持音频提取（浏览器端转换）"
-                ],
-                "limitations": [
-                    "💡 图文笔记会显示所有图片，支持单独下载或批量打包下载"
-                ]
-            },
-            "audioTip": {
-                "title": "音频提取说明",
-                "steps": "💡 音频提取流程：加载处理器(首次约30MB) → 下载视频 → 转换音频",
-                "warning": "⏱️ 视频越大，音频提取处理时间越长，请耐心等待"
-            },
-            "urlExamples": {
-                "title": "🔗 链接格式：",
-                "bilibili": [
-                    "https://www.bilibili.com/video/BV1xx411c7mD",
-                    "https://b23.tv/BV1xx411c7mD"
-                ],
-                "douyin": [
-                    "https://www.douyin.com/jingxuan?modal_id=7573004270581140751",
-                    "https://www.douyin.com/video/7491698414288260387",
-                    "https://v.douyin.com/fiU6t9rA3QU/"
-                ],
-                "xiaohongshu": [
-                    "https://www.xiaohongshu.com/explore/xxxxx",
-                    "https://xhslink.com/xxxxx"
-                ]
+                "name": "小红书",
+                "summary": "支持图文/视频笔记"
             },
             "comingSoon": "🔄 更多平台即将支持..."
         },
@@ -231,7 +193,6 @@
             "douyin": {
                 "title": "🔗 抖音链接示例：",
                 "examples": [
-                    "https://www.douyin.com/jingxuan?modal_id=7573004270581140751",
                     "https://www.douyin.com/video/7491698414288260387",
                     "https://v.douyin.com/fiU6t9rA3QU/"
                 ]

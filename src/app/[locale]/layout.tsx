@@ -150,7 +150,7 @@ export default async function RootLayout({
                     async
                     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1581472267398547"
                     crossOrigin="anonymous"
-                    strategy="lazyOnload"
+                    strategy="afterInteractive"
                 />
                 <Script
                     strategy="afterInteractive"

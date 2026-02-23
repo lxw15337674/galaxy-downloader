@@ -1,6 +1,27 @@
 {
   "versions": [
     {
+      "version": "1.10.0",
+      "date": "2026-02-23",
+      "changes": {
+        "zh": [
+          "优化广告展示逻辑，提升填充率和用户体验",
+          "精简平台支持指南，使界面更简洁清爽",
+          "广告位调整至侧栏底部，内容优先展示"
+        ],
+        "en": [
+          "Optimized ad display logic for better fill rate and user experience",
+          "Simplified platform support guide for cleaner interface",
+          "Moved ads to sidebar bottom, prioritizing content display"
+        ],
+        "zh-tw": [
+          "最佳化廣告顯示邏輯，提升填充率和使用者體驗",
+          "精簡平台支援指南，使介面更簡潔清爽",
+          "廣告位調整至側欄底部，內容優先展示"
+        ]
+      }
+    },
+    {
       "version": "1.9.0",
       "date": "2026-01-03",
       "changes": {

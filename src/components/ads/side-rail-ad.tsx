@@ -42,6 +42,7 @@ export function SideRailAd({ slot, className }: SideRailAdProps) {
         data-ad-client={ADSENSE_CLIENT_ID}
         data-ad-slot={slot}
         data-ad-format="auto"
+        data-ad-test={process.env.NODE_ENV === 'development' ? 'on' : undefined}
         data-full-width-responsive="true"
       />
     </div>

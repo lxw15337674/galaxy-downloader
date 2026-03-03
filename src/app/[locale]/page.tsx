@@ -1,8 +1,13 @@
+import dynamic from "next/dynamic"
 import { getDictionary } from "@/lib/i18n"
 import type { Locale } from "@/lib/i18n/config"
-import { UnifiedDownloader } from "./unified-downloader"
 import { StructuredData } from "@/components/structured-data"
 import { HomeFaqStructuredData } from "@/components/home-faq-structured-data"
+
+const UnifiedDownloader = dynamic(
+    () => import("./unified-downloader").then((m) => m.UnifiedDownloader),
+    { ssr: false }
+)
 
 export default async function HomePage({
     params,

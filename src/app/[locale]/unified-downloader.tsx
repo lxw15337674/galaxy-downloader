@@ -99,9 +99,10 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
         setParseResult(apiResult.data);
 
         // 添加到下载历史 - 如果没有 title，使用 desc
+        // 使用 API 返回的规范 URL，避免口令等原始输入无法跳转
         const displayTitle = apiResult.data.title || apiResult.data.desc || 'Unknown Title';
         const newRecord: DownloadRecord = {
-            url: videoUrl,
+            url: apiResult.data.url || videoUrl,
             title: displayTitle,
             timestamp: Date.now(),
             platform: apiResult.data.platform as Platform

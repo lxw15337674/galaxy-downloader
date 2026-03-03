@@ -25,12 +25,28 @@ export function SideRailAd({ slot, className }: SideRailAdProps) {
       return;
     }
 
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-      initializedRef.current = true;
-    } catch (error) {
-      console.error('AdSense error:', error);
-    }
+    // Wait until the ad container is visible (width > 0) before pushing.
+    // Containers inside `hidden lg:block` have 0 width on smaller screens,
+    // which causes AdSense "No slot size for availableWidth=0" errors.
+    const el = adRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting && el.offsetWidth > 0) {
+          observer.disconnect();
+          try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+            initializedRef.current = true;
+          } catch (error) {
+            console.error('AdSense error:', error);
+          }
+        }
+      },
+      { threshold: 0 }
+    );
+    observer.observe(el);
+
+    return () => observer.disconnect();
   }, [slot, pathname]);
 
   return (

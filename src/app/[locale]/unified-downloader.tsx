@@ -231,9 +231,9 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
             <main className="flex-1 p-4 sm:p-6 md:p-8 pt-6">
                 {/* PC端三栏布局，移动端垂直布局 */}
                 <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                         {/* 左栏：快速入门指南 (PC端显示，移动端隐藏) */}
-                        <div className="hidden xl:block">
+                        <div className="hidden lg:block">
                             <div className="sticky top-20 flex flex-col gap-4">
                                 <QuickStartCard dict={dict} />
                                 <FreeSupportCard dict={dict} />
@@ -242,7 +242,7 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
                         </div>
 
                         {/* 中栏：主要功能区域 */}
-                        <div className="xl:col-span-2 flex flex-col gap-4">
+                        <div className="lg:col-span-2 flex flex-col gap-4">
                             <Card className="shrink-0">
                                 <CardHeader className="p-4 md:p-6">
                                     <h1 className="text-2xl text-center font-semibold tracking-tight">
@@ -314,7 +314,7 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
                                 </CardContent>
                             </Card>
 
-                            <div className="xl:hidden">
+                            <div className="lg:hidden">
                                 <SideRailAd slot="5740014745" className="h-full" />
                             </div>
 
@@ -333,7 +333,7 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
                             />
 
                             {/* 移动端帮助卡片 - 放在历史记录下方 */}
-                            <div className="xl:hidden flex flex-col gap-4">
+                            <div className="lg:hidden flex flex-col gap-4">
                                 <QuickStartCard dict={dict} />
                                 <FreeSupportCard dict={dict} />
                                 <PlatformGuideCard dict={dict} />
@@ -341,7 +341,7 @@ export function UnifiedDownloader({ dict, locale }: UnifiedDownloaderProps) {
                         </div>
 
                         {/* 右栏：平台支持指南 (PC端显示，移动端隐藏) */}
-                        <div className="hidden xl:block">
+                        <div className="hidden lg:block">
                             <div className="sticky top-20 flex flex-col gap-4">
                                 <PlatformGuideCard dict={dict} />
                                 <SideRailAd slot="6380909506" />

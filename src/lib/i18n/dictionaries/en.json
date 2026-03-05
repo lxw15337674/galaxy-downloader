@@ -177,7 +177,7 @@
             },
             "bilibiliTv": {
                 "name": "Bilibili TV",
-                "summary": "Separate video/audio stream download support"
+                "summary": "Audio download only (video requires stream merging, not yet supported)"
             },
             "douyin": {
                 "name": "Douyin",

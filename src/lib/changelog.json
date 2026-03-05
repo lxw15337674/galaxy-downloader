@@ -5,13 +5,22 @@
       "date": "2026-03-05",
       "changes": {
         "zh": [
-          "新增支持 TikTok 视频与音频下载"
+          "新增支持 TikTok 视频与音频下载",
+          "新增支持 Bilibili TV 音频下载",
+          "移动端顶栏新增反馈按钮，快速入口更便捷",
+          "优化平台支持指南说明文案"
         ],
         "en": [
-          "Added support for TikTok video and audio download"
+          "Added support for TikTok video and audio download",
+          "Added support for Bilibili TV audio download",
+          "Added Feedback button to mobile top bar for quick access",
+          "Improved platform support guide descriptions"
         ],
         "zh-tw": [
-          "新增支援 TikTok 影片與音訊下載"
+          "新增支援 TikTok 影片與音訊下載",
+          "新增支援 Bilibili TV 音訊下載",
+          "行動端頂欄新增反饋按鈕，快速入口更便捷",
+          "最佳化平台支援指南說明文案"
         ]
       }
     },

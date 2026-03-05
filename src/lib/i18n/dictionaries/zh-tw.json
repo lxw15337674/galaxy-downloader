@@ -177,7 +177,7 @@
             },
             "bilibiliTv": {
                 "name": "Bilibili TV",
-                "summary": "支援分離音訊/影片流下載"
+                "summary": "支援音訊下載（影片需合併音視訊流，暫不支援直接下載）"
             },
             "douyin": {
                 "name": "抖音",

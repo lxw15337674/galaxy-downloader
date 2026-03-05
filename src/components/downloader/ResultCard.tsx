@@ -95,13 +95,14 @@ export function ResultCard({ result, onClose, dict }: ResultCardProps) {
  */
 function SinglePartButtons({ result, dict }: { result: NonNullable<UnifiedParseResult['data']>; dict: HomeDictionary }) {
     const showExtractAudio = result.platform === 'douyin' || result.platform === 'xiaohongshu' || result.platform === 'tiktok';
+    const hideVideoDownload = result.platform === 'bilibili_tv';
     const videoDownloadUrl = result.downloadVideoUrl || result.originDownloadVideoUrl;
     const audioDownloadUrl = result.downloadAudioUrl || result.originDownloadAudioUrl || null;
 
     return (
         <>
             <div className="grid grid-cols-2 gap-2">
-                {videoDownloadUrl && (
+                {videoDownloadUrl && !hideVideoDownload && (
                     <Button
                         variant="outline"
                         className="flex items-center justify-center gap-2"

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import { useState, useRef, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 
 import { toast } from '@/lib/deferred-toast';
-import { Loader2, HelpCircle, Menu, Github } from 'lucide-react';
+import { Loader2, HelpCircle, Menu, Github, History } from 'lucide-react';
 import type { HomeDictionary } from '@/lib/i18n/types';
 import type { Locale } from "@/lib/i18n/config";
 import { DeferredLanguageSwitcher } from "@/components/deferred-language-switcher";
@@ -93,6 +93,7 @@ export function UnifiedDownloader({
     const [error, setError] = useState('');
     const [parseResult, setParseResult] = useState<UnifiedParseResult['data'] | null>(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const historyRef = useRef<HTMLDivElement>(null);
 
     const [downloadHistory, setDownloadHistory] = useLocalStorageState<DownloadRecord[]>(DOWNLOAD_HISTORY_STORAGE_KEY, {
         defaultValue: []
@@ -197,13 +198,24 @@ export function UnifiedDownloader({
                 style={{ paddingTop: 'env(safe-area-inset-top)' }}
             >
                 <div className="md:hidden max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-2">
-                    <Link
-                        href={`/${locale}`}
-                        prefetch={false}
-                        className="max-w-[56vw] truncate text-sm font-medium"
-                    >
-                        {dict.unified.pageTitle}
-                    </Link>
+                    <div className="flex items-center gap-1">
+                        {downloadHistory.length > 0 && (
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="flex items-center gap-1.5"
+                                onClick={() => {
+                                    if (historyRef.current) {
+                                        const top = historyRef.current.getBoundingClientRect().top + window.scrollY - 64;
+                                        window.scrollTo({ top, behavior: 'smooth' });
+                                    }
+                                }}
+                            >
+                                <History className="h-4 w-4" />
+                                <span>{dict.history.title}</span>
+                            </Button>
+                        )}
+                    </div>
                     <div className="flex items-center gap-1">
                         <DeferredFeedbackDialog locale={locale} dict={dict} />
                         <DeferredLanguageSwitcher currentLocale={locale} dict={dict} compact />
@@ -347,12 +359,14 @@ export function UnifiedDownloader({
 
                             {/* 历史记录 */}
                             {downloadHistory.length > 0 && (
+                                <div ref={historyRef}>
                                 <DownloadHistory
                                     dict={dict}
                                     downloadHistory={downloadHistory}
                                     clearHistory={clearDownloadHistory}
                                     onRedownload={handleRedownload}
                                 />
+                                </div>
                             )}
 
                             {/* 移动端帮助卡片 - 放在历史记录下方 */}

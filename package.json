@@ -17,7 +17,7 @@
   "dependencies": {
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
-    "@formatjs/intl-localematcher": "^0.6.2",
+    "@formatjs/intl-localematcher": "^0.8.1",
     "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-label": "^2.1.8",
@@ -32,28 +32,29 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "jszip": "^3.10.1",
-    "lucide-react": "^0.471.2",
+    "lucide-react": "^0.577.0",
     "negotiator": "^1.0.0",
     "next": "^16.1.6",
     "next-themes": "^0.4.6",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "server-only": "^0.0.1",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^2.6.1",
+    "tailwind-merge": "^3.5.0",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
+    "@tailwindcss/postcss": "^4.2.1",
     "@types/negotiator": "^0.6.4",
     "@types/node": "^20.19.37",
-    "@types/react": "19.2.7",
+    "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9.39.4",
-    "eslint-config-next": "16.0.6",
+    "eslint-config-next": "16.1.6",
     "postcss": "^8.5.8",
-    "tailwindcss": "^3.4.19",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3"
   },
   "pnpm": {
@@ -62,7 +63,7 @@
       "unrs-resolver"
     ],
     "overrides": {
-      "@types/react": "19.2.7",
+      "@types/react": "19.2.14",
       "@types/react-dom": "19.2.3"
     }
   }

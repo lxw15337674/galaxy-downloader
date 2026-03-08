@@ -7,7 +7,7 @@
     },
     "unified": {
         "pageTitle": "社交媒体下载器",
-        "pageDescription": "粘贴链接或口令，自动识别并下载。支持 哔哩哔哩、抖音、小红书、TikTok。",
+        "pageDescription": "粘贴链接或口令，点击解析按钮，自动识别平台后选择下载。支持哔哩哔哩、抖音、小红书、TikTok。",
         "placeholder": "请在此处粘贴链接或口令...",
         "newBadge": "新增抖音图文支持"
     },
@@ -44,6 +44,8 @@
         "description": "历史记录功能说明",
         "clear": "清空",
         "cleared": "历史记录已清空",
+        "searchPlaceholder": "搜索标题...",
+        "noSearchResults": "没有匹配的历史记录",
         "viewSource": "查看源链接",
         "redownload": "重新解析",
         "linkFilled": "链接已填入",

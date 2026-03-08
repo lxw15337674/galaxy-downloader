@@ -7,7 +7,7 @@
     },
     "unified": {
         "pageTitle": "Social Media Downloader",
-        "pageDescription": "Paste links or share tokens, automatically detect platform and download. Supports Bilibili, Douyin, Xiaohongshu, and TikTok.",
+        "pageDescription": "Paste a link or share token, click the Parse button, then choose a download option after auto platform detection. Supports Bilibili, Douyin, Xiaohongshu, and TikTok.",
         "placeholder": "Paste link or share token here...",
         "newBadge": "New: Douyin image notes"
     },
@@ -44,6 +44,8 @@
         "description": "History feature description",
         "clear": "Clear",
         "cleared": "History cleared",
+        "searchPlaceholder": "Search title...",
+        "noSearchResults": "No matching history records",
         "viewSource": "View Source Link",
         "redownload": "Re-parse",
         "linkFilled": "Link filled",

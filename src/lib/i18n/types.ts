@@ -65,6 +65,8 @@ export interface Dictionary {
         title: string;
         clear: string;
         cleared: string;
+        searchPlaceholder: string;
+        noSearchResults: string;
         viewSource: string;
         redownload: string;
         linkFilled: string;

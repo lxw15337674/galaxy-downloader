@@ -291,9 +291,6 @@ export function UnifiedDownloader({
                                     </h1>
                                     <p className="text-xs text-muted-foreground text-center flex items-center justify-center gap-1.5 flex-wrap">
                                         {dict.unified.pageDescription}
-                                        <span className="inline-flex items-center rounded-full bg-green-500/15 px-2 py-0.5 text-xs font-medium text-green-600 dark:text-green-400 ring-1 ring-inset ring-green-500/30">
-                                            {dict.unified.newBadge}
-                                        </span>
                                     </p>
                                     {heroMeta}
                                 </CardHeader>

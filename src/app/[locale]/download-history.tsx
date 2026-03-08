@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChevronsUpDown } from 'lucide-react';
 import { toast } from '@/lib/deferred-toast';
@@ -76,23 +77,32 @@ const getPlatformBadge = (platform: Platform, dict: HomeDictionary) => {
 
 export function DownloadHistory({ dict, downloadHistory, clearHistory, onRedownload }: DownloadHistoryProps) {
     const [isOpen, setIsOpen] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleClearHistory = () => {
+        const confirmed = window.confirm(`${dict.history.clear}?`);
+        if (!confirmed) {
+            return;
+        }
+
         clearHistory();
         toast.success(dict.history.cleared);
     };
 
     const handleRedownload = (url: string) => {
         onRedownload?.(url);
-        toast(dict.history.linkFilled, {
-            description: dict.history.clickToRedownload,
-        });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     if (!downloadHistory || downloadHistory.length === 0) {
         return null;
     }
+
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+    const filteredHistory = normalizedQuery
+        ? downloadHistory.filter((record) => {
+            return record.title.toLowerCase().includes(normalizedQuery);
+        })
+        : downloadHistory;
 
     return (
         <Card className="flex-1 min-h-0 flex flex-col">
@@ -108,59 +118,74 @@ export function DownloadHistory({ dict, downloadHistory, clearHistory, onRedownl
                             </h2>
                         </div>
                     </CollapsibleTrigger>
-                    <Button variant="outline" size="sm" onClick={handleClearHistory}>
-                        {dict.history.clear}
-                    </Button>
+                    <div className="flex items-center gap-2">
+                        <Button variant="destructive" size="sm" onClick={handleClearHistory}>
+                            {dict.history.clear}
+                        </Button>
+                        <Input
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder={dict.history.searchPlaceholder}
+                            aria-label={dict.history.searchPlaceholder}
+                            className="w-40 sm:w-56"
+                        />
+                    </div>
                 </CardHeader>
                 <CollapsibleContent className="flex-1 min-h-0 flex flex-col">
-                    <CardContent className="flex-1 min-h-0 p-0">
-                        <ScrollArea className="h-full">
+                    <CardContent className="flex-1 min-h-0 p-0 flex flex-col">
+                        <ScrollArea className="h-full flex-1">
                             <div className="px-4 md:px-6 pb-4 md:pb-6">
-                                <div className="space-y-2">
-                                {downloadHistory.map((record: DownloadRecord, index: number) => {
-                                    const platformBadge = getPlatformBadge(record.platform, dict);
-                                    return (
-                                        <div
-                                            key={index}
-                                            className="flex flex-col md:flex-row md:items-center md:justify-between p-2 md:p-3 rounded-lg border bg-card/50 hover:bg-card/80 transition-colors gap-3"
-                                        >
-                                            <div className="flex-1 min-w-0">
-                                                <div className="font-medium text-sm mb-1.5 line-clamp-2" title={record.title} >
-                                                    {record.title}
-                                                </div>
-                                                <div className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap">
-                                                    <span className={`px-2 py-0.5 text-xs font-medium rounded-md ${platformBadge.className}`}>
-                                                        {platformBadge.text}
-                                                    </span>
-                                                    <span>
-                                                        {formatRecordTimestamp(record.timestamp)}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div className="flex gap-2 md:ml-4 shrink-0">
-                                                <Button
-                                                    variant="outline"
-                                                    size="sm"
-                                                    onClick={() => {
-                                                        window.open(record.url, '_blank');
-                                                    }}
-                                                    className="flex-1 md:flex-none"
+                                {filteredHistory.length === 0 ? (
+                                    <p className="py-6 text-center text-sm text-muted-foreground">
+                                        {dict.history.noSearchResults}
+                                    </p>
+                                ) : (
+                                    <div className="space-y-2">
+                                        {filteredHistory.map((record: DownloadRecord, index: number) => {
+                                            const platformBadge = getPlatformBadge(record.platform, dict);
+                                            return (
+                                                <div
+                                                    key={index}
+                                                    className="flex flex-col md:flex-row md:items-center md:justify-between p-2 md:p-3 rounded-lg border bg-card/50 hover:bg-card/80 transition-colors gap-3"
                                                 >
-                                                    {dict.history.viewSource}
-                                                </Button>
-                                                <Button
-                                                    variant="outline"
-                                                    size="sm"
-                                                    onClick={() => handleRedownload(record.url)}
-                                                    className="flex-1 md:flex-none"
-                                                >
-                                                    {dict.history.redownload}
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                                </div>
+                                                    <div className="flex-1 min-w-0">
+                                                        <div className="font-medium text-sm mb-1.5 line-clamp-2" title={record.title} >
+                                                            {record.title}
+                                                        </div>
+                                                        <div className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap">
+                                                            <span className={`px-2 py-0.5 text-xs font-medium rounded-md ${platformBadge.className}`}>
+                                                                {platformBadge.text}
+                                                            </span>
+                                                            <span>
+                                                                {formatRecordTimestamp(record.timestamp)}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex gap-2 md:ml-4 shrink-0">
+                                                        <Button
+                                                            variant="outline"
+                                                            size="sm"
+                                                            onClick={() => {
+                                                                window.open(record.url, '_blank');
+                                                            }}
+                                                            className="flex-1 md:flex-none"
+                                                        >
+                                                            {dict.history.viewSource}
+                                                        </Button>
+                                                        <Button
+                                                            variant="outline"
+                                                            size="sm"
+                                                            onClick={() => handleRedownload(record.url)}
+                                                            className="flex-1 md:flex-none"
+                                                        >
+                                                            {dict.history.redownload}
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
                             </div>
                         </ScrollArea>
                     </CardContent>

@@ -1,6 +1,30 @@
 {
   "versions": [
     {
+      "version": "2.1.0",
+      "date": "2026-03-08",
+      "changes": {
+        "zh": [
+          "历史记录新增搜索功能，可按标题快速筛选",
+          "历史记录清空操作新增二次确认，并改为警示样式按钮，降低误触风险",
+          "优化“重新解析”提示逻辑，移除重复提示，交互更简洁",
+          "优化首页操作引导文案，明确“粘贴链接/口令 → 点击解析按钮 → 自动识别 → 选择下载”流程"
+        ],
+        "en": [
+          "Added search to history, allowing quick filtering by title",
+          "Added confirmation before clearing history and switched to a warning-style button to reduce accidental clicks",
+          "Optimized re-parse notifications by removing duplicate messages for cleaner interaction",
+          "Refined homepage guidance copy to clarify the flow: paste link/token -> click Parse -> auto detect -> choose download"
+        ],
+        "zh-tw": [
+          "歷史記錄新增搜尋功能，可依標題快速篩選",
+          "清空歷史操作新增二次確認，並改為警示樣式按鈕，降低誤觸風險",
+          "最佳化「重新解析」提示邏輯，移除重複提示，互動更簡潔",
+          "最佳化首頁操作引導文案，明確「貼上連結/口令 → 點擊解析按鈕 → 自動識別 → 選擇下載」流程"
+        ]
+      }
+    },
+    {
       "version": "2.0.0",
       "date": "2026-03-05",
       "changes": {

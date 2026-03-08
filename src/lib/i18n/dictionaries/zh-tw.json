@@ -7,7 +7,7 @@
     },
     "unified": {
         "pageTitle": "社交媒體下載器",
-        "pageDescription": "貼上連結或口令，自動識別並下載。支援 嗶哩嗶哩、抖音、小紅書、TikTok。",
+        "pageDescription": "貼上連結或口令，點擊解析按鈕，自動識別平台後選擇下載。支援嗶哩嗶哩、抖音、小紅書、TikTok。",
         "placeholder": "請在此處貼上連結或口令...",
         "newBadge": "新增抖音圖文支援"
     },
@@ -44,6 +44,8 @@
         "description": "歷史記錄功能說明",
         "clear": "清空",
         "cleared": "歷史記錄已清空",
+        "searchPlaceholder": "搜尋標題...",
+        "noSearchResults": "沒有符合的歷史記錄",
         "viewSource": "查看來源連結",
         "redownload": "重新解析",
         "linkFilled": "連結已填入",

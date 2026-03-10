@@ -5,7 +5,7 @@ export const FEEDBACK_CONFIG = {
 
   // 验证规则
   validation: {
-    contentMinLength: 10,
+    contentMinLength: 5,
     contentMaxLength: 1000,
     emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   }

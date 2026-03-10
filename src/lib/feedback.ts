@@ -1,6 +1,6 @@
 import { FEEDBACK_CONFIG, type FeedbackData } from './feedback-config'
 import type { Locale } from './i18n/config'
-import { appendLangQuery, buildApiI18nHeaders } from './api-i18n'
+import { appendLangQuery, buildApiAcceptLanguage } from './api-i18n'
 
 /**
  * 提交反馈到自建API
@@ -21,7 +21,7 @@ export async function submitFeedback(data: FeedbackData, locale: Locale): Promis
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...buildApiI18nHeaders(locale),
+        'Accept-Language': buildApiAcceptLanguage(locale),
       },
       body: JSON.stringify(requestBody),
     })

@@ -440,7 +440,7 @@
         "emailLabel": "Contact Email",
         "emailPlaceholder": "your@email.com",
         "emailInvalid": "Invalid email format",
-        "emailRequired": "Please enter your email so we can reply to you",
+        "emailRequired": "Optional. Leave your email if you want a reply",
         "emailHint": "Leave your email if you'd like us to follow up",
         "cancelButton": "Cancel",
         "submitButton": "Submit Feedback",

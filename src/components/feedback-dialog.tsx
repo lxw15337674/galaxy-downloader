@@ -60,7 +60,7 @@ export function FeedbackDialog({
     // 验证状态
     const contentError = content ? validateContent(content) : null
     const emailError = email ? !validateEmail(email) : null
-    const canSubmit = !contentError && !emailError && content.trim().length >= FEEDBACK_CONFIG.validation.contentMinLength && email.trim().length > 0 && validateEmail(email)
+    const canSubmit = !contentError && !emailError && content.trim().length >= FEEDBACK_CONFIG.validation.contentMinLength
     const contentTooShortMessage = feedback.contentTooShort.replace('{min}', String(FEEDBACK_CONFIG.validation.contentMinLength))
     const contentCounterText = feedback.contentCounter
         .replace('{current}', String(contentLength))
@@ -202,7 +202,7 @@ export function FeedbackDialog({
             {/* 联系邮箱 */}
             <div className="space-y-2">
                 <Label htmlFor="feedback-email">
-                    {feedback.emailLabel} <span className="text-red-500">*</span>
+                    {feedback.emailLabel}
                 </Label>
                 <Input
                     id="feedback-email"
@@ -216,7 +216,7 @@ export function FeedbackDialog({
                         {feedback.emailInvalid}
                     </p>
                 )}
-                {!email && (
+                {!email && !emailError && (
                     <p className="text-xs text-muted-foreground">
                         {feedback.emailRequired}
                     </p>
@@ -267,7 +267,10 @@ export function FeedbackDialog({
                     )}
                 </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+            <DialogContent
+                className="max-w-lg max-h-[90vh] overflow-y-auto"
+                onInteractOutside={(event) => event.preventDefault()}
+            >
                 <DialogHeader>
                     <DialogTitle>
                         {feedback.title}

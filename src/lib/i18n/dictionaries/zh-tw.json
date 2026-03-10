@@ -441,7 +441,7 @@
         "emailLabel": "聯絡信箱",
         "emailPlaceholder": "your@email.com",
         "emailInvalid": "信箱格式不正確",
-        "emailRequired": "請填寫信箱，以便我們回覆你",
+        "emailRequired": "選填。如需我們回覆你，可留下信箱",
         "emailHint": "如果需要我們回覆，請留下信箱",
         "cancelButton": "取消",
         "submitButton": "提交反饋",

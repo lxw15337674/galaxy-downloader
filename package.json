@@ -1,18 +1,13 @@
 {
   "name": "bilibili-audio-downloader",
   "version": "1.8.0",
-    "scripts": {
+  "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint .",
     "test": "node --experimental-strip-types --experimental-specifier-resolution=node --test tests/seo-routing.test.ts tests/seo-sitemap.test.ts",
     "generate-og": "node scripts/generate-og-images.mjs",
-    "perf:report": "node scripts/perf-report.mjs",
-    "perf:baseline": "node scripts/perf-report.mjs --save-baseline",
-    "perf:check": "node scripts/perf-check.mjs",
-    "perf:ci": "pnpm run perf:report && pnpm run perf:check",
-    "perf:ci:full": "pnpm run build && pnpm run perf:report && pnpm run perf:check",
     "react-compiler:check": "node scripts/react-compiler-check.mjs",
     "generate-icons": "node scripts/generate-icons.mjs"
   },

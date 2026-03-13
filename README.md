@@ -65,51 +65,6 @@ bun dev
    npm run dev
    ```
 
-## 性能基线与门禁
-
-项目内置了首页包体积监控脚本，基于 `.next` 构建产物生成报告并做预算检查：
-
-1. 生成报告
-   ```bash
-   npm run perf:report
-   ```
-   报告会写入 `.next/perf-report.json`，包含：
-   - 首页初始 JS/CSS 体积
-   - 懒加载 JS/CSS 体积
-   - 关键模块对应 chunk 分组
-
-2. 保存当前基线
-   ```bash
-   npm run perf:baseline
-   ```
-   会生成 `perf-baseline.json`，后续 `perf:report` 会自动显示与基线差值。
-
-3. 执行预算检查
-   ```bash
-   npm run perf:check
-   ```
-   默认读取 `perf-budget.json` 的阈值与基线增量预算，超限会返回非零退出码。
-   当前配置要求必须存在 `perf-baseline.json`（`baseline.required: true`）。
-
-4. 一键 CI 检查
-   ```bash
-   npm run perf:ci
-   ```
-   适用于“已经完成 build”的阶段，顺序执行 `perf:report -> perf:check`。
-
-5. 全流程 CI 检查（含 build）
-   ```bash
-   npm run perf:ci:full
-   ```
-   顺序执行 `build -> perf:report -> perf:check`。
-
-6. 当你“有意”调整了包体积时，更新基线
-   ```bash
-   npm run build
-   npm run perf:baseline
-   ```
-   提交 `perf-baseline.json`，让后续检查以新基线为准。
-
 ## React Compiler 定向验证
 
 已启用 `next.config.ts` 中的 `reactCompiler`。项目提供了一个“热点组件定向校验”脚本：

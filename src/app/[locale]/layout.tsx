@@ -129,11 +129,10 @@ export default async function RootLayout({
                 <meta name="apple-mobile-web-app-title" content={dict.metadata.siteName} />
                 <meta name="application-name" content={dict.metadata.siteName} />
                 <meta name="msapplication-TileColor" content="#000000" />
-                <meta name="msapplication-config" content="/browserconfig.xml" />
                 <meta name="format-detection" content="telephone=no" />
                 <meta httpEquiv="x-ua-compatible" content="ie=edge" />
                 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-                <link rel="apple-touch-icon" href="/favicon.ico" />
+                <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
             </head>
             <body className="antialiased">
                 <DeferredToaster />

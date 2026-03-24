@@ -69,11 +69,11 @@
         "installAction": "Install"
     },
     "metadata": {
-        "title": "Universal Media Downloader for Bilibili, Douyin, Xiaohongshu, TikTok",
-        "description": "Free online downloader for Bilibili, Douyin, Xiaohongshu, and TikTok. Paste a link to auto-detect platform, download videos, and extract audio to MP3 in your browser.",
-        "keywords": "universal downloader,media downloader,Bilibili audio download,Bilibili video download,Douyin video downloader,Xiaohongshu downloader,TikTok video downloader,Bilibili audio extractor,Bilibili to MP3,Douyin no watermark,TikTok no watermark,video downloader,audio extractor,free video download,online video downloader",
+        "title": "Universal Media Downloader - Download Video and Audio from Bilibili, Douyin, Xiaohongshu, TikTok",
+        "description": "Free online universal media downloader. Supports video and audio downloads from Bilibili, Douyin, Xiaohongshu, and TikTok. Paste a link to auto-detect the platform and download in one click.",
+        "keywords": "online media downloader,Bilibili video downloader,Bilibili audio downloader,Douyin video downloader,Xiaohongshu video downloader,Xiaohongshu image note downloader,TikTok video downloader",
         "ogTitle": "Universal Media Downloader - Free Online Tool",
-        "ogDescription": "Professional universal media download tool. Supports video and audio downloads from Bilibili, Douyin, Xiaohongshu, TikTok and more platforms, auto-detect platform, one-click high-quality download.",
+        "ogDescription": "Professional universal media downloader. Supports video, audio, and image-note downloads from Bilibili, Douyin, Xiaohongshu, and TikTok, auto-detects the platform, and downloads in one click.",
         "siteName": "Universal Media Downloader"
     },
     "common": {

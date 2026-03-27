@@ -35,6 +35,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+.wrangler/
 
 # PWA
 public/sw.js
@@ -48,3 +49,5 @@ public/fallback-*.js
 next-env.d.ts
 .env*.local
 /dist/
+
+.vscode

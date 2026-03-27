@@ -8,6 +8,7 @@ import { UnifiedParseResult, PageInfo } from "../../lib/types";
 import { downloadFile, formatDuration, sanitizeFilename } from "../../lib/utils";
 import { useState, useEffect, useRef } from 'react';
 import { toast } from '@/lib/deferred-toast';
+import { normalizePlatform, supportsAudioExtraction } from '@/lib/platforms';
 
 const ExtractAudioButton = dynamic(
     () => import("./ExtractAudioButton").then((m) => m.ExtractAudioButton),
@@ -24,6 +25,13 @@ function resolveCoverSrc(coverUrl: string): string {
         return `/api/proxy-image?url=${encodeURIComponent(coverUrl)}`;
     }
     return coverUrl;
+}
+
+function resolveImageSrc(imageUrl: string): string {
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+        return `/api/proxy-image?url=${encodeURIComponent(imageUrl)}`;
+    }
+    return imageUrl;
 }
 
 function replaceTemplate(template: string, token: string, value: string): string {
@@ -50,7 +58,10 @@ export function ResultCard({ result, onClose }: ResultCardProps) {
                         <X className="h-4 w-4" />
                     </Button>
                 </div>
-                <p className="text-sm text-foreground/80 break-all">
+                <p
+                    className="line-clamp-2 text-sm text-foreground/80 break-words"
+                    title={displayTitle}
+                >
                     {displayTitle}
                     {result.duration != null && (
                         <span className="ml-2 text-xs text-foreground/70">({formatDuration(result.duration)})</span>
@@ -94,8 +105,9 @@ function SinglePartButtons({ result }: { result: NonNullable<UnifiedParseResult[
     const dict = useDictionary()
     const [videoLoading, setVideoLoading] = useState(false);
     const [audioLoading, setAudioLoading] = useState(false);
-    const showExtractAudio = result.platform === 'douyin' || result.platform === 'xiaohongshu' || result.platform === 'tiktok';
-    const hideVideoDownload = result.platform === 'bilibili_tv';
+    const normalizedPlatform = normalizePlatform(result.platform);
+    const showExtractAudio = supportsAudioExtraction(normalizedPlatform);
+    const hideVideoDownload = normalizedPlatform === 'bilibili_tv';
     const videoDownloadUrl = result.downloadVideoUrl || result.originDownloadVideoUrl;
     const audioDownloadUrl = result.downloadAudioUrl || result.originDownloadAudioUrl || null;
 
@@ -282,17 +294,21 @@ function ImageNoteGrid({
         const fetchImages = async () => {
             await Promise.all(
                 images.map(async (imageUrl, index) => {
+                    const resolvedImageUrl = resolveImageSrc(imageUrl);
                     try {
                         const referrerMap: Record<string, string> = {
                             xiaohongshu: 'https://www.xiaohongshu.com/',
                             douyin: 'https://www.douyin.com/',
+                            instagram: 'https://www.instagram.com/',
+                            x: 'https://x.com/',
                         };
-                        const referrer = referrerMap[platform];
+                        const referrer = referrerMap[normalizePlatform(platform)];
                         const shouldUseCustomReferrer =
                             !!referrer &&
+                            resolvedImageUrl === imageUrl &&
                             (imageUrl.startsWith('http://') || imageUrl.startsWith('https://'));
 
-                        const response = await fetch(imageUrl, shouldUseCustomReferrer ? { referrer } : undefined);
+                        const response = await fetch(resolvedImageUrl, shouldUseCustomReferrer ? { referrer } : undefined);
                         if (!response.ok) {
                             throw new Error(`HTTP ${response.status}`);
                         }
@@ -306,6 +322,24 @@ function ImageNoteGrid({
                         scheduleFlush();
                     } catch (error) {
                         console.error(`Failed to load image ${index}:`, error);
+                        if (resolvedImageUrl !== imageUrl) {
+                            try {
+                                const response = await fetch(imageUrl);
+                                if (!response.ok) {
+                                    throw new Error(`HTTP ${response.status}`);
+                                }
+                                const blob = await response.blob();
+                                const blobUrl = URL.createObjectURL(blob);
+
+                                currentBlobUrls.add(blobUrl);
+
+                                draftStates.set(index, { loading: false, error: false, blobUrl });
+                                scheduleFlush();
+                                return;
+                            } catch (fallbackError) {
+                                console.error(`Fallback image load failed ${index}:`, fallbackError);
+                            }
+                        }
                         draftStates.set(index, { loading: false, error: true, blobUrl: null });
                         scheduleFlush();
                     }

@@ -7,7 +7,7 @@
     },
     "unified": {
         "pageTitle": "Social Media Downloader",
-        "pageDescription": "Paste a link or share token, click the Parse button, then choose a download option after auto platform detection. Supports Bilibili, Douyin, Xiaohongshu, and TikTok.",
+        "pageDescription": "Paste a link or share token, click the Parse button, then choose a download option after auto platform detection. Supports Bilibili, Douyin, Instagram, Xiaohongshu, TikTok, and X.",
         "placeholder": "Paste link or share token here...",
         "newBadge": "New: Douyin image notes"
     },
@@ -73,7 +73,9 @@
             "douyin": "Douyin",
             "xiaohongshu": "Xiaohongshu",
             "tiktok": "TikTok",
-            "unknown": "Unknown"
+            "unknown": "Unknown",
+            "instagram": "Instagram",
+            "x": "X"
         }
     },
     "toast": {
@@ -86,11 +88,11 @@
         "installAction": "Install"
     },
     "metadata": {
-        "title": "Universal Media Downloader - Download Video and Audio from Bilibili, Douyin, Xiaohongshu, TikTok",
-        "description": "Free online universal media downloader. Supports video and audio downloads from Bilibili, Douyin, Xiaohongshu, and TikTok. Paste a link to auto-detect the platform and download in one click.",
-        "keywords": "online media downloader,Bilibili video downloader,Bilibili audio downloader,Douyin video downloader,Xiaohongshu video downloader,Xiaohongshu image note downloader,TikTok video downloader",
+        "title": "Universal Media Downloader - Download Video and Audio from Bilibili, Douyin, Instagram, Xiaohongshu, TikTok, and X",
+        "description": "Free online universal media downloader. Supports video and audio downloads from Bilibili, Douyin, Instagram, Xiaohongshu, TikTok, and X. Paste a link to auto-detect the platform and download in one click.",
+        "keywords": "online media downloader,Bilibili video downloader,Bilibili audio downloader,Douyin video downloader,Instagram reels downloader,Instagram photo downloader,Xiaohongshu video downloader,Xiaohongshu image note downloader,TikTok video downloader,X video downloader",
         "ogTitle": "Universal Media Downloader - Free Online Tool",
-        "ogDescription": "Professional universal media downloader. Supports video, audio, and image-note downloads from Bilibili, Douyin, Xiaohongshu, and TikTok, auto-detects the platform, and downloads in one click.",
+        "ogDescription": "Professional universal media downloader. Supports video, audio, and image-post downloads from Bilibili, Douyin, Instagram, Xiaohongshu, TikTok, and X, auto-detects the platform, and downloads in one click.",
         "siteName": "Universal Media Downloader"
     },
     "common": {
@@ -176,28 +178,43 @@
             ]
         },
         "platformSupport": {
-            "title": "Platform Support Guide",
+            "title": "Platforms",
             "bilibili": {
                 "name": "Bilibili",
-                "summary": "Video download, audio extraction & share code support"
+                "summary": "Video / Audio / Share Code",
+                "features": ["Video", "Audio", "Share Code"]
             },
             "bilibiliTv": {
                 "name": "Bilibili TV",
-                "summary": "Audio download only (video requires stream merging, not yet supported)"
+                "summary": "Audio Only",
+                "features": ["Audio Only"]
             },
             "douyin": {
                 "name": "Douyin",
-                "summary": "Video download, image notes & share code support"
+                "summary": "Video / Image / Share Code",
+                "features": ["Video", "Image", "Share Code"]
             },
             "xiaohongshu": {
                 "name": "Xiaohongshu",
-                "summary": "Video download & image notes support"
+                "summary": "Video / Image",
+                "features": ["Video", "Image"]
             },
             "tiktok": {
                 "name": "TikTok",
-                "summary": "Video download support"
+                "summary": "Video",
+                "features": ["Video"]
             },
-            "comingSoon": "🔄 More platforms coming soon..."
+            "comingSoon": "More platforms on the way",
+            "instagram": {
+                "name": "Instagram",
+                "summary": "Reels / Posts / Image",
+                "features": ["Reels", "Posts", "Image"]
+            },
+            "x": {
+                "name": "X",
+                "summary": "Video",
+                "features": ["Video"]
+            }
         },
         "linkFormats": {
             "title": "Supported Link Formats",
@@ -240,10 +257,15 @@
             "en": [
                 "Extract MP3 audio from Bilibili videos",
                 "Download Douyin videos without watermark",
+                "Download Instagram reels and posts",
+                "Download Instagram image posts",
+                "Extract audio from Instagram videos",
                 "Download Xiaohongshu Image Notes",
                 "Download Xiaohongshu Videos",
-                "Download TikTok videos without watermark",
                 "Extract audio from Xiaohongshu videos",
+                "Download TikTok videos without watermark",
+                "Download X videos",
+                "Extract audio from X videos",
                 "Auto-detect video platform",
                 "High-quality audio and video downloads",
                 "Free online tool",
@@ -293,7 +315,7 @@
         },
         "howTo": {
             "title": {
-                "en": "How to download Bilibili, Douyin, Xiaohongshu and TikTok content",
+                "en": "How to download Bilibili, Douyin, Instagram, Xiaohongshu, TikTok, and X content",
                 "zh": "如何下载哔哩哔哩、抖音、小红书及TikTok内容",
                 "zh-tw": "如何下载哔哩哔哩、抖音、小红书及TikTok内容",
                 "ja": "Bilibili・Douyin・Xiaohongshu・TikTokのコンテンツをダウンロードする方法"
@@ -302,7 +324,7 @@
                 "en": [
                     {
                         "name": "Copy link",
-                        "text": "Copy the video or note link from Bilibili, Douyin, Xiaohongshu, or TikTok"
+                        "text": "Copy the video or post link from Bilibili, Douyin, Instagram, Xiaohongshu, TikTok, or X"
                     },
                     {
                         "name": "Paste link",
@@ -310,7 +332,7 @@
                     },
                     {
                         "name": "Auto-detect",
-                        "text": "The tool will automatically detect the platform (Bilibili/Douyin/Xiaohongshu/TikTok)"
+                        "text": "The tool will automatically detect the platform (Bilibili/Douyin/Instagram/Xiaohongshu/TikTok/X)"
                     },
                     {
                         "name": "Download",

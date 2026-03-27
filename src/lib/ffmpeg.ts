@@ -4,8 +4,12 @@ import { toBlobURL } from '@ffmpeg/util';
 let ffmpegInstance: FFmpeg | null = null;
 let loadPromise: Promise<FFmpeg> | null = null;
 
-const FFMPEG_CORE_VERSION = '0.12.10';
-const FFMPEG_CORE_BASE_URL = `https://cdn.jsdelivr.net/npm/@ffmpeg/core@${FFMPEG_CORE_VERSION}/dist/umd`;
+// Keep this aligned with the installed @ffmpeg/ffmpeg package's expected core build.
+const FFMPEG_CORE_VERSION = '0.12.9';
+const FFMPEG_CORE_BASE_URLS = [
+  `https://cdn.jsdelivr.net/npm/@ffmpeg/core@${FFMPEG_CORE_VERSION}/dist/esm`,
+  `https://unpkg.com/@ffmpeg/core@${FFMPEG_CORE_VERSION}/dist/esm`,
+];
 
 export async function getFFmpeg(): Promise<FFmpeg> {
   if (ffmpegInstance?.loaded) {
@@ -24,23 +28,37 @@ export async function getFFmpeg(): Promise<FFmpeg> {
     });
 
     try {
-      // Use toBlobURL to load from CDN, avoiding dynamic import issues in Next.js
-      const coreURL = await toBlobURL(
-        `${FFMPEG_CORE_BASE_URL}/ffmpeg-core.js`,
-        'text/javascript'
-      );
-      const wasmURL = await toBlobURL(
-        `${FFMPEG_CORE_BASE_URL}/ffmpeg-core.wasm`,
-        'application/wasm'
-      );
+      let lastError: unknown = null;
 
-      const loadConfig = {
-        coreURL,
-        wasmURL,
-      };
+      // The FFmpeg wrapper uses a module worker and loads ffmpeg-core with import().
+      // That means the core asset must be the ESM build, not the UMD one.
+      for (const baseURL of FFMPEG_CORE_BASE_URLS) {
+        try {
+          const coreURL = await toBlobURL(
+            `${baseURL}/ffmpeg-core.js`,
+            'text/javascript'
+          );
+          const wasmURL = await toBlobURL(
+            `${baseURL}/ffmpeg-core.wasm`,
+            'application/wasm'
+          );
 
-      await ffmpeg.load(loadConfig);
-      console.log('[FFmpeg] Loaded single-thread core');
+          await ffmpeg.load({
+            coreURL,
+            wasmURL,
+          });
+          console.log('[FFmpeg] Loaded single-thread core from:', baseURL);
+          lastError = null;
+          break;
+        } catch (candidateError) {
+          lastError = candidateError;
+          console.warn('[FFmpeg] Failed to load core from:', baseURL, candidateError);
+        }
+      }
+
+      if (lastError) {
+        throw lastError;
+      }
     } catch (err) {
       loadPromise = null;
       throw new Error(`Failed to load FFmpeg: ${err instanceof Error ? err.message : String(err)}`);
@@ -144,37 +162,40 @@ export async function extractAudioFromVideo({
   console.log('[FFmpeg] Video written to virtual filesystem');
 
   // Set conversion progress listener
-  ffmpeg.on('progress', ({ progress }) => {
+  const handleProgress = ({ progress }: { progress: number }) => {
     onProgress?.(Math.round(progress * 100), 'converting');
-  });
+  };
+  ffmpeg.on('progress', handleProgress);
 
-  // Execute conversion: extract audio to MP3
-  console.log('[FFmpeg] Starting conversion...');
-  await ffmpeg.exec([
-    '-i', 'input.mp4',
-    '-vn',
-    '-acodec', 'libmp3lame',
-    '-q:a', '2',
-    'output.mp3'
-  ]);
-  console.log('[FFmpeg] Conversion completed');
+  try {
+    // Execute conversion: extract audio to MP3
+    console.log('[FFmpeg] Starting conversion...');
+    await ffmpeg.exec([
+      '-i', 'input.mp4',
+      '-vn',
+      '-acodec', 'libmp3lame',
+      '-q:a', '2',
+      'output.mp3'
+    ]);
+    console.log('[FFmpeg] Conversion completed');
 
-  // Read output file
-  const outputData = await ffmpeg.readFile('output.mp3');
+    // Read output file
+    const outputData = await ffmpeg.readFile('output.mp3');
 
-  // Cleanup files
-  await ffmpeg.deleteFile('input.mp4');
-  await ffmpeg.deleteFile('output.mp3');
-
-  // Create Blob (outputData is Uint8Array or string)
-  if (typeof outputData === 'string') {
-    throw new Error('Unexpected string output from ffmpeg');
+    // Create Blob (outputData is Uint8Array or string)
+    if (typeof outputData === 'string') {
+      throw new Error('Unexpected string output from ffmpeg');
+    }
+    // Copy to a new ArrayBuffer to avoid SharedArrayBuffer issues
+    const buffer = new ArrayBuffer(outputData.byteLength);
+    new Uint8Array(buffer).set(outputData);
+    console.log('[FFmpeg] Audio blob created, size:', buffer.byteLength);
+    return new Blob([buffer], { type: 'audio/mpeg' });
+  } finally {
+    ffmpeg.off('progress', handleProgress);
+    await ffmpeg.deleteFile('input.mp4').catch(() => undefined);
+    await ffmpeg.deleteFile('output.mp3').catch(() => undefined);
   }
-  // Copy to a new ArrayBuffer to avoid SharedArrayBuffer issues
-  const buffer = new ArrayBuffer(outputData.byteLength);
-  new Uint8Array(buffer).set(outputData);
-  console.log('[FFmpeg] Audio blob created, size:', buffer.byteLength);
-  return new Blob([buffer], { type: 'audio/mpeg' });
 }
 
 export function downloadBlob(blob: Blob, filename: string) {

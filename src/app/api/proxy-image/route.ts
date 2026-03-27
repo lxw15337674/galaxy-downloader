@@ -11,6 +11,12 @@ const ALLOWED_IMAGE_HOSTS = [
     'tiktokcdn.com',
     'tiktokcdn-us.com',
     'tiktok.com',
+    'instagram.com',
+    'cdninstagram.com',
+    'fbcdn.net',
+    'twimg.com',
+    'x.com',
+    'twitter.com',
 ];
 
 const DEFAULT_ACCEPT =
@@ -37,6 +43,20 @@ function getReferer(hostname: string): string | undefined {
         normalized.endsWith('tiktok.com')
     ) {
         return 'https://www.tiktok.com/';
+    }
+    if (
+        normalized.endsWith('instagram.com') ||
+        normalized.endsWith('cdninstagram.com') ||
+        normalized.endsWith('fbcdn.net')
+    ) {
+        return 'https://www.instagram.com/';
+    }
+    if (
+        normalized.endsWith('twimg.com') ||
+        normalized.endsWith('x.com') ||
+        normalized.endsWith('twitter.com')
+    ) {
+        return 'https://x.com/';
     }
     return undefined;
 }

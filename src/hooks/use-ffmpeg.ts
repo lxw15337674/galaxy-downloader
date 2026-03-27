@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { extractAudioFromVideo, downloadBlob, ExtractStage, ProgressInfo } from '@/lib/ffmpeg';
+import type { ExtractStage, ProgressInfo } from '@/lib/ffmpeg';
 import { sanitizeFilename } from '@/lib/utils';
 
 export type FFmpegStatus = 'idle' | 'loading' | 'downloading' | 'converting' | 'completed' | 'error';
@@ -27,6 +27,8 @@ export function useFFmpeg(): UseFFmpegReturn {
       setProgress(0);
       setProgressInfo(null);
       setError(null);
+
+      const { extractAudioFromVideo, downloadBlob } = await import('@/lib/ffmpeg');
 
       const audioBlob = await extractAudioFromVideo({
         videoUrl,

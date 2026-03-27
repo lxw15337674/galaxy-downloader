@@ -6,7 +6,7 @@
     "build": "vinext build",
     "start": "vinext start",
     "lint": "eslint .",
-    "test": "node --experimental-strip-types --experimental-specifier-resolution=node --test tests/api-errors.test.ts tests/seo-routing.test.ts tests/seo-sitemap.test.ts",
+    "test": "node --experimental-strip-types --experimental-specifier-resolution=node --test tests/api-errors.test.ts tests/platforms.test.ts tests/seo-routing.test.ts tests/seo-sitemap.test.ts",
     "generate-og": "node scripts/generate-og-images.mjs",
     "react-compiler:check": "node scripts/react-compiler-check.mjs",
     "generate-icons": "node scripts/generate-icons.mjs",
@@ -75,7 +75,7 @@
     "tailwindcss": "^4.2.2",
     "typescript": "^5.9.3",
     "vinext": "^0.0.35",
-    "vite": "^8.0.2",
+    "vite": "^8.0.3",
     "wrangler": "4.77.0"
   },
   "pnpm": {

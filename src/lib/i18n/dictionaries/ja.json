@@ -7,7 +7,7 @@
     },
     "unified": {
         "pageTitle": "ソーシャルメディアダウンローダー",
-        "pageDescription": "リンクまたは共有トークンを貼り付けて解析をクリックすると、プラットフォームを自動判別した後にダウンロード方法を選べます。Bilibili、Douyin、Xiaohongshu、TikTok に対応しています。",
+        "pageDescription": "リンクまたは共有トークンを貼り付けて解析をクリックすると、プラットフォームを自動判別した後にダウンロード方法を選べます。Bilibili、Douyin、Instagram、Xiaohongshu、TikTok、X に対応しています。",
         "placeholder": "リンクまたは共有トークンをここに貼り付けてください...",
         "newBadge": "新機能: Douyin 画像ノート対応"
     },
@@ -73,7 +73,9 @@
             "douyin": "Douyin",
             "xiaohongshu": "Xiaohongshu",
             "tiktok": "TikTok",
-            "unknown": "不明"
+            "unknown": "不明",
+            "instagram": "Instagram",
+            "x": "X"
         }
     },
     "toast": {
@@ -86,11 +88,11 @@
         "installAction": "インストール"
     },
     "metadata": {
-        "title": "ユニバーサルメディアダウンローダー - Bilibili・Douyin・Xiaohongshu・TikTok の動画と音声をダウンロード",
-        "description": "無料のオンラインメディアダウンローダー。Bilibili、Douyin、Xiaohongshu、TikTok の動画と音声ダウンロードに対応。リンクを貼り付けるだけでプラットフォームを自動判別し、ワンクリックでダウンロードできます。",
-        "keywords": "オンラインメディアダウンローダー,Bilibili動画ダウンロード,Bilibili音声ダウンロード,Douyin動画ダウンロード,Xiaohongshu動画ダウンロード,Xiaohongshu画像ノートダウンロード,TikTok動画ダウンロード",
+        "title": "ユニバーサルメディアダウンローダー - Bilibili・Douyin・Instagram・Xiaohongshu・TikTok・X の動画と音声をダウンロード",
+        "description": "無料のオンラインメディアダウンローダー。Bilibili、Douyin、Instagram、Xiaohongshu、TikTok、X の動画と音声ダウンロードに対応。リンクを貼り付けるだけでプラットフォームを自動判別し、ワンクリックでダウンロードできます。",
+        "keywords": "オンラインメディアダウンローダー,Bilibili動画ダウンロード,Bilibili音声ダウンロード,Douyin動画ダウンロード,Instagram Reelsダウンロード,Instagram画像投稿ダウンロード,Xiaohongshu動画ダウンロード,Xiaohongshu画像ノートダウンロード,TikTok動画ダウンロード,X動画ダウンロード",
         "ogTitle": "ユニバーサルメディアダウンローダー - 無料オンラインツール",
-        "ogDescription": "動画・音声・画像ノートのダウンロードに対応した高機能メディアダウンローダー。Bilibili、Douyin、Xiaohongshu、TikTok を自動判別し、ワンクリックでダウンロードできます。",
+        "ogDescription": "動画・音声・画像投稿のダウンロードに対応した高機能メディアダウンローダー。Bilibili、Douyin、Instagram、Xiaohongshu、TikTok、X を自動判別し、ワンクリックでダウンロードできます。",
         "siteName": "ユニバーサルメディアダウンローダー"
     },
     "common": {
@@ -176,28 +178,43 @@
             ]
         },
         "platformSupport": {
-            "title": "対応プラットフォーム案内",
+            "title": "対応プラットフォーム",
             "bilibili": {
                 "name": "Bilibili",
-                "summary": "動画ダウンロード、音声抽出、共有コード解析に対応"
+                "summary": "動画 / 音声 / 共有コード",
+                "features": ["動画", "音声", "共有コード"]
             },
             "bilibiliTv": {
                 "name": "Bilibili TV",
-                "summary": "音声ダウンロードのみ対応（動画はストリーム結合が必要なため未対応）"
+                "summary": "音声のみ",
+                "features": ["音声のみ"]
             },
             "douyin": {
                 "name": "Douyin",
-                "summary": "動画ダウンロード、画像ノート、共有コード解析に対応"
+                "summary": "動画 / 画像 / 共有コード",
+                "features": ["動画", "画像", "共有コード"]
             },
             "xiaohongshu": {
                 "name": "Xiaohongshu",
-                "summary": "動画ダウンロードと画像ノートに対応"
+                "summary": "動画 / 画像",
+                "features": ["動画", "画像"]
             },
             "tiktok": {
                 "name": "TikTok",
-                "summary": "動画ダウンロードに対応"
+                "summary": "動画",
+                "features": ["動画"]
             },
-            "comingSoon": "🔄 さらに多くのプラットフォームに順次対応予定..."
+            "comingSoon": "さらに追加予定",
+            "instagram": {
+                "name": "Instagram",
+                "summary": "Reels / 投稿 / 画像",
+                "features": ["Reels", "投稿", "画像"]
+            },
+            "x": {
+                "name": "X",
+                "summary": "動画",
+                "features": ["動画"]
+            }
         },
         "linkFormats": {
             "title": "対応リンク形式",
@@ -282,10 +299,15 @@
             "ja": [
                 "Bilibili動画からMP3音声を抽出",
                 "Douyin動画をダウンロード",
+                "InstagramのReelsと投稿をダウンロード",
+                "Instagramの画像投稿をダウンロード",
+                "Instagram動画から音声を抽出",
                 "Xiaohongshuの画像ノートをダウンロード",
                 "Xiaohongshu動画をダウンロード",
                 "Xiaohongshu動画から音声を抽出",
                 "TikTok動画をダウンロード",
+                "X動画をダウンロード",
+                "X動画から音声を抽出",
                 "プラットフォームを自動判別",
                 "高品質な音声・動画ダウンロード",
                 "無料のオンラインツール",
@@ -299,7 +321,7 @@
                 "en": "How to download Bilibili, Douyin, Xiaohongshu and TikTok content",
                 "zh": "如何下载哔哩哔哩、抖音、小红书及TikTok内容",
                 "zh-tw": "如何下載嗶哩嗶哩、抖音、小紅書及TikTok內容",
-                "ja": "Bilibili・Douyin・Xiaohongshu・TikTokのコンテンツをダウンロードする方法"
+                "ja": "Bilibili・Douyin・Instagram・Xiaohongshu・TikTok・X のコンテンツをダウンロードする方法"
             },
             "steps": {
                 "en": [
@@ -359,7 +381,7 @@
                 "ja": [
                     {
                         "name": "リンクをコピー",
-                        "text": "Bilibili、Douyin、Xiaohongshu、またはTikTokの動画・ノートのリンクをコピーします"
+                        "text": "Bilibili、Douyin、Instagram、Xiaohongshu、TikTok、または X の動画・投稿リンクをコピーします"
                     },
                     {
                         "name": "リンクを貼り付け",
@@ -367,7 +389,7 @@
                     },
                     {
                         "name": "自動判別",
-                        "text": "ツールがプラットフォームを自動で判別します（Bilibili / Douyin / Xiaohongshu / TikTok）"
+                        "text": "ツールがプラットフォームを自動で判別します（Bilibili / Douyin / Instagram / Xiaohongshu / TikTok / X）"
                     },
                     {
                         "name": "ダウンロード",

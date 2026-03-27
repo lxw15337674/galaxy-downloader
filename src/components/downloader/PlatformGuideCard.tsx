@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Globe } from 'lucide-react';
 import type { Dictionary } from '@/lib/i18n/types';
+import { PlatformSupportGrid } from './PlatformSupportGrid';
 
 interface PlatformGuideCardProps {
     dict: Pick<Dictionary, 'guide'>;
@@ -9,62 +10,14 @@ interface PlatformGuideCardProps {
 export function PlatformGuideCard({ dict }: PlatformGuideCardProps) {
     return (
         <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg">
-                    <Globe className="h-5 w-5 text-primary" />
+            <CardHeader className="p-4 pb-3">
+                <CardTitle className="flex items-center gap-2 text-base">
+                    <Globe className="h-4 w-4 text-primary" />
                     {dict.guide.platformSupport.title}
                 </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
-                {/* B站 */}
-                <div className="flex items-start gap-2">
-                    <span className="text-sm">✅</span>
-                    <div className="flex-1">
-                        <p className="text-sm font-medium">{dict.guide.platformSupport.bilibili.name}</p>
-                        <p className="text-xs text-foreground/75">{dict.guide.platformSupport.bilibili.summary}</p>
-                    </div>
-                </div>
-
-                {/* Bilibili TV */}
-                <div className="flex items-start gap-2">
-                    <span className="text-sm">✅</span>
-                    <div className="flex-1">
-                        <p className="text-sm font-medium">{dict.guide.platformSupport.bilibiliTv.name}</p>
-                        <p className="text-xs text-foreground/75">{dict.guide.platformSupport.bilibiliTv.summary}</p>
-                    </div>
-                </div>
-
-                {/* 抖音 */}
-                <div className="flex items-start gap-2">
-                    <span className="text-sm">✅</span>
-                    <div className="flex-1">
-                        <p className="text-sm font-medium">{dict.guide.platformSupport.douyin.name}</p>
-                        <p className="text-xs text-foreground/75">{dict.guide.platformSupport.douyin.summary}</p>
-                    </div>
-                </div>
-
-                {/* 小红书 */}
-                <div className="flex items-start gap-2">
-                    <span className="text-sm">✅</span>
-                    <div className="flex-1">
-                        <p className="text-sm font-medium">{dict.guide.platformSupport.xiaohongshu.name}</p>
-                        <p className="text-xs text-foreground/75">{dict.guide.platformSupport.xiaohongshu.summary}</p>
-                    </div>
-                </div>
-
-                {/* TikTok */}
-                <div className="flex items-start gap-2">
-                    <span className="text-sm">✅</span>
-                    <div className="flex-1">
-                        <p className="text-sm font-medium">{dict.guide.platformSupport.tiktok.name}</p>
-                        <p className="text-xs text-foreground/75">{dict.guide.platformSupport.tiktok.summary}</p>
-                    </div>
-                </div>
-
-                {/* 更多平台预告 */}
-                <div className="text-center text-xs text-foreground/65 pt-2 border-t">
-                    {dict.guide.platformSupport.comingSoon}
-                </div>
+            <CardContent className="p-4 pt-0">
+                <PlatformSupportGrid dict={dict} />
             </CardContent>
         </Card>
     );

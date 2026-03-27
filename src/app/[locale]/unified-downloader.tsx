@@ -23,6 +23,7 @@ import { Platform } from '@/lib/types';
 import { DOWNLOAD_HISTORY_MAX_COUNT, DOWNLOAD_HISTORY_STORAGE_KEY } from '@/lib/constants';
 import { useDictionary } from '@/i18n/client';
 import { ApiRequestError, isApiRequestError, resolveApiErrorMessage } from '@/lib/api-errors';
+import { getPlatformLabel, normalizePlatform } from '@/lib/platforms';
 
 const UnifiedDownloaderLowerSections = dynamic(
     () => import('./unified-downloader-lower-sections').then((m) => m.UnifiedDownloaderLowerSections),
@@ -101,38 +102,24 @@ export function UnifiedDownloader({
         setDownloadHistory([]);
     };
 
-    const getPlatformLabel = (platform: string): string => {
-        switch (platform) {
-            case 'bili':
-            case 'bilibili':
-                return dict.history.platforms.bilibili;
-            case 'bilibili_tv':
-                return dict.history.platforms.bilibiliTv;
-            case 'douyin':
-                return dict.history.platforms.douyin;
-            case 'xiaohongshu':
-                return dict.history.platforms.xiaohongshu;
-            case 'tiktok':
-                return dict.history.platforms.tiktok;
-            default:
-                return dict.history.platforms.unknown;
-        }
-    };
-
     // 统一解析处理：只解析不自动下载
     const handleUnifiedParse = async (videoUrl: string) => {
         void import('./unified-downloader-lower-sections');
 
         // 调用解析接口获取视频信息
         const apiResult = await requestUnifiedParse(videoUrl);
-        const platformCode = apiResult.data.platform;
-        const platformLabel = getPlatformLabel(platformCode);
+        const normalizedData = {
+            ...apiResult.data,
+            platform: normalizePlatform(apiResult.data.platform),
+        };
+        const platformCode = normalizedData.platform;
+        const platformLabel = getPlatformLabel(platformCode, dict);
 
         // 添加到下载历史 - 如果没有 title，使用 desc
         // 使用 API 返回的规范 URL，避免口令等原始输入无法跳转
-        const displayTitle = apiResult.data.title || apiResult.data.desc || dict.history.unknownTitle;
+        const displayTitle = normalizedData.title || normalizedData.desc || dict.history.unknownTitle;
         const nextRecord: DownloadRecord = {
-            url: apiResult.data.url || videoUrl,
+            url: normalizedData.url || videoUrl,
             title: displayTitle,
             timestamp: Date.now(),
             platform: platformCode as Platform
@@ -141,7 +128,7 @@ export function UnifiedDownloader({
         // Parse result card can be heavy on mobile. Mark as transition to keep interaction responsive.
         startTransition(() => {
             // 直接保存完整 parseResult.data，便于 ResultCard 渲染所有字段
-            setParseResult(apiResult.data);
+            setParseResult(normalizedData);
             addToHistory(nextRecord);
         });
 

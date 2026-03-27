@@ -7,7 +7,7 @@
     },
     "unified": {
         "pageTitle": "社交媒體下載器",
-        "pageDescription": "貼上連結或口令，點擊解析按鈕，自動識別平台後選擇下載。支援嗶哩嗶哩、抖音、小紅書、TikTok。",
+        "pageDescription": "貼上連結或口令，點擊解析按鈕，自動識別平台後選擇下載。支援嗶哩嗶哩、抖音、Instagram、小紅書、TikTok、X。",
         "placeholder": "請在此處貼上連結或口令...",
         "newBadge": "新增抖音圖文支援"
     },
@@ -73,7 +73,9 @@
             "douyin": "抖音",
             "xiaohongshu": "小紅書",
             "tiktok": "TikTok",
-            "unknown": "未知"
+            "unknown": "未知",
+            "instagram": "Instagram",
+            "x": "X"
         }
     },
     "toast": {
@@ -86,11 +88,11 @@
         "installAction": "立即安裝"
     },
     "metadata": {
-        "title": "通用媒體下載器 - 支援嗶哩嗶哩、抖音、小紅書、TikTok影片音訊下載",
-        "description": "免費線上通用媒體下載工具。支援嗶哩嗶哩、抖音、小紅書、TikTok等平台的影片音訊下載。一鍵貼上連結，自動識別平台，高清無損下載。",
-        "keywords": "線上媒體下載器,嗶哩嗶哩影片下載,嗶哩嗶哩音訊下載,抖音影片下載,小紅書影片下載,小紅書圖文下載,TikTok影片下載",
+        "title": "通用媒體下載器 - 支援嗶哩嗶哩、抖音、Instagram、小紅書、TikTok、X 影片音訊下載",
+        "description": "免費線上通用媒體下載工具。支援嗶哩嗶哩、抖音、Instagram、小紅書、TikTok、X 等平台的影片音訊下載。一鍵貼上連結，自動識別平台，高清無損下載。",
+        "keywords": "線上媒體下載器,嗶哩嗶哩影片下載,嗶哩嗶哩音訊下載,抖音影片下載,Instagram Reels下載,Instagram圖文下載,小紅書影片下載,小紅書圖文下載,TikTok影片下載,X影片下載",
         "ogTitle": "通用媒體下載器 - 免費線上工具",
-        "ogDescription": "專業的通用媒體下載工具。支援嗶哩嗶哩、抖音、小紅書、TikTok等平台的影片、音訊、圖文下載，自動識別連結平台，一鍵下載。",
+        "ogDescription": "專業的通用媒體下載工具。支援嗶哩嗶哩、抖音、Instagram、小紅書、TikTok、X 等平台的影片、音訊、圖文下載，自動識別連結平台，一鍵下載。",
         "siteName": "通用媒體下載器"
     },
     "common": {
@@ -176,28 +178,43 @@
             ]
         },
         "platformSupport": {
-            "title": "平台支援指南",
+            "title": "支援平台",
             "bilibili": {
                 "name": "嗶哩嗶哩",
-                "summary": "支援影片下載、音訊提取、口令解析"
+                "summary": "影片 / 音訊 / 口令",
+                "features": ["影片", "音訊", "口令"]
             },
             "bilibiliTv": {
                 "name": "Bilibili TV",
-                "summary": "支援音訊下載（影片需合併音視訊流，暫不支援直接下載）"
+                "summary": "僅音訊",
+                "features": ["僅音訊"]
             },
             "douyin": {
                 "name": "抖音",
-                "summary": "支援影片下載、圖文筆記、口令解析"
+                "summary": "影片 / 圖文 / 口令",
+                "features": ["影片", "圖文", "口令"]
             },
             "xiaohongshu": {
                 "name": "小紅書",
-                "summary": "支援影片下載、圖文筆記"
+                "summary": "影片 / 圖文",
+                "features": ["影片", "圖文"]
             },
             "tiktok": {
                 "name": "TikTok",
-                "summary": "支援影片下載"
+                "summary": "影片",
+                "features": ["影片"]
             },
-            "comingSoon": "🔄 更多平台即將支援..."
+            "comingSoon": "更多平台陸續支援",
+            "instagram": {
+                "name": "Instagram",
+                "summary": "Reel / 影片貼文 / 圖文",
+                "features": ["Reel", "影片貼文", "圖文"]
+            },
+            "x": {
+                "name": "X",
+                "summary": "影片",
+                "features": ["影片"]
+            }
         },
         "linkFormats": {
             "title": "支援的連結格式",
@@ -267,10 +284,15 @@
             "zh-tw": [
                 "提取嗶哩嗶哩影片MP3音訊",
                 "下載抖音無浮水印影片",
+                "下載Instagram Reels與貼文",
+                "下載Instagram圖文貼文",
+                "提取Instagram影片音訊",
                 "下載小紅書圖文筆記",
                 "下載小紅書無浮水印影片",
                 "提取小紅書影片音訊",
                 "下載TikTok無浮水印影片",
+                "下載X影片",
+                "提取X影片音訊",
                 "自動識別影片平台",
                 "高清音訊影片下載",
                 "免費線上工具",
@@ -297,7 +319,7 @@
             "title": {
                 "en": "How to download Bilibili, Douyin, Xiaohongshu and TikTok content",
                 "zh": "如何下載嗶哩嗶哩、抖音、小紅書及TikTok內容",
-                "zh-tw": "如何下載嗶哩嗶哩、抖音、小紅書及TikTok內容",
+                "zh-tw": "如何下載嗶哩嗶哩、抖音、Instagram、小紅書、TikTok 與 X 內容",
                 "ja": "Bilibili・Douyin・Xiaohongshu・TikTokのコンテンツをダウンロードする方法"
             },
             "steps": {
@@ -340,19 +362,19 @@
                 "zh-tw": [
                     {
                         "name": "複製連結",
-                        "text": "從瀏覽器複製嗶哩嗶哩、抖音、小紅書或TikTok的影片/筆記連結"
+                        "text": "從瀏覽器複製嗶哩嗶哩、抖音、Instagram、小紅書、TikTok 或 X 的影片/貼文連結"
                     },
                     {
                         "name": "貼上連結",
-                        "text": "將連結貼上到網站的輸入框中"
+                        "text": "將連結貼到網站的輸入框中"
                     },
                     {
                         "name": "自動識別",
-                        "text": "工具會自動識別平台（嗶哩嗶哩/抖音/小紅書）"
+                        "text": "工具會自動識別平台（嗶哩嗶哩/抖音/Instagram/小紅書/TikTok/X）"
                     },
                     {
                         "name": "下載",
-                        "text": "點擊下載按鈕獲取對應的音訊影片或圖片內容"
+                        "text": "點擊下載按鈕取得對應的音訊、影片或圖片內容"
                     }
                 ],
                 "ja": [

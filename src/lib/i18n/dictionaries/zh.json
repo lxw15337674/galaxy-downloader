@@ -7,7 +7,7 @@
     },
     "unified": {
         "pageTitle": "社交媒体下载器",
-        "pageDescription": "粘贴链接或口令，点击解析按钮，自动识别平台后选择下载。支持哔哩哔哩、抖音、小红书、TikTok。",
+        "pageDescription": "粘贴链接或口令，点击解析按钮，自动识别平台后选择下载。支持哔哩哔哩、抖音、Instagram、小红书、TikTok、X。",
         "placeholder": "请在此处粘贴链接或口令...",
         "newBadge": "新增抖音图文支持"
     },
@@ -73,7 +73,9 @@
             "douyin": "抖音",
             "xiaohongshu": "小红书",
             "tiktok": "TikTok",
-            "unknown": "未知"
+            "unknown": "未知",
+            "instagram": "Instagram",
+            "x": "X"
         }
     },
     "toast": {
@@ -86,11 +88,11 @@
         "installAction": "立即安装"
     },
     "metadata": {
-        "title": "通用媒体下载器 - 支持哔哩哔哩、抖音、小红书、TikTok视频音频下载",
-        "description": "免费在线通用媒体下载工具。支持 哔哩哔哩、抖音、小红书、TikTok等平台的视频音频下载。一键粘贴链接，自动识别平台，高清无损下载。",
-        "keywords": "在线媒体下载器,哔哩哔哩视频下载,哔哩哔哩音频下载,抖音视频下载,小红书视频下载,小红书图文下载,TikTok视频下载",
+        "title": "通用媒体下载器 - 支持哔哩哔哩、抖音、Instagram、小红书、TikTok、X 视频音频下载",
+        "description": "免费在线通用媒体下载工具。支持哔哩哔哩、抖音、Instagram、小红书、TikTok、X 等平台的视频音频下载。一键粘贴链接，自动识别平台，高清无损下载。",
+        "keywords": "在线媒体下载器,哔哩哔哩视频下载,哔哩哔哩音频下载,抖音视频下载,Instagram Reels下载,Instagram图文下载,小红书视频下载,小红书图文下载,TikTok视频下载,X视频下载",
         "ogTitle": "通用媒体下载器 - 免费在线工具",
-        "ogDescription": "专业的通用媒体下载工具。支持 哔哩哔哩、抖音、小红书、TikTok等平台的视频、音频、图文下载，自动识别链接平台，一键下载。",
+        "ogDescription": "专业的通用媒体下载工具。支持哔哩哔哩、抖音、Instagram、小红书、TikTok、X 等平台的视频、音频、图文下载，自动识别链接平台，一键下载。",
         "siteName": "通用媒体下载器"
     },
     "common": {
@@ -176,28 +178,43 @@
             ]
         },
         "platformSupport": {
-            "title": "平台支持指南",
+            "title": "支持平台",
             "bilibili": {
                 "name": "哔哩哔哩",
-                "summary": "支持视频下载、音频提取、口令解析"
+                "summary": "视频 / 音频 / 口令",
+                "features": ["视频", "音频", "口令"]
             },
             "bilibiliTv": {
                 "name": "Bilibili TV",
-                "summary": "支持音频下载（视频需合并音视频流，暂不支持直接下载）"
+                "summary": "仅音频",
+                "features": ["仅音频"]
             },
             "douyin": {
                 "name": "抖音",
-                "summary": "支持视频下载、图文笔记、口令解析"
+                "summary": "视频 / 图文 / 口令",
+                "features": ["视频", "图文", "口令"]
             },
             "xiaohongshu": {
                 "name": "小红书",
-                "summary": "支持视频下载、图文笔记"
+                "summary": "视频 / 图文",
+                "features": ["视频", "图文"]
             },
             "tiktok": {
                 "name": "TikTok",
-                "summary": "支持视频下载"
+                "summary": "视频",
+                "features": ["视频"]
             },
-            "comingSoon": "🔄 更多平台即将支持..."
+            "comingSoon": "更多平台陆续接入",
+            "instagram": {
+                "name": "Instagram",
+                "summary": "视频",
+                "features": ["视频"]
+            },
+            "x": {
+                "name": "X",
+                "summary": "视频",
+                "features": ["视频"]
+            }
         },
         "linkFormats": {
             "title": "支持的链接格式",
@@ -253,10 +270,15 @@
             "zh": [
                 "提取哔哩哔哩视频MP3音频",
                 "下载抖音无水印视频",
+                "下载Instagram Reels和帖子",
+                "下载Instagram图文帖子",
+                "提取Instagram视频音频",
                 "下载小红书图文笔记",
                 "下载小红书无水印视频",
                 "提取小红书视频音频",
                 "下载TikTok无水印视频",
+                "下载X视频",
+                "提取X视频音频",
                 "自动识别视频平台",
                 "高清音频视频下载",
                 "免费在线工具",
@@ -296,7 +318,7 @@
         "howTo": {
             "title": {
                 "en": "How to download Bilibili, Douyin, Xiaohongshu and TikTok content",
-                "zh": "如何下载哔哩哔哩、抖音、小红书及TikTok内容",
+                "zh": "如何下载哔哩哔哩、抖音、Instagram、小红书、TikTok 及 X 内容",
                 "zh-tw": "如何下载哔哩哔哩、抖音、小红书及TikTok内容",
                 "ja": "Bilibili・Douyin・Xiaohongshu・TikTokのコンテンツをダウンロードする方法"
             },
@@ -322,7 +344,7 @@
                 "zh": [
                     {
                         "name": "复制链接",
-                        "text": "从浏览器复制哔哩哔哩、抖音、小红书或TikTok的视频/笔记链接"
+                        "text": "从浏览器复制哔哩哔哩、抖音、Instagram、小红书、TikTok 或 X 的视频/帖子链接"
                     },
                     {
                         "name": "粘贴链接",
@@ -330,7 +352,7 @@
                     },
                     {
                         "name": "自动识别",
-                        "text": "工具会自动识别平台（哔哩哔哩/抖音/小红书/TikTok）"
+                        "text": "工具会自动识别平台（哔哩哔哩/抖音/Instagram/小红书/TikTok/X）"
                     },
                     {
                         "name": "下载",

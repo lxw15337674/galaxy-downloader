@@ -20,8 +20,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChevronsUpDown } from 'lucide-react';
 import { toast } from '@/lib/deferred-toast';
 import { useDictionary } from '@/i18n/client';
-import type { Dictionary } from '@/lib/i18n/types';
 import { Platform } from '../../lib/types';
+import { getPlatformBadge } from '@/lib/platforms';
 
 export interface DownloadRecord {
     url: string;
@@ -48,43 +48,6 @@ const DATE_TIME_FORMATTER = new Intl.DateTimeFormat(undefined, {
 
 function formatRecordTimestamp(timestamp: number): string {
     return DATE_TIME_FORMATTER.format(new Date(timestamp)).replace(',', '');
-}
-
-// 获取平台标签样式
-function getPlatformBadge(platform: Platform, dict: Dictionary) {
-    switch (platform) {
-        case 'bili':
-        case 'bilibili':
-            return {
-                text: dict.history.platforms.bilibili,
-                className: 'bg-pink-100 text-pink-700 dark:bg-pink-900 dark:text-pink-300'
-            };
-        case 'bilibili_tv':
-            return {
-                text: dict.history.platforms.bilibiliTv,
-                className: 'bg-violet-100 text-violet-700 dark:bg-violet-900 dark:text-violet-300'
-            };
-        case 'douyin':
-            return {
-                text: dict.history.platforms.douyin,
-                className: 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
-            };
-        case 'xiaohongshu':
-            return {
-                text: dict.history.platforms.xiaohongshu,
-                className: 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300'
-            }
-        case 'tiktok':
-            return {
-                text: dict.history.platforms.tiktok,
-                className: 'bg-sky-100 text-sky-700 dark:bg-sky-900 dark:text-sky-300'
-            }
-        default:
-            return {
-                text: dict.history.platforms.unknown,
-                className: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300'
-            };
-    }
 }
 
 export function DownloadHistory({

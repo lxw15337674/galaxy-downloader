@@ -8,6 +8,10 @@ const FORWARDED_REQUEST_HEADERS = [
     "range",
 ] as const
 
+type StreamingRequestInit = RequestInit & {
+    duplex?: "half"
+}
+
 function buildUpstreamUrl(pathSegments: string[], request: NextRequest): URL {
     const upstream = new URL(`/api/${pathSegments.join("/")}`, API_BASE_URL)
     upstream.search = request.nextUrl.search
@@ -36,14 +40,16 @@ async function proxyRequest(
     const method = request.method
     const headers = buildUpstreamHeaders(request)
 
-    const upstreamResponse = await fetch(upstreamUrl, {
+    const upstreamInit: StreamingRequestInit = {
         method,
         headers,
         body: method === "GET" || method === "HEAD" ? undefined : request.body,
         duplex: method === "GET" || method === "HEAD" ? undefined : "half",
         redirect: "follow",
         cache: "no-store",
-    })
+    }
+
+    const upstreamResponse = await fetch(upstreamUrl, upstreamInit)
 
     const responseHeaders = new Headers()
     for (const [key, value] of upstreamResponse.headers) {

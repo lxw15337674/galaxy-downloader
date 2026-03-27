@@ -1,8 +1,9 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PlayCircle, Globe, Link, CheckCircle, AlertCircle } from 'lucide-react';
+import { PlayCircle, Globe, Link } from 'lucide-react';
 import type { Dictionary } from '@/lib/i18n/types';
+import { PlatformSupportGrid } from './PlatformSupportGrid';
 
 interface HelpCardsProps {
     dict: Dictionary;
@@ -37,47 +38,13 @@ export function HelpCards({ dict }: HelpCardsProps) {
             {/* 支持平台 */}
             <Card className="order-2">
                 <CardHeader className="p-4">
-                    <CardTitle className="flex items-center gap-2 text-lg">
-                        <Globe className="h-5 w-5 text-primary" />
+                    <CardTitle className="flex items-center gap-2 text-base">
+                        <Globe className="h-4 w-4 text-primary" />
                         {dict.guide.platformSupport.title}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3 p-4">
-                    <div className="flex items-start gap-3">
-                        <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                        <div>
-                            <p className="font-medium">{dict.guide.platformSupport.bilibili.name}</p>
-                            <p className="text-sm text-muted-foreground">{dict.guide.platformSupport.bilibili.summary}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                        <div>
-                            <p className="font-medium">{dict.guide.platformSupport.bilibiliTv.name}</p>
-                            <p className="text-sm text-muted-foreground">{dict.guide.platformSupport.bilibiliTv.summary}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <AlertCircle className="h-5 w-5 text-orange-500 flex-shrink-0 mt-0.5" />
-                        <div>
-                            <p className="font-medium">{dict.guide.platformSupport.douyin.name}</p>
-                            <p className="text-sm text-muted-foreground">{dict.guide.platformSupport.douyin.summary}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                        <div>
-                            <p className="font-medium">{dict.guide.platformSupport.xiaohongshu.name}</p>
-                            <p className="text-sm text-muted-foreground">{dict.guide.platformSupport.xiaohongshu.summary}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                        <div>
-                            <p className="font-medium">{dict.guide.platformSupport.tiktok.name}</p>
-                            <p className="text-sm text-muted-foreground">{dict.guide.platformSupport.tiktok.summary}</p>
-                        </div>
-                    </div>
+                    <PlatformSupportGrid dict={dict} />
 
                     {/* 音频提取说明 */}
                     {dict.guide.platformSupport.audioTip && (

@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server"
 
 const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8080"
 
+type StreamingRequestInit = RequestInit & {
+    duplex?: "half"
+}
+
 function buildUpstreamHeaders(request: NextRequest): Headers {
     const headers = new Headers()
     const accept = request.headers.get("accept")
@@ -20,14 +24,16 @@ function buildUpstreamHeaders(request: NextRequest): Headers {
 
 export async function POST(request: NextRequest): Promise<Response> {
     const upstreamUrl = new URL("/api/feedback", API_BASE_URL)
-    const upstreamResponse = await fetch(upstreamUrl, {
+    const upstreamInit: StreamingRequestInit = {
         method: "POST",
         headers: buildUpstreamHeaders(request),
         body: request.body,
         duplex: "half",
         redirect: "follow",
         cache: "no-store",
-    })
+    }
+
+    const upstreamResponse = await fetch(upstreamUrl, upstreamInit)
 
     const responseHeaders = new Headers()
     for (const [key, value] of upstreamResponse.headers) {

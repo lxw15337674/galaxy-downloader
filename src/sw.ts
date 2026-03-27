@@ -7,13 +7,18 @@ const SW_BYPASS_HOSTS = new Set([
   "www.googletagmanager.com",
 ]);
 
+type ServiceWorkerFetchEvent = Event & {
+  request: Request;
+  stopImmediatePropagation(): void;
+}
+
 declare global {
   interface ServiceWorkerGlobalScope extends SerwistGlobalConfig {
     __SW_MANIFEST: (PrecacheEntry | string)[] | undefined;
   }
 }
 
-declare const self: ServiceWorkerGlobalScope;
+declare const self: ServiceWorkerGlobalScope & typeof globalThis;
 
 const serwist = new Serwist({
   precacheEntries: self.__SW_MANIFEST,
@@ -39,11 +44,14 @@ const serwist = new Serwist({
 });
 
 // Let the browser handle Google Ads and Analytics scripts directly.
-self.addEventListener("fetch", (event) => {
-  const url = new URL(event.request.url);
+const handleBypassFetch: EventListener = (event) => {
+  const fetchEvent = event as ServiceWorkerFetchEvent;
+  const url = new URL(fetchEvent.request.url);
   if (SW_BYPASS_HOSTS.has(url.hostname)) {
-    event.stopImmediatePropagation();
+    fetchEvent.stopImmediatePropagation();
   }
-});
+};
+
+self.addEventListener("fetch", handleBypassFetch);
 
 serwist.addEventListeners();

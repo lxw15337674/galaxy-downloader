@@ -96,6 +96,8 @@ export interface Dictionary {
             douyin: string;
             xiaohongshu: string;
             tiktok: string;
+            instagram: string;
+            x: string;
             unknown: string;
         };
     };
@@ -181,6 +183,18 @@ export interface Dictionary {
                 limitations?: string[];
             };
             tiktok: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
+            instagram: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
+            x: {
                 name: string;
                 summary: string;
                 features?: string[];

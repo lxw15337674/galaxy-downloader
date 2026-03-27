@@ -1,6 +1,24 @@
 {
   "versions": [
     {
+      "version": "2.2.1",
+      "date": "2026-03-27",
+      "changes": {
+        "zh": [
+          "优化浏览器端音频提取器加载流程，减少初始化失败问题"
+        ],
+        "en": [
+          "Improved the browser-side audio extractor loading flow to reduce initialization failures"
+        ],
+        "ja": [
+          "ブラウザ側の音声抽出機能の読み込みフローを改善し、初期化失敗を減らしました"
+        ],
+        "zh-tw": [
+          "最佳化瀏覽器端音訊提取器載入流程，降低初始化失敗問題"
+        ]
+      }
+    },
+    {
       "version": "2.2.0",
       "date": "2026-03-25",
       "changes": {

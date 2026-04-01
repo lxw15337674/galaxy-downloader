@@ -7,11 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
 import { toast } from '@/lib/deferred-toast';
-import { Loader2, Github, History } from 'lucide-react';
+import { Loader2, Github, History, Music } from 'lucide-react';
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { FeedbackDialog } from '@/components/feedback-dialog';
 import { ChangelogDialog } from '@/components/changelog-dialog';
+import { AudioExtractDialog } from '@/components/audio-extract-dialog';
 import { MobileNavMenu } from '@/components/mobile-nav-menu';
 import { API_ENDPOINTS } from '@/lib/config';
 
@@ -86,6 +87,7 @@ export function UnifiedDownloader({
     const [url, setUrl] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [audioToolOpen, setAudioToolOpen] = useState(false);
     const [parseResult, setParseResult] = useState<UnifiedParseResult['data'] | null>(null);
     const historyRef = useRef<HTMLDivElement>(null);
 
@@ -270,7 +272,11 @@ export function UnifiedDownloader({
                     <div className="flex items-center gap-1">
                         <FeedbackDialog />
                         <LanguageSwitcher compact />
-                        <MobileNavMenu />
+                        <MobileNavMenu
+                            onOpenAudioTool={() => {
+                                setAudioToolOpen(true);
+                            }}
+                        />
                     </div>
                 </div>
                 <div className="hidden md:flex max-w-7xl mx-auto px-3 sm:px-4 md:px-5 py-3 justify-end items-center gap-1">
@@ -280,12 +286,26 @@ export function UnifiedDownloader({
                             <span>GitHub</span>
                         </a>
                     </Button>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="flex items-center gap-1"
+                        onClick={() => setAudioToolOpen(true)}
+                    >
+                        <Music className="h-4 w-4" />
+                        <span>{dict.audioTool.triggerButton}</span>
+                    </Button>
                     <FeedbackDialog />
                     <ChangelogDialog />
                     <ThemeSwitcher />
                     <LanguageSwitcher />
                 </div>
             </div>
+
+            <AudioExtractDialog
+                open={audioToolOpen}
+                onOpenChange={setAudioToolOpen}
+            />
 
             <main className="flex-1 p-3 sm:p-4 md:p-4 pt-4">
                 {/* PC端三栏布局，移动端垂直布局 */}

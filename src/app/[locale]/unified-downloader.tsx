@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
 import { toast } from '@/lib/deferred-toast';
-import { Loader2, Github, History, Music } from 'lucide-react';
+import { Loader2, Github, History, Link2, Music } from 'lucide-react';
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { FeedbackDialog } from '@/components/feedback-dialog';
@@ -58,6 +58,7 @@ export function UnifiedDownloader({
     const [audioToolTask, setAudioToolTask] = useState<AudioExtractTask | null>(null);
     const [parseResult, setParseResult] = useState<UnifiedParseResult['data'] | null>(null);
     const historyRef = useRef<HTMLDivElement>(null);
+    const urlInputRef = useRef<HTMLTextAreaElement>(null);
 
     const [downloadHistory, setDownloadHistory, historyHydrated] = useLocalStorageState<DownloadRecord[]>(DOWNLOAD_HISTORY_STORAGE_KEY, {
         defaultValue: []
@@ -316,6 +317,30 @@ export function UnifiedDownloader({
                                     <p className="text-xs text-foreground/70 text-center flex items-center justify-center gap-1.5 flex-wrap">
                                         {dict.unified.pageDescription}
                                     </p>
+                                    {dict.unified.exampleUrl && (
+                                        <div className="mx-auto flex max-w-full items-center justify-center">
+                                            <button
+                                                type="button"
+                                                className="inline-flex max-w-full items-center gap-1 rounded-full border border-border/70 bg-muted/40 px-3 py-1 text-xs text-foreground/65 transition-colors hover:border-primary/35 hover:bg-muted/70 hover:text-foreground"
+                                                onClick={() => {
+                                                    setUrl(dict.unified.exampleUrl!);
+                                                    toast.success(dict.toast.linkFilled);
+                                                    window.requestAnimationFrame(() => {
+                                                        urlInputRef.current?.focus();
+                                                        const input = urlInputRef.current;
+                                                        if (input) {
+                                                            const valueLength = input.value.length;
+                                                            input.setSelectionRange(valueLength, valueLength);
+                                                        }
+                                                    });
+                                                }}
+                                            >
+                                                <Link2 className="h-3.5 w-3.5 shrink-0 text-foreground/45" />
+                                                <span className="shrink-0 text-foreground/45">{dict.unified.exampleLabel}</span>
+                                                <span className="truncate text-left">{dict.unified.exampleUrl}</span>
+                                            </button>
+                                        </div>
+                                    )}
                                     {heroMeta}
                                 </CardHeader>
                                 <CardContent className="px-4 pb-4 pt-0">
@@ -323,6 +348,7 @@ export function UnifiedDownloader({
                                         <div className="space-y-2">
                                             <Textarea
                                                 id="url"
+                                                ref={urlInputRef}
                                                 value={url}
                                                 onChange={(e) => setUrl(e.target.value)}
                                                 placeholder={dict.unified.placeholder}

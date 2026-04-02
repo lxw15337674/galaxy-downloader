@@ -55,6 +55,8 @@ export interface Dictionary {
         pageDescription: string;
         placeholder: string;
         newBadge: string;
+        exampleLabel?: string;
+        exampleUrl?: string;
     };
     page: {
         feedback: string;

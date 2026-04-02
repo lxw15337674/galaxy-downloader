@@ -7,9 +7,11 @@
     },
     "unified": {
         "pageTitle": "社交媒体下载器",
-        "pageDescription": "粘贴链接或口令，点击解析后自动识别平台并选择下载。支持哔哩哔哩音视频、抖音视频、微信公众号文章视频、Niconico 视频/音频、Instagram Reels/帖子/图文、小红书视频/图文、TikTok 视频，以及 X 视频。",
+        "pageDescription": "粘贴链接后自动识别内容，快速下载视频、音频或图文。",
         "placeholder": "请在此处粘贴链接或口令...",
-        "newBadge": "新增抖音图文支持"
+        "newBadge": "新增抖音图文支持",
+        "exampleLabel": "例如：",
+        "exampleUrl": "https://www.bilibili.com/video/BV1Wv3ez2Ex8"
     },
     "page": {
         "feedback": "有反馈或建议？点击右上角「反馈」按钮告诉我们。",

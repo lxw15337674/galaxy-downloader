@@ -493,7 +493,8 @@
     "result": {
         "title": "解析结果",
         "downloadVideo": "下载视频",
-        "mergeDownloadVideo": "合并下载视频",
+        "mergeDownloadVideo": "下载完整视频",
+        "mergeDownloadVideoHint": "当前视频需要先合并音频后再下载",
         "downloadAudio": "下载音频",
         "originDownloadVideo": "视频直链",
         "originDownloadAudio": "音频直链",

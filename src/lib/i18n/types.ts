@@ -4,6 +4,7 @@ export interface ResultDict {
     title: string;
     downloadVideo: string;
     mergeDownloadVideo: string;
+    mergeDownloadVideoHint: string;
     downloadAudio: string;
     originDownloadVideo: string;
     originDownloadAudio: string;

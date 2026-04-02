@@ -38,10 +38,25 @@ export function getResultMediaActions({
     const hasVideo = hasSourceUrl(videoDownloadUrl)
     const hasAudio = hasSourceUrl(audioDownloadUrl)
 
+    // Prefer native audio download whenever backend provides a direct audio url.
+    if (hasAudio) {
+        if (videoAudioMode === 'separate') {
+            return {
+                videoAction: hasVideo ? 'merge-then-download' : 'hide',
+                audioAction: 'direct-download',
+            }
+        }
+
+        return {
+            videoAction: hasVideo ? 'direct-download' : 'hide',
+            audioAction: 'direct-download',
+        }
+    }
+
     if (videoAudioMode === 'separate') {
         return {
-            videoAction: hasVideo && hasAudio ? 'merge-then-download' : 'hide',
-            audioAction: hasAudio ? 'direct-download' : 'hide',
+            videoAction: 'hide',
+            audioAction: 'hide',
         }
     }
 
@@ -56,13 +71,6 @@ export function getResultMediaActions({
         return {
             videoAction: hasVideo ? 'direct-download' : 'hide',
             audioAction: 'hide',
-        }
-    }
-
-    if (hasAudio) {
-        return {
-            videoAction: hasVideo ? 'direct-download' : 'hide',
-            audioAction: 'direct-download',
         }
     }
 

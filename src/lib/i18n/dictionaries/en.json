@@ -7,9 +7,11 @@
     },
     "unified": {
         "pageTitle": "Social Media Downloader",
-        "pageDescription": "Paste a link or share token, click Parse, and choose a download option after auto-detection. Supports Bilibili video and audio, Douyin videos, WeChat article videos, Niconico video and audio, Instagram reels, posts, and image posts, Xiaohongshu videos and image notes, TikTok videos, and X videos.",
+        "pageDescription": "Paste a link to auto-detect the content and quickly download video, audio, or image posts.",
         "placeholder": "Paste link or share token here...",
-        "newBadge": "New: Douyin image notes"
+        "newBadge": "New: Douyin image notes",
+        "exampleLabel": "Example:",
+        "exampleUrl": "https://www.bilibili.com/video/BV1Wv3ez2Ex8/"
     },
     "page": {
         "feedback": "Have feedback or suggestions? Click the \"Feedback\" button in the top-right corner.",
@@ -488,7 +490,8 @@
     "result": {
         "title": "Parse Result",
         "downloadVideo": "Download Video",
-        "mergeDownloadVideo": "Merge and Download Video",
+        "mergeDownloadVideo": "Download Complete Video",
+        "mergeDownloadVideoHint": "Audio and video will be merged before the download starts.",
         "downloadAudio": "Download Audio",
         "originDownloadVideo": "Video Direct Link",
         "originDownloadAudio": "Audio Direct Link",

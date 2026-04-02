@@ -68,7 +68,20 @@ it('maps muxed streams to direct video download plus audio extraction', () => {
     })
 })
 
-it('hides audio action when backend marks media as not applicable', () => {
+it('prefers direct audio download when muxed media still provides audio url', () => {
+    expect(
+        getResultMediaActions({
+            videoAudioMode: 'muxed',
+            videoDownloadUrl: 'https://example.com/video.mp4',
+            audioDownloadUrl: 'https://example.com/audio.mp3',
+        })
+    ).toEqual({
+        videoAction: 'direct-download',
+        audioAction: 'direct-download',
+    })
+})
+
+it('still shows audio download when backend marks media as not applicable but audio url exists', () => {
     expect(
         getResultMediaActions({
             videoAudioMode: 'not_applicable',
@@ -77,7 +90,7 @@ it('hides audio action when backend marks media as not applicable', () => {
         })
     ).toEqual({
         videoAction: 'direct-download',
-        audioAction: 'hide',
+        audioAction: 'direct-download',
     })
 })
 

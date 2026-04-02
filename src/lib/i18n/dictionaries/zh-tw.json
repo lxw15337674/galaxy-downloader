@@ -7,9 +7,11 @@
     },
     "unified": {
         "pageTitle": "社交媒體下載器",
-        "pageDescription": "貼上連結或口令，點擊解析後自動識別平台並選擇下載。支援嗶哩嗶哩音訊與影片、抖音影片、微信公眾號文章影片、Niconico 影片/音訊、Instagram Reels/貼文/圖文、小紅書影片/圖文、TikTok 影片，以及 X 影片。",
+        "pageDescription": "貼上連結後自動識別內容，快速下載影片、音訊或圖文。",
         "placeholder": "請在此處貼上連結或口令...",
-        "newBadge": "新增抖音圖文支援"
+        "newBadge": "新增抖音圖文支援",
+        "exampleLabel": "例如：",
+        "exampleUrl": "https://www.bilibili.com/video/BV1Wv3ez2Ex8/"
     },
     "page": {
         "feedback": "有回饋或建議？點擊右上角「反饋」按鈕告訴我們。",
@@ -491,7 +493,8 @@
     "result": {
         "title": "解析結果",
         "downloadVideo": "下載影片",
-        "mergeDownloadVideo": "合併下載影片",
+        "mergeDownloadVideo": "下載完整影片",
+        "mergeDownloadVideoHint": "將先合併音訊與影片，再開始下載",
         "downloadAudio": "下載音訊",
         "originDownloadVideo": "影片直鏈",
         "originDownloadAudio": "音訊直鏈",

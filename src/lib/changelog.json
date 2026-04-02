@@ -1,6 +1,28 @@
 {
   "versions": [
     {
+      "version": "3.2.1",
+      "date": "2026-04-02",
+      "changes": {
+        "zh": [
+          "优化首页引导文案，首屏说明更简洁",
+          "新增可点击示例链接，点击后可自动填入输入框"
+        ],
+        "en": [
+          "Refined the homepage guidance copy for a cleaner first-screen description",
+          "Added a clickable example link that can fill the input automatically"
+        ],
+        "ja": [
+          "トップページの案内文を見直し、ファーストビューの説明をより簡潔にしました",
+          "クリックで入力欄に自動入力できるサンプルリンクを追加しました"
+        ],
+        "zh-tw": [
+          "最佳化首頁引導文案，首屏說明更精簡",
+          "新增可點擊的示例連結，點擊後可自動填入輸入框"
+        ]
+      }
+    },
+    {
       "version": "3.2.0",
       "date": "2026-04-02",
       "changes": {

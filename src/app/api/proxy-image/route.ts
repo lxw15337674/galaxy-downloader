@@ -23,6 +23,10 @@ const ALLOWED_IMAGE_HOSTS = [
 const DEFAULT_ACCEPT =
     'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8';
 
+const NESTED_IMAGE_PROXY_HOSTS = new Set([
+    'downloader-api.bhwa233.com',
+]);
+
 function isAllowedImageHost(hostname: string): boolean {
     const normalized = hostname.toLowerCase();
     return ALLOWED_IMAGE_HOSTS.some(
@@ -77,6 +81,48 @@ function normalizeUpstreamUrl(url: URL): URL {
     return normalizedUrl;
 }
 
+function tryDecodeURIComponent(value: string): string {
+    try {
+        return decodeURIComponent(value);
+    } catch {
+        return value;
+    }
+}
+
+function unwrapNestedImageProxyUrl(targetUrl: URL): URL {
+    const host = targetUrl.hostname.toLowerCase();
+    const isKnownNestedProxyHost = NESTED_IMAGE_PROXY_HOSTS.has(host);
+    const isImageProxyPath = targetUrl.pathname === '/api/image-proxy';
+    if (!isKnownNestedProxyHost || !isImageProxyPath) {
+        return targetUrl;
+    }
+
+    const nestedUrlParam = targetUrl.searchParams.get('url');
+    if (!nestedUrlParam) {
+        return targetUrl;
+    }
+
+    // Some upstream responses double-encode the nested url query parameter.
+    let decoded = nestedUrlParam;
+    for (let i = 0; i < 2; i += 1) {
+        const nextDecoded = tryDecodeURIComponent(decoded);
+        if (nextDecoded === decoded) {
+            break;
+        }
+        decoded = nextDecoded;
+    }
+
+    try {
+        const nestedUrl = new URL(decoded);
+        if (!isHttpProtocol(nestedUrl.protocol)) {
+            return targetUrl;
+        }
+        return nestedUrl;
+    } catch {
+        return targetUrl;
+    }
+}
+
 export async function GET(request: NextRequest) {
     const rawUrl = request.nextUrl.searchParams.get('url');
     if (!rawUrl) {
@@ -89,6 +135,8 @@ export async function GET(request: NextRequest) {
     } catch {
         return NextResponse.json({ error: 'Invalid image url' }, { status: 400 });
     }
+
+    targetUrl = unwrapNestedImageProxyUrl(targetUrl);
 
     if (!isHttpProtocol(targetUrl.protocol)) {
         return NextResponse.json({ error: 'Only http(s) protocol is allowed' }, { status: 400 });

@@ -206,6 +206,11 @@ function SinglePartButtons({
                     </Button>
                 )}
             </div>
+            {videoAction === 'merge-then-download' && (
+                <p className="text-xs text-muted-foreground">
+                    {dict.result.mergeDownloadVideoHint}
+                </p>
+            )}
             {(showOriginVideoLink || showOriginAudioLink) && (
                 <div className="flex flex-wrap items-center gap-x-1 gap-y-0.5 text-xs text-muted-foreground">
                     {showOriginVideoLink && (

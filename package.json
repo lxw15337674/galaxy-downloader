@@ -50,7 +50,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.31.0",
+    "@cloudflare/vite-plugin": "^1.30.2",
     "@eslint/eslintrc": "^3.3.5",
     "@serwist/next": "^9.5.7",
     "@serwist/sw": "^9.5.7",

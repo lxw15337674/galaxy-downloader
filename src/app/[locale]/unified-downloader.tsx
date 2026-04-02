@@ -13,8 +13,8 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import { FeedbackDialog } from '@/components/feedback-dialog';
 import { ChangelogDialog } from '@/components/changelog-dialog';
 import { AudioExtractDialog } from '@/components/audio-extract-dialog';
+import type { AudioExtractTask } from '@/components/audio-tool/types';
 import { MobileNavMenu } from '@/components/mobile-nav-menu';
-import { API_ENDPOINTS } from '@/lib/config';
 
 import type { DownloadRecord } from './download-history';
 import { useLocalStorageState } from '@/hooks/use-local-storage-state';
@@ -23,8 +23,9 @@ import type { UnifiedParseResult } from '@/lib/types';
 import { Platform } from '@/lib/types';
 import { DOWNLOAD_HISTORY_MAX_COUNT, DOWNLOAD_HISTORY_STORAGE_KEY } from '@/lib/constants';
 import { useDictionary } from '@/i18n/client';
-import { ApiRequestError, isApiRequestError, resolveApiErrorMessage } from '@/lib/api-errors';
+import { isApiRequestError, resolveApiErrorMessage } from '@/lib/api-errors';
 import { getPlatformLabel, normalizePlatform } from '@/lib/platforms';
+import { requestUnifiedParse } from '@/lib/unified-parse';
 
 const UnifiedDownloaderLowerSections = dynamic(
     () => import('./unified-downloader-lower-sections').then((m) => m.UnifiedDownloaderLowerSections),
@@ -38,41 +39,6 @@ interface UnifiedDownloaderProps {
     mobileGuides?: ReactNode;
     heroMeta?: ReactNode;
     footer?: ReactNode;
-}
-
-type UnifiedParseSuccessResult = UnifiedParseResult & {
-    success: true;
-    data: NonNullable<UnifiedParseResult['data']>;
-};
-
-async function requestUnifiedParse(videoUrl: string): Promise<UnifiedParseSuccessResult> {
-    const params = new URLSearchParams({ url: videoUrl });
-    const requestUrl = `${API_ENDPOINTS.unified.parse}?${params.toString()}`;
-    const response = await fetch(requestUrl, {
-        method: 'GET',
-        cache: 'no-store',
-    });
-
-    let payload: UnifiedParseResult | null = null;
-    try {
-        payload = await response.json() as UnifiedParseResult;
-    } catch {
-        throw new ApiRequestError({
-            status: response.status,
-        });
-    }
-
-    if (!response.ok || !payload?.success || !payload.data) {
-        throw new ApiRequestError({
-            code: payload?.code,
-            status: payload?.status ?? response.status,
-            requestId: payload?.requestId,
-            details: payload?.details,
-            fallbackMessage: payload?.error || payload?.message,
-        });
-    }
-
-    return payload as UnifiedParseSuccessResult;
 }
 
 export function UnifiedDownloader({
@@ -89,12 +55,7 @@ export function UnifiedDownloader({
     const [error, setError] = useState('');
     const [audioToolOpen, setAudioToolOpen] = useState(false);
     const [audioToolEntry, setAudioToolEntry] = useState<'toolbar' | 'result'>('toolbar');
-    const [audioToolTask, setAudioToolTask] = useState<{
-        title?: string;
-        sourceUrl?: string | null;
-        audioUrl?: string | null;
-        videoUrl?: string | null;
-    } | null>(null);
+    const [audioToolTask, setAudioToolTask] = useState<AudioExtractTask | null>(null);
     const [parseResult, setParseResult] = useState<UnifiedParseResult['data'] | null>(null);
     const historyRef = useRef<HTMLDivElement>(null);
 
@@ -117,12 +78,7 @@ export function UnifiedDownloader({
         setAudioToolOpen(true);
     };
 
-    const openResultAudioExtract = (task: {
-        title?: string;
-        sourceUrl?: string | null;
-        audioUrl?: string | null;
-        videoUrl?: string | null;
-    }) => {
+    const openResultAudioExtract = (task: AudioExtractTask) => {
         setAudioToolEntry('result');
         setAudioToolTask(task);
         setAudioToolOpen(true);

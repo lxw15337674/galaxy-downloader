@@ -2,7 +2,7 @@
   "name": "bilibili-audio-downloader",
   "version": "2.0.0",
   "scripts": {
-    "dev": "vinext dev",
+    "dev": "vinext dev --port 3010",
     "build": "vinext build",
     "start": "vinext start",
     "lint": "eslint .",

@@ -1,8 +1,9 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { serwist } from "@serwist/vite";
 import vinext from "vinext";
-import { defineConfig } from "vite";
+import { defineConfig, type ResolvedConfig } from "vite";
 import { fileURLToPath } from "node:url";
+
 
 export default defineConfig({
   resolve: {

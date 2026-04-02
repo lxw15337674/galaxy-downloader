@@ -22,7 +22,6 @@ const nextConfig: NextConfig = {
             'lucide-react',
             'sonner',
             '@radix-ui/react-collapsible',
-            '@radix-ui/react-dialog',
             '@radix-ui/react-label',
             '@radix-ui/react-progress',
             '@radix-ui/react-scroll-area',

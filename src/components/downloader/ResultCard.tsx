@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { X, Download, ExternalLink, Loader2, Package } from 'lucide-react';
 import Image from "next/image";
 import { useDictionary } from '@/i18n/client';
+import type { AudioExtractTask } from '@/components/audio-tool/types';
 import { UnifiedParseResult, PageInfo, EmbeddedVideoInfo } from "../../lib/types";
 import { downloadFile, formatDuration, sanitizeFilename } from "../../lib/utils";
 import { useState, useEffect, useRef } from 'react';
@@ -13,7 +14,7 @@ import { shouldHideSingleImagePreview, shouldShowVideoDownloadButton } from "./r
 interface ResultCardProps {
     result: UnifiedParseResult['data'] | null | undefined
     onClose: () => void;
-    onOpenExtractAudio: (task: { title?: string; sourceUrl?: string | null; audioUrl?: string | null; videoUrl?: string | null }) => void;
+    onOpenExtractAudio: (task: AudioExtractTask) => void;
 }
 
 function resolveCoverSrc(coverUrl: string): string {
@@ -115,7 +116,7 @@ function SinglePartButtons({
     onOpenExtractAudio,
 }: {
     result: NonNullable<UnifiedParseResult['data']>;
-    onOpenExtractAudio: (task: { title?: string; sourceUrl?: string | null; audioUrl?: string | null; videoUrl?: string | null }) => void;
+    onOpenExtractAudio: (task: AudioExtractTask) => void;
 }) {
     const dict = useDictionary()
     const [videoLoading, setVideoLoading] = useState(false);

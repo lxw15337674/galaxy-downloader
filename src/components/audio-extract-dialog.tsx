@@ -1,10 +1,15 @@
 'use client'
 
-import { useEffect, useMemo, useState, useCallback, useId, type ChangeEvent, type DragEvent } from 'react'
-import { AlertCircle, CheckCircle2, FileX, Loader2, Music, Upload } from 'lucide-react'
+import { useCallback, useEffect, useId, useMemo, useState, type ChangeEvent, type DragEvent } from 'react'
 
-import { Button, buttonVariants } from '@/components/ui/button'
+import { AlertCircle, CheckCircle2, Loader2, Music } from 'lucide-react'
 import * as Tabs from '@radix-ui/react-tabs'
+
+import { FileExtractPanel } from '@/components/audio-tool/file-extract-panel'
+import { MergePanel } from '@/components/audio-tool/merge-panel'
+import { ResultAutoExtractPanel } from '@/components/audio-tool/result-auto-extract-panel'
+import type { AudioExtractTask, AudioToolStage, ExtractMode } from '@/components/audio-tool/types'
+import { Button } from '@/components/ui/button'
 import {
     Dialog,
     DialogContent,
@@ -13,40 +18,18 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog'
 import { Progress } from '@/components/ui/progress'
-import { Textarea } from '@/components/ui/textarea'
 import { useFFmpeg, type FFmpegStatus } from '@/hooks/use-ffmpeg'
 import { useDictionary } from '@/i18n/client'
-import { ApiRequestError, isApiRequestError, resolveApiErrorMessage } from '@/lib/api-errors'
-import { API_ENDPOINTS } from '@/lib/config'
+import { isApiRequestError, resolveApiErrorMessage } from '@/lib/api-errors'
 import { toast } from '@/lib/deferred-toast'
-import type { UnifiedParseResult } from '@/lib/types'
+import { requestUnifiedParse } from '@/lib/unified-parse'
 import { cn, downloadFile, formatBytes } from '@/lib/utils'
 
 interface AudioExtractDialogProps {
     open: boolean
     onOpenChange: (open: boolean) => void
     entry?: 'toolbar' | 'result'
-    autoExtractTask?: {
-        title?: string
-        sourceUrl?: string | null
-        audioUrl?: string | null
-        videoUrl?: string | null
-    } | null
-}
-
-type ExtractMode = 'url' | 'file' | 'merge'
-type AudioToolStage =
-    | 'idle'
-    | 'parsing'
-    | 'direct-downloading'
-    | 'fallback-extracting'
-    | 'reading-file'
-    | 'completed'
-    | 'error'
-
-type UnifiedParseSuccessResult = UnifiedParseResult & {
-    success: true
-    data: NonNullable<UnifiedParseResult['data']>
+    autoExtractTask?: AudioExtractTask | null
 }
 
 const MAX_VIDEO_FILE_SIZE = 500 * 1024 * 1024
@@ -80,36 +63,6 @@ const SUPPORTED_AUDIO_TYPES = new Set([
 const VIDEO_EXTENSIONS = new Set(['mp4', 'webm', 'mov', 'mkv', 'avi', 'mpeg', 'mpg'])
 const AUDIO_EXTENSIONS = new Set(['mp3', 'aac', 'wav', 'ogg', 'flac', 'm4a'])
 
-async function requestUnifiedParse(videoUrl: string): Promise<UnifiedParseSuccessResult> {
-    const params = new URLSearchParams({ url: videoUrl })
-    const requestUrl = `${API_ENDPOINTS.unified.parse}?${params.toString()}`
-    const response = await fetch(requestUrl, {
-        method: 'GET',
-        cache: 'no-store',
-    })
-
-    let payload: UnifiedParseResult | null = null
-    try {
-        payload = await response.json() as UnifiedParseResult
-    } catch {
-        throw new ApiRequestError({
-            status: response.status,
-        })
-    }
-
-    if (!response.ok || !payload?.success || !payload.data) {
-        throw new ApiRequestError({
-            code: payload?.code,
-            status: payload?.status ?? response.status,
-            requestId: payload?.requestId,
-            details: payload?.details,
-            fallbackMessage: payload?.error || payload?.message,
-        })
-    }
-
-    return payload as UnifiedParseSuccessResult
-}
-
 function getFileExtension(file: File): string {
     const match = /\.([a-z0-9]+)$/i.exec(file.name)
     return match?.[1]?.toLowerCase() ?? ''
@@ -133,101 +86,6 @@ function isSupportedAudioFile(file: File): boolean {
     return !!file.type && (SUPPORTED_AUDIO_TYPES.has(file.type) || file.type.startsWith('audio/'))
 }
 
-interface FileDropzoneProps {
-    acceptedFile: File | null
-    title: string
-    hint: string
-    limitText: string
-    emptyButtonLabel: string
-    selectedLabel: string
-    inputId: string
-    accept: string
-    isBusy: boolean
-    onSelect: (event: ChangeEvent<HTMLInputElement>) => void
-    onDrop: (event: DragEvent<HTMLDivElement>) => void
-    onDragOver: (event: DragEvent<HTMLDivElement>) => void
-    onClear: () => void
-}
-
-function FileDropzone({
-    acceptedFile,
-    title,
-    hint,
-    limitText,
-    emptyButtonLabel,
-    selectedLabel,
-    inputId,
-    accept,
-    isBusy,
-    onSelect,
-    onDrop,
-    onDragOver,
-    onClear,
-}: FileDropzoneProps) {
-    return (
-        <div
-            className={cn(
-                'border-2 border-dashed rounded-lg p-4 text-center transition-colors space-y-3',
-                acceptedFile ? 'border-muted bg-muted/20' : 'border-muted-foreground/30 hover:border-muted-foreground/50'
-            )}
-            onDrop={onDrop}
-            onDragOver={onDragOver}
-        >
-            <div className="space-y-1">
-                <div className="text-sm font-medium">{title}</div>
-                <div className="text-xs text-muted-foreground">{hint}</div>
-                <div className="text-xs text-muted-foreground/80">{limitText}</div>
-            </div>
-
-            <input
-                id={inputId}
-                type="file"
-                accept={accept}
-                onChange={onSelect}
-                disabled={isBusy}
-                className="sr-only"
-            />
-
-            {acceptedFile ? (
-                <div className="space-y-3">
-                    <p className="text-sm font-medium break-all">{selectedLabel}</p>
-                    <div className="flex justify-center gap-2">
-                        <label
-                            htmlFor={inputId}
-                            aria-disabled={isBusy}
-                            className={cn(
-                                buttonVariants({ variant: 'outline', size: 'sm' }),
-                                'cursor-pointer',
-                                isBusy && 'pointer-events-none opacity-50'
-                            )}
-                        >
-                            {emptyButtonLabel}
-                        </label>
-                        <Button type="button" variant="ghost" size="sm" onClick={onClear} disabled={isBusy} className="h-8 w-8 p-0">
-                            <FileX className="h-4 w-4" />
-                        </Button>
-                    </div>
-                </div>
-            ) : (
-                <div className="space-y-2 py-2">
-                    <Upload className="mx-auto h-8 w-8 text-muted-foreground/60" />
-                    <label
-                        htmlFor={inputId}
-                        aria-disabled={isBusy}
-                        className={cn(
-                            buttonVariants({ variant: 'outline', size: 'sm' }),
-                            'cursor-pointer',
-                            isBusy && 'pointer-events-none opacity-50'
-                        )}
-                    >
-                        {emptyButtonLabel}
-                    </label>
-                </div>
-            )}
-        </div>
-    )
-}
-
 export function AudioExtractDialog({
     open,
     onOpenChange,
@@ -238,15 +96,13 @@ export function AudioExtractDialog({
     const extractFileInputId = useId()
     const mergeVideoInputId = useId()
     const mergeAudioInputId = useId()
-    const [mode, setMode] = useState<ExtractMode>('url')
-    const [url, setUrl] = useState('')
+    const [mode, setMode] = useState<ExtractMode>('file')
     const [selectedFile, setSelectedFile] = useState<File | null>(null)
     const [mergeVideoFile, setMergeVideoFile] = useState<File | null>(null)
     const [mergeAudioFile, setMergeAudioFile] = useState<File | null>(null)
     const [stage, setStage] = useState<AudioToolStage>('idle')
     const [errorMessage, setErrorMessage] = useState('')
     const { status, progress, progressInfo, error, extractAudio, extractAudioFromFile, mergeVideoAndAudio, reset, cancel } = useFFmpeg()
-    const isToolbarEntry = entry === 'toolbar'
     const autoTaskKey = autoExtractTask
         ? `${autoExtractTask.audioUrl ?? ''}::${autoExtractTask.videoUrl ?? ''}::${autoExtractTask.sourceUrl ?? ''}::${autoExtractTask.title ?? ''}`
         : null
@@ -342,11 +198,19 @@ export function AudioExtractDialog({
     }, [dict.errors.audioFileTooLarge, dict.errors.audioFormatNotSupported, dict.errors.fileEmpty, setValidationError])
 
     const statusText = useMemo(() => {
-        if (mode === 'merge') {
-            if (status === 'loading') {
-                return dict.extractAudio.loading
-            }
+        if (stage === 'parsing') {
+            return dict.audioTool.statusParsing
+        }
 
+        if (stage === 'direct-downloading') {
+            return dict.audioTool.statusDirectDownloading
+        }
+
+        if (stage === 'fallback-extracting') {
+            return dict.audioTool.statusFallbackExtracting
+        }
+
+        if (mode === 'merge') {
             if (status === 'reading-video') {
                 return dict.audioTool.statusReadingVideo
             }
@@ -359,7 +223,9 @@ export function AudioExtractDialog({
                 return dict.audioTool.statusMerging
             }
 
-            return dict.audioTool.statusMergeIdle
+            if (status === 'idle' && !mergeVideoFile && !mergeAudioFile) {
+                return dict.audioTool.statusMergeIdle
+            }
         }
 
         if (mode === 'file') {
@@ -367,17 +233,9 @@ export function AudioExtractDialog({
                 return dict.audioTool.statusReadingFile
             }
 
-            if (selectedFile && stage === 'idle') {
+            if (selectedFile && stage === 'idle' && status === 'idle') {
                 return dict.audioTool.statusFileReady
             }
-        }
-
-        if (stage === 'parsing') {
-            return dict.audioTool.statusParsing
-        }
-
-        if (stage === 'direct-downloading') {
-            return dict.audioTool.statusDirectDownloading
         }
 
         if (status === 'loading') {
@@ -399,10 +257,6 @@ export function AudioExtractDialog({
             return dict.extractAudio.converting.replace('{progress}', String(Math.floor(progress)))
         }
 
-        if (stage === 'fallback-extracting') {
-            return dict.audioTool.statusFallbackExtracting
-        }
-
         if (stage === 'completed' || status === 'completed') {
             return dict.audioTool.statusCompleted
         }
@@ -411,11 +265,15 @@ export function AudioExtractDialog({
             return errorMessage || error || dict.errors.downloadError
         }
 
-        return dict.audioTool.statusIdle
+        return mode === 'merge'
+            ? dict.audioTool.statusMergeIdle
+            : dict.audioTool.statusIdle
     }, [
         dict,
         error,
         errorMessage,
+        mergeAudioFile,
+        mergeVideoFile,
         mode,
         progress,
         progressInfo?.loaded,
@@ -441,98 +299,20 @@ export function AudioExtractDialog({
     useEffect(() => {
         if (!open) {
             const timer = window.setTimeout(() => {
-                setUrl('')
                 setSelectedFile(null)
                 setMergeVideoFile(null)
                 setMergeAudioFile(null)
                 setStage('idle')
                 setErrorMessage('')
-                setMode(isToolbarEntry ? 'file' : 'url')
+                setMode('file')
                 reset()
             }, 150)
 
             return () => window.clearTimeout(timer)
         }
-    }, [isToolbarEntry, open, reset])
+    }, [open, reset])
 
-    useEffect(() => {
-        if (!open) {
-            return
-        }
-
-        if (isToolbarEntry && mode === 'url') {
-            setMode('file')
-        }
-    }, [isToolbarEntry, mode, open])
-
-    const handlePaste = async () => {
-        try {
-            const text = await navigator.clipboard.readText()
-            setUrl(text)
-            toast.success(dict.toast.linkFilled)
-        } catch (err) {
-            console.error('Failed to read clipboard:', err)
-            toast.error(dict.errors.clipboardFailed, {
-                description: dict.errors.clipboardPermission,
-            })
-        }
-    }
-
-    const handleExtractUrl = async () => {
-        if (!url.trim()) {
-            setValidationError(dict.errors.emptyUrl)
-            return
-        }
-
-        if (status === 'error') {
-            reset()
-        }
-
-        setStage('parsing')
-        setErrorMessage('')
-
-        try {
-            const apiResult = await requestUnifiedParse(url.trim())
-            const parsed = apiResult.data
-            const audioDownloadUrl = parsed.downloadAudioUrl || parsed.originDownloadAudioUrl || null
-            const videoDownloadUrl = parsed.downloadVideoUrl || parsed.originDownloadVideoUrl || null
-            const outputTitle = parsed.title || parsed.desc || dict.history.unknownTitle
-
-            if (audioDownloadUrl) {
-                setStage('direct-downloading')
-                downloadFile(audioDownloadUrl)
-                setStage('completed')
-                setUrl('')
-                return
-            }
-
-            if (!videoDownloadUrl) {
-                throw new Error(dict.audioTool.noAudioSource)
-            }
-
-            setStage('fallback-extracting')
-            await extractAudio(videoDownloadUrl, outputTitle)
-            setUrl('')
-        } catch (err) {
-            if (isApiRequestError(err)) {
-                console.error('Audio tool parse failed', {
-                    code: err.code,
-                    status: err.status,
-                    requestId: err.requestId,
-                    details: err.details,
-                })
-            }
-
-            const resolvedMessage = resolveApiErrorMessage(err, dict)
-            setStage('error')
-            setErrorMessage(resolvedMessage)
-            toast.error(dict.errors.downloadFailed, {
-                description: resolvedMessage,
-            })
-        }
-    }
-
-    const runAutoExtractTask = useCallback(async (task: NonNullable<AudioExtractDialogProps['autoExtractTask']>) => {
+    const runAutoExtractTask = useCallback(async (task: AudioExtractTask) => {
         if (status === 'error') {
             reset()
         }
@@ -826,26 +606,14 @@ export function AudioExtractDialog({
                     className="flex-1 min-h-0 overflow-y-auto pr-1"
                     style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 0px)' }}
                 >
-                    {entry === 'result' ? (
-                        <div className="space-y-4">
-                            <div className="rounded-md border bg-muted/20 px-3 py-2 text-xs text-muted-foreground break-all">
-                                {autoExtractTask?.sourceUrl || autoExtractTask?.videoUrl || autoExtractTask?.audioUrl}
-                            </div>
-
-                            {stage === 'error' && autoExtractTask && (
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    className="w-full"
-                                    onClick={() => void runAutoExtractTask(autoExtractTask)}
-                                    disabled={isBusy}
-                                >
-                                    {dict.extractAudio.retry}
-                                </Button>
-                            )}
-
-                            {statusPanel}
-                        </div>
+                    {entry === 'result' && autoExtractTask ? (
+                        <ResultAutoExtractPanel
+                            task={autoExtractTask}
+                            stage={stage}
+                            isBusy={isBusy}
+                            statusPanel={statusPanel}
+                            onRetry={() => void runAutoExtractTask(autoExtractTask)}
+                        />
                     ) : (
                         <Tabs.Root value={mode} onValueChange={(value) => setMode(value as ExtractMode)} className="space-y-4">
                             <Tabs.List className="grid grid-cols-2 rounded-lg bg-muted p-1">
@@ -874,93 +642,36 @@ export function AudioExtractDialog({
                             </Tabs.List>
 
                             <Tabs.Content value="file" className="space-y-4 focus:outline-none">
-                                <FileDropzone
-                                    acceptedFile={selectedFile}
-                                    title={dict.audioTool.videoFile}
-                                    hint={dict.audioTool.dropHint}
-                                    limitText={dict.audioTool.fileSizeLimit}
-                                    emptyButtonLabel={selectedFile ? dict.audioTool.changeFileButton : dict.audioTool.selectFileButton}
-                                    selectedLabel={selectedFile
-                                        ? dict.audioTool.fileSelected
-                                            .replace('{name}', selectedFile.name)
-                                            .replace('{size}', formatBytes(selectedFile.size))
-                                        : ''}
+                                <FileExtractPanel
+                                    selectedFile={selectedFile}
                                     inputId={extractFileInputId}
-                                    accept="video/*,.mp4,.webm,.mov,.mkv,.avi,.mpeg,.mpg"
                                     isBusy={isBusy}
+                                    statusPanel={statusPanel}
                                     onSelect={handleExtractFileSelect}
                                     onDrop={handleExtractFileDrop}
                                     onDragOver={handleDragOver}
                                     onClear={handleClearExtractFile}
+                                    onSubmit={() => void handleExtractFile()}
                                 />
-
-                                {statusPanel}
-
-                                <Button
-                                    type="button"
-                                    className="w-full flex items-center justify-center gap-2"
-                                    onClick={handleExtractFile}
-                                    disabled={isBusy || !selectedFile}
-                                >
-                                    {isBusy && <Loader2 className="h-4 w-4 animate-spin" />}
-                                    {isBusy ? dict.audioTool.processingButton : dict.audioTool.submitButton}
-                                </Button>
                             </Tabs.Content>
 
                             <Tabs.Content value="merge" className="space-y-4 focus:outline-none">
-                                <div className="grid gap-4 md:grid-cols-2">
-                                    <FileDropzone
-                                        acceptedFile={mergeVideoFile}
-                                        title={dict.audioTool.videoFile}
-                                        hint={dict.audioTool.dropHint}
-                                        limitText={dict.audioTool.videoSizeLimit}
-                                        emptyButtonLabel={mergeVideoFile ? dict.audioTool.changeVideoButton : dict.audioTool.selectVideoButton}
-                                        selectedLabel={mergeVideoFile
-                                            ? dict.audioTool.videoSelected
-                                                .replace('{name}', mergeVideoFile.name)
-                                                .replace('{size}', formatBytes(mergeVideoFile.size))
-                                            : ''}
-                                        inputId={mergeVideoInputId}
-                                        accept="video/*,.mp4,.webm,.mov,.mkv,.avi,.mpeg,.mpg"
-                                        isBusy={isBusy}
-                                        onSelect={handleMergeVideoSelect}
-                                        onDrop={handleMergeVideoDrop}
-                                        onDragOver={handleDragOver}
-                                        onClear={handleClearMergeVideo}
-                                    />
-
-                                    <FileDropzone
-                                        acceptedFile={mergeAudioFile}
-                                        title={dict.audioTool.audioFile}
-                                        hint={dict.audioTool.dropHint}
-                                        limitText={dict.audioTool.audioSizeLimit}
-                                        emptyButtonLabel={mergeAudioFile ? dict.audioTool.changeAudioButton : dict.audioTool.selectAudioButton}
-                                        selectedLabel={mergeAudioFile
-                                            ? dict.audioTool.audioSelected
-                                                .replace('{name}', mergeAudioFile.name)
-                                                .replace('{size}', formatBytes(mergeAudioFile.size))
-                                            : ''}
-                                        inputId={mergeAudioInputId}
-                                        accept="audio/*,.mp3,.aac,.wav,.ogg,.flac,.m4a"
-                                        isBusy={isBusy}
-                                        onSelect={handleMergeAudioSelect}
-                                        onDrop={handleMergeAudioDrop}
-                                        onDragOver={handleDragOver}
-                                        onClear={handleClearMergeAudio}
-                                    />
-                                </div>
-
-                                {statusPanel}
-
-                                <Button
-                                    type="button"
-                                    className="w-full flex items-center justify-center gap-2"
-                                    onClick={handleMerge}
-                                    disabled={isBusy || !mergeVideoFile || !mergeAudioFile}
-                                >
-                                    {isBusy && <Loader2 className="h-4 w-4 animate-spin" />}
-                                    {isBusy ? dict.audioTool.processingButton : dict.audioTool.mergeButton}
-                                </Button>
+                                <MergePanel
+                                    mergeVideoFile={mergeVideoFile}
+                                    mergeAudioFile={mergeAudioFile}
+                                    videoInputId={mergeVideoInputId}
+                                    audioInputId={mergeAudioInputId}
+                                    isBusy={isBusy}
+                                    statusPanel={statusPanel}
+                                    onVideoSelect={handleMergeVideoSelect}
+                                    onAudioSelect={handleMergeAudioSelect}
+                                    onVideoDrop={handleMergeVideoDrop}
+                                    onAudioDrop={handleMergeAudioDrop}
+                                    onDragOver={handleDragOver}
+                                    onClearVideo={handleClearMergeVideo}
+                                    onClearAudio={handleClearMergeAudio}
+                                    onSubmit={() => void handleMerge()}
+                                />
                             </Tabs.Content>
                         </Tabs.Root>
                     )}

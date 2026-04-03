@@ -91,6 +91,14 @@ export function HelpCards({ dict }: HelpCardsProps) {
                             ))}
                         </div>
                     </div>
+                    <div>
+                        <p className="font-medium mb-2">{dict.guide.linkFormats.telegram.title}</p>
+                        <div className="bg-muted p-3 rounded-md space-y-1 text-sm font-mono">
+                            {dict.guide.linkFormats.telegram.examples.map((example, index) => (
+                                <p key={index}>{example}</p>
+                            ))}
+                        </div>
+                    </div>
                     <div className="flex items-start gap-2 p-3 bg-blue-50 dark:bg-blue-950 rounded-md">
                         <div className="text-blue-500 mt-0.5">💡</div>
                         <p className="text-sm text-blue-700 dark:text-blue-300">

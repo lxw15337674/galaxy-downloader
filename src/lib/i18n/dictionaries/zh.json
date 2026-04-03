@@ -11,16 +11,17 @@
         "placeholder": "请在此处粘贴链接或口令...",
         "newBadge": "新增抖音图文支持",
         "exampleLabel": "例如：",
-        "exampleUrl": "https://www.bilibili.com/video/BV1Wv3ez2Ex8"
+        "exampleUrl": "https://t.me/zhijiang/8187"
     },
     "page": {
         "feedback": "有反馈或建议？点击右上角「反馈」按钮告诉我们。",
         "feedbackLinkText": "",
         "openMenuLabel": "打开菜单",
+        "switchLanguageLabel": "切换语言",
         "copyrightVideo": "版权说明：视频版权归相关网站及作者所有",
         "copyrightStorage": "本站不提供和存储任何视频及图片",
         "copyrightYear": "Copyright © 2025",
-        "copyrightBilibiliRestriction": "⚠️ 不支持下载版权受限（如会员专享、付费）的视频。"
+        "copyrightBilibiliRestriction": "⚠️ 不支持下载版权受限（如会员专享、付费）或平台访问受限（如 Telegram / X 限制级、需登录或受限内容）的视频。"
     },
     "form": {
         "pasteButton": "粘贴",
@@ -83,6 +84,7 @@
             "bilibili": "哔哩哔哩",
             "bilibiliTv": "Bilibili TV",
             "douyin": "抖音",
+            "telegram": "Telegram",
             "wechat": "微信公众号",
             "niconico": "Niconico",
             "xiaohongshu": "小红书",
@@ -102,11 +104,11 @@
         "installAction": "立即安装"
     },
     "metadata": {
-        "title": "通用媒体下载器 - 支持哔哩哔哩、抖音、微信公众号、Niconico、Instagram、小红书、TikTok、X 内容下载",
-        "description": "免费在线通用媒体下载工具。一键下载哔哩哔哩音视频、抖音视频、微信公众号文章视频、Niconico 视频/音频、Instagram Reels/帖子/图文、小红书视频/图文、TikTok 视频，以及 X 视频，自动识别平台。",
-        "keywords": "在线媒体下载器,哔哩哔哩视频下载,哔哩哔哩音频下载,抖音视频下载,微信公众号视频下载,微信文章视频下载,Niconico视频下载,Niconico音频下载,Instagram Reels下载,Instagram帖子下载,Instagram图文帖子下载,小红书视频下载,小红书图文下载,TikTok视频下载,X视频下载",
+        "title": "通用媒体下载器 - 支持哔哩哔哩、抖音、Telegram、微信公众号、Niconico、Instagram、小红书、TikTok、X 内容下载",
+        "description": "免费在线通用媒体下载工具。一键下载哔哩哔哩音视频、抖音视频、Telegram 公开视频消息、微信公众号文章视频、Niconico 视频/音频、Instagram Reels/帖子/图文、小红书视频/图文、TikTok 视频，以及 X 视频，自动识别平台。",
+        "keywords": "在线媒体下载器,哔哩哔哩视频下载,哔哩哔哩音频下载,抖音视频下载,Telegram视频下载,Telegram公开消息下载,微信公众号视频下载,微信文章视频下载,Niconico视频下载,Niconico音频下载,Instagram Reels下载,Instagram帖子下载,Instagram图文帖子下载,小红书视频下载,小红书图文下载,TikTok视频下载,X视频下载",
         "ogTitle": "通用媒体下载器 - 免费在线工具",
-        "ogDescription": "专业的通用媒体下载工具。自动识别链接平台，一键下载哔哩哔哩音视频、抖音视频、微信公众号文章视频、Niconico 视频/音频、Instagram Reels/帖子/图文、小红书视频/图文、TikTok 视频，以及 X 视频。",
+        "ogDescription": "专业的通用媒体下载工具。自动识别链接平台，一键下载哔哩哔哩音视频、抖音视频、Telegram 公开视频消息、微信公众号文章视频、Niconico 视频/音频、Instagram Reels/帖子/图文、小红书视频/图文、TikTok 视频，以及 X 视频。",
         "siteName": "通用媒体下载器"
     },
     "common": {
@@ -168,15 +170,15 @@
         "converting": "转换中 {progress}%",
         "completed": "提取完成",
         "retry": "重试",
-        "errorLoad": "加载音频处理器失败，请刷新页面重试",
+        "errorLoad": "加载处理工具失败，请刷新页面重试",
         "errorDownload": "下载视频失败，请使用备用链接手动下载后用其他工具提取",
         "errorConvert": "音频转换失败，视频格式可能不支持",
         "errorMemory": "视频文件过大，浏览器内存不足，建议使用桌面工具"
     },
     "audioTool": {
-        "triggerButton": "音频处理",
-        "title": "音频处理",
-        "description": "提取音频或合并音视频，处理完成后自动下载。",
+        "triggerButton": "处理工具",
+        "title": "处理工具",
+        "description": "处理工具支持提取音频或合并音视频，处理完成后自动下载。",
         "extractDescription": "从本地视频中提取音频，输出 MP3。",
         "mergeDescription": "选择一个视频文件和一个音频文件，合并后输出 MP4。",
         "placeholder": "请粘贴视频或帖子分享链接...",
@@ -254,6 +256,11 @@
                 "summary": "视频 / 图文 / 口令",
                 "features": ["视频", "图文", "口令"]
             },
+            "telegram": {
+                "name": "Telegram",
+                "summary": "公开视频消息",
+                "features": ["公开视频", "消息链接"]
+            },
             "wechat": {
                 "name": "微信公众号",
                 "summary": "文章视频",
@@ -302,6 +309,13 @@
                     "https://v.douyin.com/fiU6t9rA3QU/"
                 ]
             },
+            "telegram": {
+                "title": "🔗 Telegram 链接示例：",
+                "examples": [
+                    "https://t.me/zhijiang/8187",
+                    "https://t.me/europa_press/613"
+                ]
+            },
             "tip": "提示：复制分享链接即可，无需手动修改"
         }
     },
@@ -327,6 +341,7 @@
             "en": [
                 "Extract MP3 audio from Bilibili videos",
                 "Download Douyin videos without watermark",
+                "Download Telegram public video posts",
                 "Download WeChat article videos",
                 "Download Instagram reels and posts",
                 "Download Instagram image posts",
@@ -345,9 +360,10 @@
                 "Browser-based processing"
             ],
                 "zh": [
-                    "提取哔哩哔哩视频MP3音频",
-                    "下载抖音无水印视频",
-                    "下载微信公众号文章视频",
+                "提取哔哩哔哩视频MP3音频",
+                "下载抖音无水印视频",
+                "下载 Telegram 公开视频消息",
+                "下载微信公众号文章视频",
                     "下载Niconico视频",
                     "下载Niconico音频",
                     "下载Instagram Reels和帖子",
@@ -369,6 +385,7 @@
             "zh-tw": [
                 "提取嗶哩嗶哩影片MP3音訊",
                 "下載抖音無浮水印影片",
+                "下載 Telegram 公開影片訊息",
                 "下載微信公眾號文章影片",
                 "下載Instagram Reels與貼文",
                 "下載Instagram圖文貼文",
@@ -389,6 +406,7 @@
             "ja": [
                 "Bilibili動画からMP3音声を抽出",
                 "Douyin動画をダウンロード",
+                "Telegramの公開動画メッセージをダウンロード",
                 "WeChat記事内動画をダウンロード",
                 "InstagramのReelsと投稿をダウンロード",
                 "Instagramの画像投稿をダウンロード",
@@ -409,10 +427,10 @@
         },
         "howTo": {
             "title": {
-                "en": "How to download content from Bilibili, Douyin, WeChat, Niconico, Instagram, Xiaohongshu, TikTok, and X",
-                "zh": "如何下载哔哩哔哩、抖音、微信公众号、Niconico、Instagram、小红书、TikTok 和 X 内容",
-                "zh-tw": "如何下載嗶哩嗶哩、抖音、微信公眾號、Niconico、Instagram、小紅書、TikTok 與 X 內容",
-                "ja": "Bilibili・Douyin・WeChat・Niconico・Instagram・Xiaohongshu・TikTok・X のコンテンツをダウンロードする方法"
+                "en": "How to download content from Bilibili, Douyin, Telegram, WeChat, Niconico, Instagram, Xiaohongshu, TikTok, and X",
+                "zh": "如何下载哔哩哔哩、抖音、Telegram、微信公众号、Niconico、Instagram、小红书、TikTok 和 X 内容",
+                "zh-tw": "如何下載嗶哩嗶哩、抖音、Telegram、微信公眾號、Niconico、Instagram、小紅書、TikTok 與 X 內容",
+                "ja": "Bilibili・Douyin・Telegram・WeChat・Niconico・Instagram・Xiaohongshu・TikTok・X のコンテンツをダウンロードする方法"
             },
             "steps": {
                 "en": [

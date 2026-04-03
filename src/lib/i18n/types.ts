@@ -63,6 +63,7 @@ export interface Dictionary {
         feedback: string;
         feedbackLinkText: string;
         openMenuLabel: string;
+        switchLanguageLabel: string;
         copyrightVideo: string;
         copyrightStorage: string;
         copyrightYear: string;
@@ -112,6 +113,7 @@ export interface Dictionary {
             bilibili: string;
             bilibiliTv: string;
             douyin: string;
+            telegram: string;
             wechat: string;
             niconico: string;
             xiaohongshu: string;
@@ -242,6 +244,12 @@ export interface Dictionary {
                     };
                 };
             };
+            telegram: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
             wechat: {
                 name: string;
                 summary: string;
@@ -298,6 +306,10 @@ export interface Dictionary {
                 examples: string[];
             };
             douyin: {
+                title: string;
+                examples: string[];
+            };
+            telegram: {
                 title: string;
                 examples: string[];
             };

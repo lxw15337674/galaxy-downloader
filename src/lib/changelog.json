@@ -1,6 +1,28 @@
 {
   "versions": [
     {
+      "version": "3.3.0",
+      "date": "2026-04-03",
+      "changes": {
+        "zh": [
+          "新增 Telegram 公开视频消息支持",
+          "优化移动端顶部栏布局，左侧展示历史记录与处理工具，右侧展示反馈、语言和菜单"
+        ],
+        "en": [
+          "Added support for Telegram public video posts",
+          "Optimized the mobile top bar layout, with history and tools on the left and feedback, language, and menu on the right"
+        ],
+        "ja": [
+          "Telegram の公開動画メッセージに対応しました",
+          "モバイル上部バーのレイアウトを改善し、左側に履歴とツール、右側にフィードバック・言語・メニューを配置しました"
+        ],
+        "zh-tw": [
+          "新增 Telegram 公開影片訊息支援",
+          "最佳化行動端頂欄布局，左側顯示歷史記錄與處理工具，右側顯示回饋、語言與選單"
+        ]
+      }
+    },
+    {
       "version": "3.2.1",
       "date": "2026-04-02",
       "changes": {

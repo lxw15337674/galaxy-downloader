@@ -4,6 +4,7 @@ export type CanonicalPlatform =
     | 'bilibili'
     | 'bilibili_tv'
     | 'douyin'
+    | 'telegram'
     | 'wechat'
     | 'niconico'
     | 'xiaohongshu'
@@ -17,6 +18,7 @@ const PLATFORM_ALIASES: Record<string, CanonicalPlatform> = {
     bilibili: 'bilibili',
     bilibili_tv: 'bilibili_tv',
     douyin: 'douyin',
+    telegram: 'telegram',
     wechat: 'wechat',
     niconico: 'niconico',
     nico: 'niconico',
@@ -56,6 +58,8 @@ export function getPlatformLabel(
             return dict.history.platforms.bilibiliTv
         case 'douyin':
             return dict.history.platforms.douyin
+        case 'telegram':
+            return dict.history.platforms.telegram
         case 'wechat':
             return dict.history.platforms.wechat
         case 'niconico':
@@ -92,6 +96,11 @@ export function getPlatformBadge(
             return {
                 text: dict.history.platforms.douyin,
                 className: 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300',
+            }
+        case 'telegram':
+            return {
+                text: dict.history.platforms.telegram,
+                className: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900 dark:text-cyan-300',
             }
         case 'wechat':
             return {

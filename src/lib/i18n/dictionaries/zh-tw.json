@@ -11,16 +11,17 @@
         "placeholder": "請在此處貼上連結或口令...",
         "newBadge": "新增抖音圖文支援",
         "exampleLabel": "例如：",
-        "exampleUrl": "https://www.bilibili.com/video/BV1Wv3ez2Ex8/"
+        "exampleUrl": "https://t.me/zhijiang/8187"
     },
     "page": {
         "feedback": "有回饋或建議？點擊右上角「反饋」按鈕告訴我們。",
         "feedbackLinkText": "",
         "openMenuLabel": "開啟選單",
+        "switchLanguageLabel": "切換語言",
         "copyrightVideo": "版權說明：影片版權歸相關網站及作者所有",
         "copyrightStorage": "本站不提供和儲存任何影片及圖片",
         "copyrightYear": "Copyright © 2025",
-        "copyrightBilibiliRestriction": "⚠️ 不支援下載版權受限（如會員專享、付費）的影片。"
+        "copyrightBilibiliRestriction": "⚠️ 不支援下載版權受限（如會員專享、付費）或平台存取受限（如 Telegram / X 限制級、需登入或受限內容）的影片。"
     },
     "form": {
         "pasteButton": "貼上",
@@ -83,6 +84,7 @@
             "bilibili": "嗶哩嗶哩",
             "bilibiliTv": "Bilibili TV",
             "douyin": "抖音",
+            "telegram": "Telegram",
             "wechat": "微信公眾號",
             "niconico": "Niconico",
             "xiaohongshu": "小紅書",
@@ -102,11 +104,11 @@
         "installAction": "立即安裝"
     },
     "metadata": {
-        "title": "通用媒體下載器 - 支援嗶哩嗶哩、抖音、微信公眾號、Niconico、Instagram、小紅書、TikTok、X 內容下載",
-        "description": "免費線上通用媒體下載工具。一鍵下載嗶哩嗶哩音訊與影片、抖音影片、微信公眾號文章影片、Niconico 影片/音訊、Instagram Reels/貼文/圖文、小紅書影片/圖文、TikTok 影片，以及 X 影片，並自動識別平台。",
-        "keywords": "線上媒體下載器,嗶哩嗶哩影片下載,嗶哩嗶哩音訊下載,抖音影片下載,微信公眾號影片下載,微信文章影片下載,Niconico影片下載,Niconico音訊下載,Instagram Reels下載,Instagram貼文下載,Instagram圖文貼文下載,小紅書影片下載,小紅書圖文下載,TikTok影片下載,X影片下載",
+        "title": "通用媒體下載器 - 支援嗶哩嗶哩、抖音、Telegram、微信公眾號、Niconico、Instagram、小紅書、TikTok、X 內容下載",
+        "description": "免費線上通用媒體下載工具。一鍵下載嗶哩嗶哩音訊與影片、抖音影片、Telegram 公開影片訊息、微信公眾號文章影片、Niconico 影片/音訊、Instagram Reels/貼文/圖文、小紅書影片/圖文、TikTok 影片，以及 X 影片，並自動識別平台。",
+        "keywords": "線上媒體下載器,嗶哩嗶哩影片下載,嗶哩嗶哩音訊下載,抖音影片下載,Telegram影片下載,Telegram公開訊息下載,微信公眾號影片下載,微信文章影片下載,Niconico影片下載,Niconico音訊下載,Instagram Reels下載,Instagram貼文下載,Instagram圖文貼文下載,小紅書影片下載,小紅書圖文下載,TikTok影片下載,X影片下載",
         "ogTitle": "通用媒體下載器 - 免費線上工具",
-        "ogDescription": "專業的通用媒體下載工具。自動識別連結平台，一鍵下載嗶哩嗶哩音訊與影片、抖音影片、微信公眾號文章影片、Niconico 影片/音訊、Instagram Reels/貼文/圖文、小紅書影片/圖文、TikTok 影片，以及 X 影片。",
+        "ogDescription": "專業的通用媒體下載工具。自動識別連結平台，一鍵下載嗶哩嗶哩音訊與影片、抖音影片、Telegram 公開影片訊息、微信公眾號文章影片、Niconico 影片/音訊、Instagram Reels/貼文/圖文、小紅書影片/圖文、TikTok 影片，以及 X 影片。",
         "siteName": "通用媒體下載器"
     },
     "common": {
@@ -168,15 +170,15 @@
         "converting": "轉換中 {progress}%",
         "completed": "提取完成",
         "retry": "重試",
-        "errorLoad": "載入音訊處理器失敗，請重新整理頁面重試",
+        "errorLoad": "載入處理工具失敗，請重新整理頁面重試",
         "errorDownload": "下載影片失敗，請使用備用連結手動下載後用其他工具提取",
         "errorConvert": "音訊轉換失敗，影片格式可能不支援",
         "errorMemory": "影片檔案過大，瀏覽器記憶體不足，建議使用桌面工具"
     },
     "audioTool": {
-        "triggerButton": "音訊處理",
-        "title": "音訊處理",
-        "description": "提取音訊或合併影音，處理完成後自動下載。",
+        "triggerButton": "處理工具",
+        "title": "處理工具",
+        "description": "處理工具支援提取音訊或合併影音，處理完成後自動下載。",
         "extractDescription": "從本地影片中提取音訊，輸出 MP3。",
         "mergeDescription": "選擇一個影片檔與一個音訊檔，合併後輸出 MP4。",
         "placeholder": "請貼上影片或貼文分享連結...",
@@ -254,6 +256,11 @@
                 "summary": "影片 / 圖文 / 口令",
                 "features": ["影片", "圖文", "口令"]
             },
+            "telegram": {
+                "name": "Telegram",
+                "summary": "公開影片訊息",
+                "features": ["公開影片", "訊息連結"]
+            },
             "wechat": {
                 "name": "微信公眾號",
                 "summary": "文章影片",
@@ -302,6 +309,13 @@
                     "https://v.douyin.com/fiU6t9rA3QU"
                 ]
             },
+            "telegram": {
+                "title": "🔗 Telegram 連結示例：",
+                "examples": [
+                    "https://t.me/zhijiang/8187",
+                    "https://t.me/europa_press/613"
+                ]
+            },
             "tip": "提示：複製分享連結即可，無需手動修改"
         }
     },
@@ -327,6 +341,7 @@
             "en": [
                 "Extract MP3 audio from Bilibili videos",
                 "Download Douyin videos without watermark",
+                "Download Telegram public video posts",
                 "Download WeChat article videos",
                 "Download Instagram reels and posts",
                 "Download Instagram image posts",
@@ -347,6 +362,7 @@
             "zh": [
                 "提取哔哩哔哩视频MP3音频",
                 "下载抖音无水印视频",
+                "下载 Telegram 公开视频消息",
                 "下载微信公众号文章视频",
                 "下载Instagram Reels和帖子",
                 "下载Instagram图文帖子",
@@ -367,6 +383,7 @@
                 "zh-tw": [
                     "提取嗶哩嗶哩影片MP3音訊",
                     "下載抖音無浮水印影片",
+                    "下載 Telegram 公開影片訊息",
                     "下載微信公眾號文章影片",
                     "下載Niconico影片",
                     "下載Niconico音訊",
@@ -389,6 +406,7 @@
             "ja": [
                 "Bilibili動画からMP3音声を抽出",
                 "Douyin動画をダウンロード",
+                "Telegramの公開動画メッセージをダウンロード",
                 "WeChat記事内動画をダウンロード",
                 "InstagramのReelsと投稿をダウンロード",
                 "Instagramの画像投稿をダウンロード",
@@ -409,10 +427,10 @@
         },
         "howTo": {
             "title": {
-                "en": "How to download content from Bilibili, Douyin, WeChat, Instagram, Xiaohongshu, TikTok, and X",
-                "zh": "如何下载哔哩哔哩、抖音、微信公众号、Instagram、小红书、TikTok 和 X 内容",
-                "zh-tw": "如何下載嗶哩嗶哩、抖音、微信公眾號、Niconico、Instagram、小紅書、TikTok 與 X 內容",
-                "ja": "Bilibili・Douyin・WeChat・Niconico・Instagram・Xiaohongshu・TikTok・X のコンテンツをダウンロードする方法"
+                "en": "How to download content from Bilibili, Douyin, Telegram, WeChat, Instagram, Xiaohongshu, TikTok, and X",
+                "zh": "如何下载哔哩哔哩、抖音、Telegram、微信公众号、Instagram、小红书、TikTok 和 X 内容",
+                "zh-tw": "如何下載嗶哩嗶哩、抖音、Telegram、微信公眾號、Niconico、Instagram、小紅書、TikTok 與 X 內容",
+                "ja": "Bilibili・Douyin・Telegram・WeChat・Niconico・Instagram・Xiaohongshu・TikTok・X のコンテンツをダウンロードする方法"
             },
             "steps": {
                 "en": [

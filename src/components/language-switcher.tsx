@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Globe, ChevronDown, Check } from 'lucide-react'
 import type { Locale } from '@/lib/i18n/config'
-import { useAppLocale } from '@/i18n/client'
+import { useAppLocale, useDictionary } from '@/i18n/client'
 import { getLocaleLabel, SUPPORTED_LOCALES } from '@/lib/i18n/locale-meta'
 import { LOCALE_COOKIE_NAME, LOCALE_COOKIE_MAX_AGE } from '@/lib/constants'
 import { cn } from '@/lib/utils'
@@ -13,6 +13,8 @@ import { cn } from '@/lib/utils'
 interface LanguageSwitcherProps {
     compact?: boolean
     defaultOpen?: boolean
+    fullWidth?: boolean
+    iconOnly?: boolean
 }
 
 function setLocaleCookie(locale: Locale) {
@@ -20,7 +22,13 @@ function setLocaleCookie(locale: Locale) {
     document.cookie = `${LOCALE_COOKIE_NAME}=${locale}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE}; SameSite=Lax${secureAttr}`
 }
 
-export function LanguageSwitcher({ compact = false, defaultOpen = false }: LanguageSwitcherProps) {
+export function LanguageSwitcher({
+    compact = false,
+    defaultOpen = false,
+    fullWidth = false,
+    iconOnly = false,
+}: LanguageSwitcherProps) {
+    const dict = useDictionary()
     const currentLocale = useAppLocale()
     const [isOpen, setIsOpen] = useState(defaultOpen)
     const pathname = usePathname()
@@ -83,12 +91,16 @@ export function LanguageSwitcher({ compact = false, defaultOpen = false }: Langu
                 onClick={() => setIsOpen(!isOpen)}
                 className={cn(
                     'flex items-center gap-2 text-sm',
-                    compact && 'h-9 max-w-[8rem] gap-1.5 px-2.5'
+                    compact && 'h-9 max-w-[8rem] gap-1.5 px-2.5',
+                    iconOnly && 'h-8 w-8 p-0',
+                    fullWidth && 'w-full justify-between'
                 )}
-                aria-label={getLocaleLabel(currentLocale)}
+                aria-label={iconOnly ? dict.page.switchLanguageLabel : getLocaleLabel(currentLocale)}
             >
                 <Globe className="h-4 w-4" />
-                {compact ? (
+                {iconOnly ? (
+                    <span className="sr-only">{dict.page.switchLanguageLabel}</span>
+                ) : compact ? (
                     <span className="max-w-[5.5rem] truncate">{getLocaleLabel(currentLocale)}</span>
                 ) : (
                     <>

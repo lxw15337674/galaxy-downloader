@@ -220,13 +220,14 @@ export function UnifiedDownloader({
                 className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur-sm"
                 style={{ paddingTop: 'env(safe-area-inset-top)' }}
             >
-                <div className="md:hidden max-w-7xl mx-auto px-3 sm:px-4 h-14 flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-1 min-w-0">
-                        {showHistoryShortcut ? (
+                <div className="md:hidden max-w-7xl mx-auto px-3 sm:px-4 h-12 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1 shrink-0 min-w-0">
+                        {showHistoryShortcut && (
                             <Button
                                 variant="ghost"
-                                size="sm"
-                                className="flex items-center gap-1.5"
+                                size="icon"
+                                className="h-8 w-8"
+                                aria-label={dict.history.title}
                                 onClick={() => {
                                     if (historyRef.current) {
                                         const top = historyRef.current.getBoundingClientRect().top + window.scrollY - 64;
@@ -235,29 +236,22 @@ export function UnifiedDownloader({
                                 }}
                             >
                                 <History className="h-4 w-4" />
-                                <span>{dict.history.title}</span>
-                            </Button>
-                        ) : (
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                className="invisible pointer-events-none flex items-center gap-1.5"
-                                aria-hidden
-                                tabIndex={-1}
-                            >
-                                <History className="h-4 w-4" />
-                                <span>{dict.history.title}</span>
                             </Button>
                         )}
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-8 max-w-[7.5rem] gap-1.5 rounded-full px-2.5 text-[11px] font-medium"
+                            onClick={openToolbarAudioTool}
+                        >
+                            <Music className="h-3.5 w-3.5" />
+                            <span className="truncate">{dict.audioTool.triggerButton}</span>
+                        </Button>
                     </div>
-                    <div className="flex items-center gap-1">
-                        <FeedbackDialog />
-                        <LanguageSwitcher compact />
-                        <MobileNavMenu
-                            onOpenAudioTool={() => {
-                                openToolbarAudioTool();
-                            }}
-                        />
+                    <div className="flex items-center gap-1 shrink-0">
+                        <FeedbackDialog triggerIconOnly triggerClassName="h-8 w-8" />
+                        <LanguageSwitcher iconOnly />
+                        <MobileNavMenu />
                     </div>
                 </div>
                 <div className="hidden md:flex max-w-7xl mx-auto px-3 sm:px-4 md:px-5 py-3 justify-end items-center gap-1">

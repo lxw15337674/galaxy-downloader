@@ -110,6 +110,7 @@ export type Platform =
     | 'bilibili'
     | 'bilibili_tv'
     | 'douyin'
+    | 'telegram'
     | 'wechat'
     | 'nico'
     | 'niconico'

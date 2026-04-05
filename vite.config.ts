@@ -1,9 +1,46 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { serwist } from "@serwist/vite";
 import vinext from "vinext";
-import { defineConfig, type ResolvedConfig } from "vite";
+import { defineConfig, type Plugin, type ResolvedConfig } from "vite";
 import { fileURLToPath } from "node:url";
 
+function normalizeTreeshakePreset(value: unknown): unknown {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return value;
+  }
+
+  const config = value as Record<string, unknown>;
+
+  if (typeof config.preset !== "string") {
+    return value;
+  }
+
+  const { preset, ...rest } = config;
+  return Object.keys(rest).length > 0 ? rest : preset;
+}
+
+function normalizeVinextTreeshakePlugin(): Plugin {
+  return {
+    name: "app:normalize-vinext-treeshake",
+    configResolved(config: ResolvedConfig) {
+      const normalizeRollupOptions = (rollupOptions?: Record<string, unknown>) => {
+        if (!rollupOptions) {
+          return;
+        }
+
+        rollupOptions.treeshake = normalizeTreeshakePreset(rollupOptions.treeshake);
+      };
+
+      normalizeRollupOptions(config.build?.rollupOptions as Record<string, unknown> | undefined);
+
+      for (const environment of Object.values((config as ResolvedConfig & {
+        environments?: Record<string, { build?: { rollupOptions?: Record<string, unknown> } }>;
+      }).environments ?? {})) {
+        normalizeRollupOptions(environment.build?.rollupOptions);
+      }
+    },
+  };
+}
 
 export default defineConfig({
   resolve: {
@@ -13,6 +50,7 @@ export default defineConfig({
   },
   plugins: [
     vinext(),
+    normalizeVinextTreeshakePlugin(),
     ...cloudflare({
       viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
     }),

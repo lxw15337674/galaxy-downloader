@@ -20,8 +20,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChevronsUpDown } from 'lucide-react';
 import { toast } from '@/lib/deferred-toast';
 import { useDictionary } from '@/i18n/client';
+import { PlatformBadge } from '@/components/platform-badge';
 import { Platform } from '../../lib/types';
-import { getPlatformBadge } from '@/lib/platforms';
 
 export interface DownloadRecord {
     url: string;
@@ -140,7 +140,6 @@ export function DownloadHistory({
                                 ) : (
                                     <div className="space-y-2">
                                         {filteredHistory.map((record: DownloadRecord, index: number) => {
-                                            const platformBadge = getPlatformBadge(record.platform, dict);
                                             return (
                                                 <div
                                                     key={index}
@@ -151,9 +150,7 @@ export function DownloadHistory({
                                                             {record.title}
                                                         </div>
                                                         <div className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap">
-                                                            <span className={`px-2 py-0.5 text-xs font-medium rounded-md ${platformBadge.className}`}>
-                                                                {platformBadge.text}
-                                                            </span>
+                                                            <PlatformBadge platform={record.platform} />
                                                             <span>
                                                                 {formatRecordTimestamp(record.timestamp)}
                                                             </span>

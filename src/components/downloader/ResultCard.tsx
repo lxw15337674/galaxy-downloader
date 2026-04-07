@@ -89,6 +89,27 @@ type ResolvedImageFetchResult = {
     sourceUrl: string;
 };
 
+type ImageLoadState = {
+    loading: boolean;
+    error: boolean;
+    src: string;
+    baseSrc: string;
+    usedFallback: boolean;
+};
+
+function createInitialImageStates(images: string[]): ImageLoadState[] {
+    return images.map((imageUrl) => {
+        const baseSrc = resolveImageSrc(imageUrl);
+        return {
+            loading: true,
+            error: false,
+            src: baseSrc,
+            baseSrc,
+            usedFallback: false,
+        };
+    });
+}
+
 async function fetchImageBlobCandidates(candidates: string[]): Promise<ResolvedImageFetchResult> {
     let lastError: unknown = null;
 
@@ -182,7 +203,7 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
                                 title={dict.result.sharePlayLink}
                             >
                                 <Share2 className="h-4 w-4" />
-                                <span className="hidden sm:inline">{dict.result.sharePlayLink}</span>
+                                <span>{dict.result.sharePlayLink}</span>
                             </Button>
                         )}
                         <Button variant="ghost" size="sm" onClick={onClose}>
@@ -545,30 +566,19 @@ function ImageNoteGrid({
     singleImageMode?: boolean;
 }) {
     const dict = useDictionary()
-    type ImageLoadState = {
-        loading: boolean;
-        error: boolean;
-        src: string;
-        usedFallback: boolean;
-    };
-    const [imageStates, setImageStates] = useState<ImageLoadState[]>(() => (
-        images.map((imageUrl) => ({
-            loading: true,
-            error: false,
-            src: resolveImageSrc(imageUrl),
-            usedFallback: false,
-        }))
-    ));
+    const [imageStates, setImageStates] = useState<ImageLoadState[]>(() => createInitialImageStates(images));
     const [isPackaging, setIsPackaging] = useState(false);
     const [packagingProgress, setPackagingProgress] = useState(0);
 
     useEffect(() => {
-        setImageStates(images.map((imageUrl) => ({
-            loading: true,
-            error: false,
-            src: resolveImageSrc(imageUrl),
-            usedFallback: false,
-        })));
+        setImageStates((previousStates) => {
+            const nextStates = createInitialImageStates(images);
+            const isSameImageSet =
+                previousStates.length === nextStates.length
+                && previousStates.every((state, index) => state.baseSrc === nextStates[index]?.baseSrc);
+
+            return isSameImageSet ? previousStates : nextStates;
+        });
     }, [images]);
 
     const updateImageState = (index: number, updater: (state: ImageLoadState) => ImageLoadState) => {

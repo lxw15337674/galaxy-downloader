@@ -7,12 +7,13 @@ import { Loader2, ExternalLink } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { AppTopBar } from '@/components/layout/app-top-bar'
+import { PlatformBadge } from '@/components/platform-badge'
 import { ViewportSideRailAd } from '@/components/ads/viewport-side-rail-ad'
 import { useAppLocale, useDictionary } from '@/i18n/client'
 import { isApiRequestError, resolveApiErrorMessage } from '@/lib/api-errors'
 import { requestUnifiedParse } from '@/lib/unified-parse'
 import type { UnifiedParseResult } from '@/lib/types'
-import { getPlatformLabel, normalizePlatform } from '@/lib/platforms'
+import { normalizePlatform } from '@/lib/platforms'
 import { shouldShowVideoDownloadButton } from '@/components/downloader/result-card-visibility'
 
 type ParsedResultData = NonNullable<UnifiedParseResult['data']>
@@ -110,13 +111,12 @@ export function PlayPageClient() {
     }, [canonicalSourceUrl])
 
     const canPlay = parseResult ? canPlayResult(parseResult) : false
-    const platformLabel = parseResult ? getPlatformLabel(parseResult.platform, dict) : ''
 
     return (
         <div className="min-h-screen flex flex-col bg-background">
             <AppTopBar showHomeButton homeHref={`/${locale}`} />
 
-            <div className=" flex-1 p-3 sm:p-4 md:p-4 pt-4 ">
+            <div className=" flex-1 sm:p-4 md:p-4 pt-2 ">
                 <section className="w-full max-w-7xl mx-auto  bg-black">
                     {loading ? (
                         <div className="aspect-video max-h-[74dvh] md:max-h-[72vh] lg:max-h-[68vh] flex items-center justify-center text-sm text-muted-foreground">
@@ -158,9 +158,7 @@ export function PlayPageClient() {
                             <div className="w-full space-y-1.5">
                                 <h2 className="text-base sm:text-lg leading-snug font-semibold wrap-break-word" title={parseResult.title}>{parseResult.title}</h2>
                                 <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs text-muted-foreground">
-                                    {platformLabel ? (
-                                        <span className="inline-flex items-center rounded-full border px-2 py-0.5">{platformLabel}</span>
-                                    ) : null}
+                                    <PlatformBadge platform={parseResult.platform} />
                                     {canonicalSourceUrl ? (
                                         <a
                                             href={canonicalSourceUrl}

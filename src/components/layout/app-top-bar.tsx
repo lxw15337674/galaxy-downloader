@@ -46,13 +46,13 @@ export function AppTopBar({
                     )}
                     {showHistoryShortcut && onHistoryClick && (
                         <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            aria-label={dict.history.title}
+                            variant="outline"
+                            size="sm"
+                            className="h-8 max-w-30 gap-1.5 rounded-full px-2.5 text-[11px] font-medium"
                             onClick={onHistoryClick}
                         >
-                            <History className="h-4 w-4" />
+                            <History className="h-3.5 w-3.5" />
+                            <span className="truncate">{dict.history.title}</span>
                         </Button>
                     )}
                     {showAudioTool && onAudioToolClick && (
@@ -91,6 +91,17 @@ export function AppTopBar({
                             <span>GitHub</span>
                         </a>
                     </Button>
+                    {showHistoryShortcut && onHistoryClick && (
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="flex items-center gap-1"
+                            onClick={onHistoryClick}
+                        >
+                            <History className="h-4 w-4" />
+                            <span>{dict.history.title}</span>
+                        </Button>
+                    )}
                     {showAudioTool && onAudioToolClick && (
                         <Button
                             variant="ghost"

@@ -196,6 +196,7 @@ export function UnifiedDownloader({
 
     const handleRedownload = (url: string) => {
         setUrl(url);
+        setParseResult(null);
         setSharePlaybackEnabled(false);
         toast(dict.toast.linkFilledForRedownload, {
             description: dict.toast.clickToRedownloadDesc,

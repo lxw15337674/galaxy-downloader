@@ -675,6 +675,22 @@ function ImageNoteGrid({
                             className="relative group border rounded-lg overflow-hidden bg-muted/30 hover:bg-muted/50 transition-colors"
                         >
                             <div className={`${singleImageMode ? 'aspect-video' : 'aspect-square'} relative bg-muted flex items-center justify-center`}>
+                                {!hasError && (
+                                    <Image
+                                        src={displaySrc}
+                                        alt={
+                                            singleImageMode
+                                                ? (title || dict.result.coverLabel)
+                                                : replaceTemplate(dict.result.imageAlt, '{index}', String(index + 1))
+                                        }
+                                        fill
+                                        unoptimized
+                                        sizes={singleImageMode ? '(max-width: 1024px) 100vw, 720px' : '(max-width: 768px) 50vw, 33vw'}
+                                        className={`object-cover transition-opacity duration-200 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+                                        onLoad={() => handleImageLoad(index)}
+                                        onError={() => handleImageError(index, imageUrl)}
+                                    />
+                                )}
                                 {isLoading && (
                                     <div className="absolute inset-0 flex flex-col items-center justify-center">
                                         <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
@@ -692,24 +708,8 @@ function ImageNoteGrid({
                                         <p className="text-[10px] mt-1 opacity-60">{dict.result.loadFailed}</p>
                                     </div>
                                 )}
-                                {!isLoading && !hasError && (
-                                    <Image
-                                        src={displaySrc}
-                                        alt={
-                                            singleImageMode
-                                                ? (title || dict.result.coverLabel)
-                                                : replaceTemplate(dict.result.imageAlt, '{index}', String(index + 1))
-                                        }
-                                        fill
-                                        unoptimized
-                                        sizes={singleImageMode ? '(max-width: 1024px) 100vw, 720px' : '(max-width: 768px) 50vw, 33vw'}
-                                        className="object-cover"
-                                        onLoad={() => handleImageLoad(index)}
-                                        onError={() => handleImageError(index, imageUrl)}
-                                    />
-                                )}
                             </div>
-                            {!isLoading && (
+                            {!isLoading && !hasError && (
                                 <div className="absolute bottom-2 right-2">
                                     <Button
                                         size="sm"

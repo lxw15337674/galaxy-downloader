@@ -1,6 +1,12 @@
 import type { Locale } from '@/lib/i18n/config'
 import type { Dictionary } from '@/lib/i18n/types'
-import { SITE_URL, buildLocaleUrl, localeToHtmlLang } from '@/lib/seo'
+import {
+    SITE_URL,
+    buildLocaleUrl,
+    localeToHtmlLang,
+    resolveSiteAlternateName,
+    sanitizeStructuredDataTextList,
+} from '@/lib/seo'
 
 interface StructuredDataProps {
     locale: Locale
@@ -10,16 +16,13 @@ interface StructuredDataProps {
 export function StructuredData({ locale, dict }: StructuredDataProps) {
     const localeUrl = buildLocaleUrl(locale)
     const seoLocale: keyof Dictionary['seo']['features'] = locale
+    const featureList = sanitizeStructuredDataTextList(dict.seo.features[seoLocale])
 
     const websiteSchema = {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": dict.metadata.siteName,
-        "alternateName": locale === 'en'
-            ? "Universal Media Downloader"
-            : locale === 'ja'
-              ? "ユニバーサルメディアダウンローダー"
-              : "通用媒体下载器",
+        "alternateName": resolveSiteAlternateName(locale),
         "description": dict.metadata.description,
         "url": localeUrl,
         "inLanguage": localeToHtmlLang(locale),
@@ -41,13 +44,13 @@ export function StructuredData({ locale, dict }: StructuredDataProps) {
         "url": localeUrl,
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Any",
-        "permissions": "browser",
+        "browserRequirements": "Requires JavaScript and a modern web browser.",
         "offers": {
             "@type": "Offer",
             "price": "0",
             "priceCurrency": "USD"
         },
-        "featureList": dict.seo.features[seoLocale]
+        "featureList": featureList
     }
 
     const organizationSchema = {
@@ -55,7 +58,7 @@ export function StructuredData({ locale, dict }: StructuredDataProps) {
         "@type": "Organization",
         "name": dict.metadata.siteName,
         "url": SITE_URL,
-        "logo": `${SITE_URL}/favicon.ico`,
+        "logo": `${SITE_URL}/icons/icon-512x512.png`,
         "sameAs": [
             "https://github.com/lxw15337674/bilibili-audio-downloader",
         ],

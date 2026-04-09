@@ -1,16 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { X, Download, ExternalLink, Loader2, Package } from 'lucide-react';
+import { X, Download, ExternalLink, Loader2, Package, Share2 } from 'lucide-react';
 import Image from "next/image";
 import { useDictionary } from '@/i18n/client';
 import type { AudioExtractTask } from '@/components/audio-tool/types';
 import { UnifiedParseResult, PageInfo, EmbeddedVideoInfo } from "../../lib/types";
 import { downloadFile, formatDuration, sanitizeFilename } from "../../lib/utils";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from '@/lib/deferred-toast';
-import { normalizePlatform } from "@/lib/platforms";
 import {
     getResultMediaActions,
+    resolveResultDisplayImages,
     shouldHideSingleImagePreview,
     shouldShowVideoDownloadButton,
     shouldUseFrontendImageProxy,
@@ -50,17 +50,142 @@ function triggerBlobDownload(blob: Blob, filename: string) {
     }, 1000);
 }
 
+function dedupeUrls(urls: string[]): string[] {
+    return Array.from(new Set(urls.filter((value) => value.length > 0)));
+}
+
+function resolveImageDownloadExtension(sourceUrl: string, contentType: string | null | undefined): string {
+    const normalizedContentType = contentType?.split(';')[0]?.trim().toLowerCase() ?? '';
+    const contentTypeMap: Record<string, string> = {
+        'image/jpeg': 'jpg',
+        'image/jpg': 'jpg',
+        'image/png': 'png',
+        'image/webp': 'webp',
+        'image/gif': 'gif',
+        'image/svg+xml': 'svg',
+        'image/avif': 'avif',
+    };
+
+    const mappedExtension = contentTypeMap[normalizedContentType];
+    if (mappedExtension) {
+        return mappedExtension;
+    }
+
+    try {
+        const pathname = new URL(sourceUrl).pathname;
+        const match = pathname.match(/\.([a-z0-9]+)$/i);
+        if (match?.[1]) {
+            return match[1].toLowerCase();
+        }
+    } catch {
+        // Ignore invalid urls and fall back to jpg.
+    }
+
+    return 'jpg';
+}
+
+type ResolvedImageFetchResult = {
+    blob: Blob;
+    sourceUrl: string;
+};
+
+type ImageLoadState = {
+    loading: boolean;
+    error: boolean;
+    src: string;
+    baseSrc: string;
+    usedFallback: boolean;
+};
+
+function createInitialImageStates(images: string[]): ImageLoadState[] {
+    return images.map((imageUrl) => {
+        const baseSrc = resolveImageSrc(imageUrl);
+        return {
+            loading: true,
+            error: false,
+            src: baseSrc,
+            baseSrc,
+            usedFallback: false,
+        };
+    });
+}
+
+async function fetchImageBlobCandidates(candidates: string[]): Promise<ResolvedImageFetchResult> {
+    let lastError: unknown = null;
+
+    for (const candidate of dedupeUrls(candidates)) {
+        try {
+            const response = await fetch(candidate);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            return {
+                blob: await response.blob(),
+                sourceUrl: candidate,
+            };
+        } catch (error) {
+            lastError = error;
+        }
+    }
+
+    throw lastError ?? new Error('Failed to fetch image');
+}
+
 export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardProps) {
     const dict = useDictionary()
     if (!result) return null;
 
+    const displayImages = resolveResultDisplayImages({
+        noteType: result.noteType,
+        images: result.images,
+        coverUrl: result.cover,
+    });
     const isMultiPart = result.isMultiPart && result.pages && result.pages.length > 1;
-    const isImageNote = result.noteType === 'image' && !!result.images?.length;
+    const isImageNote = result.noteType === 'image' && displayImages.length > 0;
     const hasEmbeddedVideos = !!result.videos?.length;
-    const hasSupplementalImages = !isImageNote && !!result.images?.length;
+    const hasSupplementalImages = !isImageNote && displayImages.length > 0;
     const coverUrl = typeof result.cover === 'string' ? result.cover.trim() : '';
     const shouldShowCover = !isImageNote && coverUrl.length > 0;
     const coverSrc = shouldShowCover ? resolveCoverSrc(coverUrl) : '';
+    const shareSourceUrl = typeof result.url === 'string' ? result.url.trim() : '';
+    const hasPlayableCandidate = [
+        result.originDownloadVideoUrl,
+        result.downloadVideoUrl,
+        ...(result.pages ?? []).map((page) => page.downloadVideoUrl),
+        ...(result.videos ?? []).flatMap((video) => [video.originDownloadVideoUrl, video.downloadVideoUrl]),
+    ].some((url) => shouldShowVideoDownloadButton(url));
+    const canSharePlayLink = shareSourceUrl.length > 0 && (
+        result.mediaActions?.video === 'direct-download'
+        || result.mediaActions?.video === 'merge-then-download'
+        || hasPlayableCandidate
+    );
+
+    const handleCopySharePlayLink = async () => {
+        if (!canSharePlayLink) {
+            return;
+        }
+
+        try {
+            if (typeof window === 'undefined' || typeof navigator === 'undefined' || !navigator.clipboard?.writeText) {
+                throw new Error('Clipboard API unavailable');
+            }
+
+            const pathnameSegments = window.location.pathname.split('/').filter((segment) => segment.length > 0);
+            const localePrefix = pathnameSegments[0] ? `/${pathnameSegments[0]}` : '';
+            const shareUrl = new URL(`${window.location.origin}${localePrefix}/play`);
+            shareUrl.searchParams.set('url', shareSourceUrl);
+            shareUrl.searchParams.set('autoplay', '1');
+
+            await navigator.clipboard.writeText(shareUrl.toString());
+            toast.success(dict.result.sharePlayLinkCopied);
+        } catch (error) {
+            console.error('Failed to copy share-play link:', error);
+            toast.error(dict.errors.clipboardFailed, {
+                description: dict.errors.clipboardPermission,
+            });
+        }
+    };
 
     const displayTitle = result.title;
     return (
@@ -68,9 +193,23 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
             <CardHeader className="p-4">
                 <div className="flex items-center justify-between mb-2">
                     <CardTitle className="text-lg">{dict.result.title}</CardTitle>
-                    <Button variant="ghost" size="sm" onClick={onClose}>
-                        <X className="h-4 w-4" />
-                    </Button>
+                    <div className="flex items-center gap-2">
+                        {canSharePlayLink && (
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-8 gap-1.5"
+                                onClick={() => void handleCopySharePlayLink()}
+                                title={dict.result.sharePlayLink}
+                            >
+                                <Share2 className="h-4 w-4" />
+                                <span>{dict.result.sharePlayLink}</span>
+                            </Button>
+                        )}
+                        <Button variant="ghost" size="sm" onClick={onClose}>
+                            <X className="h-4 w-4" />
+                        </Button>
+                    </div>
                 </div>
                 <p
                     className="line-clamp-2 text-sm text-foreground/80 break-words"
@@ -88,15 +227,13 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
                         <ImageNoteGrid
                             images={[coverSrc]}
                             title={displayTitle}
-                            platform={result.platform}
                             singleImageMode
                         />
                     )}
                     {isImageNote ? (
                         <ImageNoteGrid
-                            images={result.images!}
+                            images={displayImages}
                             title={displayTitle}
-                            platform={result.platform}
                         />
                     ) : (
                         <>
@@ -112,9 +249,8 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
                             )}
                             {hasSupplementalImages && (
                                 <ImageNoteGrid
-                                    images={result.images!}
+                                    images={displayImages}
                                     title={displayTitle}
-                                    platform={result.platform}
                                 />
                             )}
                         </>
@@ -423,147 +559,74 @@ function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
 function ImageNoteGrid({
     images,
     title,
-    platform,
     singleImageMode = false,
 }: {
     images: string[];
     title: string;
-    platform: string;
     singleImageMode?: boolean;
 }) {
     const dict = useDictionary()
-    // 合并的状态类型
-    type ImageLoadState = {
-        loading: boolean;
-        error: boolean;
-        blobUrl: string | null;
-    };
-
-    const [imageStates, setImageStates] = useState<Map<number, ImageLoadState>>(new Map());
+    const [imageStates, setImageStates] = useState<ImageLoadState[]>(() => createInitialImageStates(images));
     const [isPackaging, setIsPackaging] = useState(false);
     const [packagingProgress, setPackagingProgress] = useState(0);
 
-    // 使用 ref 管理 blob URLs，避免依赖问题
-    const blobUrlsRef = useRef<Set<string>>(new Set());
-
     useEffect(() => {
-        const currentBlobUrls = new Set<string>();
-        blobUrlsRef.current = currentBlobUrls;
-        let cancelled = false;
-        let rafId: number | null = null;
+        setImageStates((previousStates) => {
+            const nextStates = createInitialImageStates(images);
+            const isSameImageSet =
+                previousStates.length === nextStates.length
+                && previousStates.every((state, index) => state.baseSrc === nextStates[index]?.baseSrc);
 
-        // 初始化加载状态
-        const initialStates = new Map<number, ImageLoadState>();
-        images.forEach((_, index) => {
-            initialStates.set(index, { loading: true, error: false, blobUrl: null });
+            return isSameImageSet ? previousStates : nextStates;
         });
-        setImageStates(initialStates);
-        const draftStates = new Map(initialStates);
+    }, [images]);
 
-        const flushStates = () => {
-            rafId = null;
-            if (cancelled) {
-                return;
+    const updateImageState = (index: number, updater: (state: ImageLoadState) => ImageLoadState) => {
+        setImageStates((prev) => prev.map((state, currentIndex) => (
+            currentIndex === index ? updater(state) : state
+        )));
+    };
+
+    const handleImageLoad = (index: number) => {
+        updateImageState(index, (state) => ({
+            ...state,
+            loading: false,
+            error: false,
+        }));
+    };
+
+    const handleImageError = (index: number, originalUrl: string) => {
+        updateImageState(index, (state) => {
+            if (!state.usedFallback && state.src !== originalUrl) {
+                return {
+                    ...state,
+                    loading: true,
+                    error: false,
+                    src: originalUrl,
+                    usedFallback: true,
+                };
             }
-            setImageStates(new Map(draftStates));
-        };
 
-        const scheduleFlush = () => {
-            if (cancelled || rafId !== null) {
-                return;
-            }
-            rafId = window.requestAnimationFrame(flushStates);
-        };
+            return {
+                ...state,
+                loading: false,
+                error: true,
+            };
+        });
+    };
 
-        // 获取所有图片
-        const fetchImages = async () => {
-            await Promise.all(
-                images.map(async (imageUrl, index) => {
-                    const resolvedImageUrl = resolveImageSrc(imageUrl);
-                    try {
-                        const referrerMap: Record<string, string> = {
-                            xiaohongshu: 'https://www.xiaohongshu.com/',
-                            douyin: 'https://www.douyin.com/',
-                            instagram: 'https://www.instagram.com/',
-                            x: 'https://x.com/',
-                        };
-                        const referrer = referrerMap[normalizePlatform(platform)];
-                        const shouldUseCustomReferrer =
-                            !!referrer &&
-                            resolvedImageUrl === imageUrl &&
-                            (imageUrl.startsWith('http://') || imageUrl.startsWith('https://'));
-
-                        const response = await fetch(resolvedImageUrl, shouldUseCustomReferrer ? { referrer } : undefined);
-                        if (!response.ok) {
-                            throw new Error(`HTTP ${response.status}`);
-                        }
-                        const blob = await response.blob();
-                        const blobUrl = URL.createObjectURL(blob);
-
-                        // 存储到 ref 用于清理
-                        currentBlobUrls.add(blobUrl);
-
-                        draftStates.set(index, { loading: false, error: false, blobUrl });
-                        scheduleFlush();
-                    } catch (error) {
-                        console.error(`Failed to load image ${index}:`, error);
-                        if (resolvedImageUrl !== imageUrl) {
-                            try {
-                                const response = await fetch(imageUrl);
-                                if (!response.ok) {
-                                    throw new Error(`HTTP ${response.status}`);
-                                }
-                                const blob = await response.blob();
-                                const blobUrl = URL.createObjectURL(blob);
-
-                                currentBlobUrls.add(blobUrl);
-
-                                draftStates.set(index, { loading: false, error: false, blobUrl });
-                                scheduleFlush();
-                                return;
-                            } catch (fallbackError) {
-                                console.error(`Fallback image load failed ${index}:`, fallbackError);
-                            }
-                        }
-                        draftStates.set(index, { loading: false, error: true, blobUrl: null });
-                        scheduleFlush();
-                    }
-                })
-            );
-
-            if (cancelled) {
-                return;
-            }
-            if (rafId !== null) {
-                cancelAnimationFrame(rafId);
-                rafId = null;
-            }
-            setImageStates(new Map(draftStates));
-        };
-
-        void fetchImages();
-
-        // 清理函数：释放所有 blob URLs
-        return () => {
-            cancelled = true;
-            if (rafId !== null) {
-                cancelAnimationFrame(rafId);
-            }
-            currentBlobUrls.forEach(blobUrl => {
-                URL.revokeObjectURL(blobUrl);
-            });
-            currentBlobUrls.clear();
-        };
-    }, [images, platform]);
-
-    const handleDownload = (index: number, originalUrl: string) => {
-        const state = imageStates.get(index);
-        if (state?.blobUrl) {
-            // 如果有 blob，直接下载
-            downloadFile(state.blobUrl, `${sanitizeFilename(title)}-${index + 1}.jpg`);
-        } else {
-            // 否则在新标签打开原始 URL
-            window.open(originalUrl, '_blank');
+    const handleDownload = async (index: number, originalUrl: string) => {
+        try {
+            const state = imageStates[index];
+            const { blob, sourceUrl } = await fetchImageBlobCandidates([
+                state?.src ?? resolveImageSrc(originalUrl),
+                originalUrl,
+            ]);
+            const extension = resolveImageDownloadExtension(sourceUrl, blob.type);
+            triggerBlobDownload(blob, `${sanitizeFilename(title)}-${index + 1}.${extension}`);
+        } catch (error) {
+            console.error(`Failed to download image ${index}:`, error);
+            toast.error(dict.errors.downloadError);
         }
     };
 
@@ -575,27 +638,24 @@ function ImageNoteGrid({
             const { default: JSZip } = await import('jszip');
             const zip = new JSZip();
             let successCount = 0;
-            let failCount = 0;
 
             // 遍历所有图片，添加到 zip
             for (let index = 0; index < images.length; index++) {
-                const state = imageStates.get(index);
-                const blobUrl = state?.blobUrl;
-                const hasError = state?.error;
+                const state = imageStates[index];
+                const hasError = state?.error ?? false;
 
-                if (blobUrl && !hasError) {
+                if (!hasError) {
                     try {
-                        // 从 blob URL 获取实际的 blob 数据
-                        const response = await fetch(blobUrl);
-                        const blob = await response.blob();
-                        zip.file(`${sanitizeFilename(title)}-${index + 1}.jpg`, blob);
+                        const { blob, sourceUrl } = await fetchImageBlobCandidates([
+                            state?.src ?? resolveImageSrc(images[index]!),
+                            images[index]!,
+                        ]);
+                        const extension = resolveImageDownloadExtension(sourceUrl, blob.type);
+                        zip.file(`${sanitizeFilename(title)}-${index + 1}.${extension}`, blob);
                         successCount++;
                     } catch (error) {
                         console.error(`Failed to add image ${index} to zip:`, error);
-                        failCount++;
                     }
-                } else {
-                    failCount++;
                 }
 
                 // 更新进度
@@ -622,10 +682,10 @@ function ImageNoteGrid({
     };
 
     // 计算加载完成的数量和成功数量
-    const loadedCount = Array.from(imageStates.values()).filter(state => !state.loading).length;
+    const loadedCount = imageStates.filter((state) => !state.loading).length;
     const allLoaded = loadedCount === images.length;
-    const successCount = Array.from(imageStates.values()).filter(state => !state.error && state.blobUrl).length;
-    const singleImageState = singleImageMode ? imageStates.get(0) : undefined;
+    const successCount = imageStates.filter((state) => !state.error).length;
+    const singleImageState = singleImageMode ? imageStates[0] : undefined;
     const shouldHideSingleImage = shouldHideSingleImagePreview(singleImageMode, singleImageState);
 
     if (shouldHideSingleImage) {
@@ -672,10 +732,10 @@ function ImageNoteGrid({
             )}
             <div className={`${singleImageMode ? 'grid grid-cols-1' : 'grid grid-cols-2'} gap-3 max-h-[500px] overflow-y-auto pr-1`}>
                 {images.map((imageUrl, index) => {
-                    const state = imageStates.get(index);
+                    const state = imageStates[index];
                     const isLoading = state?.loading ?? true;
                     const hasError = state?.error ?? false;
-                    const blobUrl = state?.blobUrl ?? null;
+                    const displaySrc = state?.src ?? resolveImageSrc(imageUrl);
 
                     return (
                         <div
@@ -683,6 +743,22 @@ function ImageNoteGrid({
                             className="relative group border rounded-lg overflow-hidden bg-muted/30 hover:bg-muted/50 transition-colors"
                         >
                             <div className={`${singleImageMode ? 'aspect-video' : 'aspect-square'} relative bg-muted flex items-center justify-center`}>
+                                {!hasError && (
+                                    <Image
+                                        src={displaySrc}
+                                        alt={
+                                            singleImageMode
+                                                ? (title || dict.result.coverLabel)
+                                                : replaceTemplate(dict.result.imageAlt, '{index}', String(index + 1))
+                                        }
+                                        fill
+                                        unoptimized
+                                        sizes={singleImageMode ? '(max-width: 1024px) 100vw, 720px' : '(max-width: 768px) 50vw, 33vw'}
+                                        className={`object-cover transition-opacity duration-200 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+                                        onLoad={() => handleImageLoad(index)}
+                                        onError={() => handleImageError(index, imageUrl)}
+                                    />
+                                )}
                                 {isLoading && (
                                     <div className="absolute inset-0 flex flex-col items-center justify-center">
                                         <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
@@ -700,29 +776,15 @@ function ImageNoteGrid({
                                         <p className="text-[10px] mt-1 opacity-60">{dict.result.loadFailed}</p>
                                     </div>
                                 )}
-                                {!isLoading && !hasError && blobUrl && (
-                                    <Image
-                                        src={blobUrl}
-                                        alt={
-                                            singleImageMode
-                                                ? (title || dict.result.coverLabel)
-                                                : replaceTemplate(dict.result.imageAlt, '{index}', String(index + 1))
-                                        }
-                                        fill
-                                        unoptimized
-                                        sizes={singleImageMode ? '(max-width: 1024px) 100vw, 720px' : '(max-width: 768px) 50vw, 33vw'}
-                                        className="object-cover"
-                                    />
-                                )}
                             </div>
-                            {!isLoading && (
+                            {!isLoading && !hasError && (
                                 <div className="absolute bottom-2 right-2">
                                     <Button
                                         size="sm"
                                         variant="secondary"
                                         className="h-8 w-8 p-0 shadow-md"
-                                        onClick={() => handleDownload(index, imageUrl)}
-                                        title={blobUrl ? dict.result.downloadImage : dict.result.viewLargeImage}
+                                        onClick={() => void handleDownload(index, imageUrl)}
+                                        title={dict.result.downloadImage}
                                     >
                                         <Download className="h-4 w-4" />
                                     </Button>

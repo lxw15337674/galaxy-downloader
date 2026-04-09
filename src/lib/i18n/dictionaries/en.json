@@ -106,11 +106,11 @@
         "installAction": "Install"
     },
     "metadata": {
-        "title": "Universal Media Downloader - Download Media from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X",
-        "description": "Free online universal media downloader. Download Bilibili video and audio, Douyin videos and pure music, Telegram public video posts, Threads videos and image posts, WeChat article videos, Weibo videos and mixed-media posts, Niconico video and audio, Instagram reels, posts, and image posts, Xiaohongshu videos and image notes, TikTok videos, and X videos in one click.",
+        "title": "Universal Media Downloader | Bilibili, Douyin, Instagram, TikTok, X",
+        "description": "Free online media downloader for Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X. Auto-detect links and download video, audio, or image posts.",
         "keywords": "online media downloader,Bilibili video downloader,Bilibili audio downloader,Douyin video downloader,Douyin music downloader,Telegram video downloader,Threads video downloader,Threads image post downloader,WeChat video downloader,Weibo video downloader,Weibo mixed media downloader,Niconico video downloader,Niconico audio downloader,Instagram reels downloader,Instagram post downloader,Instagram image post downloader,Xiaohongshu video downloader,Xiaohongshu image note downloader,TikTok video downloader,X video downloader",
-        "ogTitle": "Universal Media Downloader - Free Online Tool",
-        "ogDescription": "Professional universal media downloader. Auto-detect links and download Bilibili video/audio, Douyin videos and pure music, Telegram public video posts, Threads videos and image posts, WeChat article videos, Weibo videos and mixed-media posts, Niconico video/audio, Instagram reels, posts, and image posts, Xiaohongshu videos and image notes, TikTok videos, and X videos in one click.",
+        "ogTitle": "Universal Media Downloader | Free Online Tool",
+        "ogDescription": "Auto-detect links from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X, then download video, audio, or image posts online.",
         "siteName": "Universal Media Downloader"
     },
     "common": {
@@ -573,6 +573,10 @@
         "mergeDownloadVideo": "Download Complete Video",
         "mergeDownloadVideoHint": "Audio and video will be merged before the download starts.",
         "downloadAudio": "Download Audio",
+        "sharePlayLink": "Share to Play",
+        "sharePlayLinkCopied": "Playback share link copied",
+        "sharePlayPlayerTitle": "Shared Video Playback",
+        "sharePlayUnavailable": "Direct playback is unavailable for this result. Please use download options.",
         "originDownloadVideo": "Video Direct Link",
         "originDownloadAudio": "Audio Direct Link",
         "totalParts": "Total {count} parts",

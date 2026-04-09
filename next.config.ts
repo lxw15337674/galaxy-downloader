@@ -1,18 +1,4 @@
 import type { NextConfig } from "next";
-import withSerwistInit from "@serwist/next";
-import createNextIntlPlugin from "next-intl/plugin";
-
-const lifecycleScript = process.env.npm_lifecycle_script ?? "";
-const isVinextRuntime =
-    /\bvinext\b/.test(lifecycleScript) ||
-    process.argv.some((arg) => arg.toLowerCase().includes("vinext"));
-
-const withSerwist = withSerwistInit({
-    swSrc: "src/sw.ts",
-    swDest: "public/sw.js",
-    disable: process.env.NODE_ENV === "development",
-});
-const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
     cacheComponents: true,
@@ -33,6 +19,31 @@ const nextConfig: NextConfig = {
     },
 };
 
-const intlConfig = withNextIntl(nextConfig);
+function isVinextRuntime(): boolean {
+    const lifecycleScript = process.env.npm_lifecycle_script ?? "";
+    return /\bvinext\b/.test(lifecycleScript)
+        || process.argv.some((arg) => arg.toLowerCase().includes("vinext"));
+}
 
-export default isVinextRuntime ? nextConfig : withSerwist(intlConfig);
+export default async function createConfig(): Promise<NextConfig> {
+    if (isVinextRuntime()) {
+        return nextConfig;
+    }
+
+    const [
+        { default: withSerwistInit },
+        { default: createNextIntlPlugin },
+    ] = await Promise.all([
+        import("@serwist/next"),
+        import("next-intl/plugin"),
+    ]);
+
+    const withSerwist = withSerwistInit({
+        swSrc: "src/sw.ts",
+        swDest: "public/sw.js",
+        disable: process.env.NODE_ENV === "development",
+    });
+    const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
+
+    return withSerwist(withNextIntl(nextConfig));
+}

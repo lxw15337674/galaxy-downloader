@@ -48,6 +48,70 @@ export function localeToHtmlLang(locale: Locale): string {
     return "en"
 }
 
+export function resolveSiteAlternateName(locale: Locale): string {
+    if (locale === "en") return "Universal Media Downloader"
+    if (locale === "ja") return "ユニバーサルメディアダウンローダー"
+    if (locale === "zh-tw") return "通用媒體下載器"
+    return "通用媒体下载器"
+}
+
+export function sanitizeStructuredDataTextList(values: string[]): string[] {
+    const seen = new Set<string>()
+
+    return values
+        .map((value) => value.trim())
+        .filter((value) => value.length > 0)
+        .filter((value) => !/^[?？]+$/.test(value))
+        .filter((value) => {
+            if (seen.has(value)) {
+                return false
+            }
+
+            seen.add(value)
+            return true
+        })
+}
+
+function normalizeHeaderToken(value: string): string {
+    return value.trim().toLowerCase()
+}
+
+export function appendVaryHeader(headers: Headers, values: string[]): void {
+    const existing = headers.get("Vary")
+    const merged = new Map<string, string>()
+
+    if (existing) {
+        for (const value of existing.split(",")) {
+            const trimmed = value.trim()
+            if (!trimmed) continue
+            merged.set(normalizeHeaderToken(trimmed), trimmed)
+        }
+    }
+
+    for (const value of values) {
+        const trimmed = value.trim()
+        if (!trimmed) continue
+        merged.set(normalizeHeaderToken(trimmed), trimmed)
+    }
+
+    if (merged.size > 0) {
+        headers.set("Vary", Array.from(merged.values()).join(", "))
+    }
+}
+
+export function setXRobotsTag(headers: Headers, directives: string[]): void {
+    const sanitized = directives
+        .map((directive) => directive.trim().toLowerCase())
+        .filter((directive) => directive.length > 0)
+
+    if (sanitized.length === 0) {
+        headers.delete("X-Robots-Tag")
+        return
+    }
+
+    headers.set("X-Robots-Tag", Array.from(new Set(sanitized)).join(", "))
+}
+
 export function buildLocaleUrl(locale: Locale, path = ""): string {
     return `${SITE_URL}/${locale}${normalizePath(path)}`
 }

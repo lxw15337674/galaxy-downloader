@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+    LOCALE_REDIRECT_VARY_HEADERS,
     isBotUserAgent,
     resolveLocaleForRequest,
     resolveLocaleFromAcceptLanguage,
@@ -61,5 +62,13 @@ it('accept-language mapping supports ja fallback to ja', () => {
 
 it('falls back to default locale for unsupported accept-language', () => {
     expect(resolveLocaleFromAcceptLanguage(['fr-FR'], locales, defaultLocale)).toBe('en')
+})
+
+it('defines stable vary headers for locale redirects', () => {
+    expect(LOCALE_REDIRECT_VARY_HEADERS).toEqual([
+        'Accept-Language',
+        'Cookie',
+        'User-Agent',
+    ])
 })
 })

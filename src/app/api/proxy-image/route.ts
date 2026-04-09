@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { setXRobotsTag } from '@/lib/seo';
 
 const ALLOWED_IMAGE_HOSTS = [
     '*',
@@ -116,24 +117,32 @@ function unwrapNestedImageProxyUrl(targetUrl: URL): URL {
 export async function GET(request: NextRequest) {
     const rawUrl = request.nextUrl.searchParams.get('url');
     if (!rawUrl) {
-        return NextResponse.json({ error: 'Missing "url" query parameter' }, { status: 400 });
+        const response = NextResponse.json({ error: 'Missing "url" query parameter' }, { status: 400 });
+        setXRobotsTag(response.headers, ['noindex', 'nofollow', 'noarchive', 'noimageindex']);
+        return response;
     }
 
     let targetUrl: URL;
     try {
         targetUrl = new URL(rawUrl);
     } catch {
-        return NextResponse.json({ error: 'Invalid image url' }, { status: 400 });
+        const response = NextResponse.json({ error: 'Invalid image url' }, { status: 400 });
+        setXRobotsTag(response.headers, ['noindex', 'nofollow', 'noarchive', 'noimageindex']);
+        return response;
     }
 
     targetUrl = unwrapNestedImageProxyUrl(targetUrl);
 
     if (!isHttpProtocol(targetUrl.protocol)) {
-        return NextResponse.json({ error: 'Only http(s) protocol is allowed' }, { status: 400 });
+        const response = NextResponse.json({ error: 'Only http(s) protocol is allowed' }, { status: 400 });
+        setXRobotsTag(response.headers, ['noindex', 'nofollow', 'noarchive', 'noimageindex']);
+        return response;
     }
 
     if (!isAllowedImageHost(targetUrl.hostname)) {
-        return NextResponse.json({ error: 'Host is not allowed' }, { status: 403 });
+        const response = NextResponse.json({ error: 'Host is not allowed' }, { status: 403 });
+        setXRobotsTag(response.headers, ['noindex', 'nofollow', 'noarchive', 'noimageindex']);
+        return response;
     }
 
     const upstreamUrl = normalizeUpstreamUrl(targetUrl);
@@ -162,25 +171,32 @@ export async function GET(request: NextRequest) {
             url: upstreamUrl.toString(),
             error: error instanceof Error ? error.message : String(error),
         });
-        return NextResponse.json({ error: 'Failed to fetch image from upstream' }, { status: 502 });
+        const response = NextResponse.json({ error: 'Failed to fetch image from upstream' }, { status: 502 });
+        setXRobotsTag(response.headers, ['noindex', 'nofollow', 'noarchive', 'noimageindex']);
+        return response;
     }
 
     if (!upstreamResponse.ok || !upstreamResponse.body) {
-        return NextResponse.json(
+        const response = NextResponse.json(
             { error: `Upstream image request failed with status ${upstreamResponse.status}` },
             { status: 502 }
         );
+        setXRobotsTag(response.headers, ['noindex', 'nofollow', 'noarchive', 'noimageindex']);
+        return response;
     }
 
     const contentType = upstreamResponse.headers.get('content-type') || '';
     if (!contentType.toLowerCase().startsWith('image/')) {
-        return NextResponse.json({ error: 'Upstream response is not an image' }, { status: 415 });
+        const response = NextResponse.json({ error: 'Upstream response is not an image' }, { status: 415 });
+        setXRobotsTag(response.headers, ['noindex', 'nofollow', 'noarchive', 'noimageindex']);
+        return response;
     }
 
     const headers = new Headers();
     headers.set('Content-Type', contentType);
     headers.set('Cache-Control', 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=86400');
     headers.set('Cross-Origin-Resource-Policy', 'same-origin');
+    setXRobotsTag(headers, ['noindex', 'nofollow', 'noarchive', 'noimageindex']);
 
     const contentLength = upstreamResponse.headers.get('content-length');
     if (contentLength) {

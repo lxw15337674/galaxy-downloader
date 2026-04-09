@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "galaxy-downloader",
-  "compatibility_date": "2026-03-25",
+  "compatibility_date": "2026-03-17",
   "compatibility_flags": [
     "nodejs_compat"
   ],

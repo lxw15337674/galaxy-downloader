@@ -1,6 +1,32 @@
 {
   "versions": [
     {
+      "version": "4.1.0",
+      "date": "2026-04-07",
+      "changes": {
+        "zh": [
+          "新增独立分享播放页，支持通过链接直接进入播放",
+          "结果卡新增分享播放入口，并优化移动端按钮展示",
+          "顶部栏支持首页快捷入口，历史记录入口改为图标加文字"
+        ],
+        "en": [
+          "Added a dedicated shared playback page so users can open and play directly from a share link",
+          "Added a share-to-play action in result cards and improved mobile button presentation",
+          "Enhanced the top bar with a home shortcut and updated history shortcut to icon-plus-label style"
+        ],
+        "ja": [
+          "共有リンクから直接再生できる専用の共有再生ページを追加しました",
+          "結果カードに共有再生アクションを追加し、モバイルでのボタン表示を改善しました",
+          "上部バーにホームショートカットを追加し、履歴ショートカットをアイコン＋ラベル表示に統一しました"
+        ],
+        "zh-tw": [
+          "新增獨立分享播放頁，可透過連結直接進入播放",
+          "結果卡新增分享播放入口，並優化行動端按鈕呈現",
+          "頂欄支援首頁快捷入口，歷史記錄入口改為圖示加文字"
+        ]
+      }
+    },
+    {
       "version": "4.0.0",
       "date": "2026-04-05",
       "changes": {

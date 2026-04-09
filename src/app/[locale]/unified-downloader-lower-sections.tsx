@@ -1,10 +1,16 @@
 'use client';
 
 import type { ReactNode, RefObject } from 'react';
+import dynamic from 'next/dynamic';
 import type { AudioExtractTask } from '@/components/audio-tool/types';
 import type { UnifiedParseResult } from '@/lib/types';
 import { ResultCard } from '@/components/downloader/ResultCard';
-import { DownloadHistory, type DownloadRecord } from './download-history';
+import type { DownloadRecord } from './download-history';
+
+const DownloadHistory = dynamic(
+    () => import('./download-history').then((m) => m.DownloadHistory),
+    { ssr: false }
+);
 
 interface UnifiedDownloaderLowerSectionsProps {
     parseResult: UnifiedParseResult['data'] | null;

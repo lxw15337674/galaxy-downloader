@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 
+import { setXRobotsTag } from "@/lib/seo"
 import type { ApiErrorDetails, UnifiedApiResponse } from "@/lib/types"
 
 const DEFAULT_DEV_API_BASE_URL = "http://localhost:8080"
@@ -26,9 +27,11 @@ function createUpstreamUnavailableResponse(details?: ApiErrorDetails): Response 
         details,
     }
 
-    return NextResponse.json(payload, {
+    const response = NextResponse.json(payload, {
         status: UPSTREAM_UNAVAILABLE_STATUS,
     })
+    setXRobotsTag(response.headers, ["noindex", "nofollow", "noarchive"])
+    return response
 }
 
 function resolveUpstreamBaseUrl(): { baseUrl: URL | null; issue?: UpstreamConfigIssue } {
@@ -120,6 +123,7 @@ export async function proxyUpstreamApi(
         if (key.toLowerCase() === "transfer-encoding") continue
         responseHeaders.set(key, value)
     }
+    setXRobotsTag(responseHeaders, ["noindex", "nofollow", "noarchive"])
 
     return new NextResponse(upstreamResponse.body, {
         status: upstreamResponse.status,

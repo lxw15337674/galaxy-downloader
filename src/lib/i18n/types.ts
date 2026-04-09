@@ -8,6 +8,10 @@ export interface ResultDict {
     mergeDownloadVideo: string;
     mergeDownloadVideoHint: string;
     downloadAudio: string;
+    sharePlayLink: string;
+    sharePlayLinkCopied: string;
+    sharePlayPlayerTitle: string;
+    sharePlayUnavailable: string;
     pureMusicHint: string;
     originDownloadVideo: string;
     originDownloadAudio: string;

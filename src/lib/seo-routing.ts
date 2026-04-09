@@ -3,6 +3,12 @@ import { match } from '@formatjs/intl-localematcher'
 export const BOT_USER_AGENT_PATTERN =
     /googlebot|bingbot|yandex|baiduspider|slurp|duckduckbot|bytespider|petalbot|applebot|facebookexternalhit|twitterbot|linkedinbot/i
 
+export const LOCALE_REDIRECT_VARY_HEADERS = [
+    'Accept-Language',
+    'Cookie',
+    'User-Agent',
+] as const
+
 const localeMapping: Record<string, string> = {
     'zh-TW': 'zh-tw',
     'zh-HK': 'zh-tw',

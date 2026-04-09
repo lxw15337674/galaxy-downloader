@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import {
     getResultMediaActions,
+    resolveResultDisplayImages,
     shouldHideSingleImagePreview,
     shouldUseFrontendImageProxy,
     shouldShowVideoDownloadButton,
@@ -33,6 +34,35 @@ it('keeps multi-image previews visible even when one item fails', () => {
             error: true,
         })
     ).toBe(false)
+})
+
+it('hides supplemental images for explicit video notes', () => {
+    expect(
+        resolveResultDisplayImages({
+            noteType: 'video',
+            images: ['https://img.example.com/cover.jpg', 'https://img.example.com/extra.jpg'],
+            coverUrl: 'https://img.example.com/cover.jpg',
+        })
+    ).toEqual([])
+})
+
+it('keeps image lists for image notes', () => {
+    expect(
+        resolveResultDisplayImages({
+            noteType: 'image',
+            images: ['https://img.example.com/1.jpg', 'https://img.example.com/2.jpg'],
+            coverUrl: 'https://img.example.com/1.jpg',
+        })
+    ).toEqual(['https://img.example.com/1.jpg', 'https://img.example.com/2.jpg'])
+})
+
+it('removes duplicated cover from mixed content without noteType', () => {
+    expect(
+        resolveResultDisplayImages({
+            images: ['https://img.example.com/cover.jpg', 'https://img.example.com/extra.jpg', 'https://img.example.com/extra.jpg'],
+            coverUrl: 'https://img.example.com/cover.jpg',
+        })
+    ).toEqual(['https://img.example.com/extra.jpg'])
 })
 
 it('shows video download button for bilibili tv when a video url exists', () => {

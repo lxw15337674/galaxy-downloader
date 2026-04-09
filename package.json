@@ -10,9 +10,6 @@
     "test:watch": "vitest",
     "generate-og": "node scripts/generate-og-images.mjs",
     "generate-icons": "node scripts/generate-icons.mjs",
-    "dev:vinext": "vinext dev --port 3001",
-    "build:vinext": "vinext build",
-    "start:vinext": "vinext start",
     "deploy": "vinext deploy",
     "deploy:ci": "vinext deploy --skip-build",
     "deploy:preview": "vinext deploy --preview",
@@ -47,7 +44,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.30.2",
+    "@cloudflare/vite-plugin": "^1.31.0",
     "@eslint/eslintrc": "^3.3.5",
     "@serwist/next": "^9.5.7",
     "@serwist/sw": "^9.5.7",
@@ -55,11 +52,11 @@
     "@serwist/window": "^9.5.7",
     "@tailwindcss/postcss": "^4.2.2",
     "@types/negotiator": "^0.6.4",
-    "@types/node": "^20.19.37",
+    "@types/node": "^20.19.39",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
-    "@vitejs/plugin-rsc": "^0.5.21",
+    "@vitejs/plugin-rsc": "^0.5.22",
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.1.6",
@@ -70,9 +67,9 @@
     "tailwindcss": "^4.2.2",
     "typescript": "^5.9.3",
     "vinext": "^0.0.39",
-    "vite": "^8.0.3",
+    "vite": "^8.0.6",
     "vitest": "^3.2.4",
-    "wrangler": "4.79.0"
+    "wrangler": "4.80.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

@@ -23,7 +23,7 @@
 pnpm dev
 ```
 
-在浏览器中打开 [http://localhost:3000](http://localhost:3000) 即可看到应用界面。
+在浏览器中打开 [http://localhost:3010](http://localhost:3010) 即可看到应用界面。
 
 ## 使用方法
 

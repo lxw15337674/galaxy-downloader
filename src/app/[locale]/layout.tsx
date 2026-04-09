@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "../globals.css";
 import { DeferredRuntimeServices } from "@/components/deferred-runtime-services"
 import { ThemeProvider } from "@/components/theme-provider";
@@ -51,6 +51,11 @@ export async function generateMetadata({
             email: false,
             address: false,
             telephone: false,
+        },
+        other: {
+            'google-adsense-account': 'ca-pub-1581472267398547',
+            'mobile-web-app-capable': 'yes',
+            'msapplication-TileColor': '#000000',
         },
         metadataBase: new URL(SITE_URL),
         category: 'utilities',
@@ -110,6 +115,13 @@ export async function generateMetadata({
     }
 }
 
+export const viewport: Viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    themeColor: '#000000',
+    colorScheme: 'dark light',
+}
+
 export default async function RootLayout({
     children,
     params,
@@ -129,22 +141,6 @@ export default async function RootLayout({
 
     return (
         <html lang={htmlLang} suppressHydrationWarning>
-            <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <meta name="theme-color" content="#000000" />
-                <meta name="color-scheme" content="dark light" />
-                <meta name="google-adsense-account" content="ca-pub-1581472267398547" />
-                <meta name="mobile-web-app-capable" content="yes" />
-                <meta name="apple-mobile-web-app-capable" content="yes" />
-                <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-                <meta name="apple-mobile-web-app-title" content={dict.metadata.siteName} />
-                <meta name="application-name" content={dict.metadata.siteName} />
-                <meta name="msapplication-TileColor" content="#000000" />
-                <meta name="format-detection" content="telephone=no" />
-                <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-                <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-                <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-            </head>
             <body className="antialiased">
                 <NextIntlClientProvider locale={locale} messages={dict}>
                     <AppI18nProvider locale={locale} dictionary={dict}>

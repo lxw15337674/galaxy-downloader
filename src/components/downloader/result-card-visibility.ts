@@ -118,6 +118,43 @@ export function shouldShowVideoDownloadButton(videoDownloadUrl: string | null | 
     return hasSourceUrl(videoDownloadUrl)
 }
 
+interface ResultDisplayImagesInput {
+    noteType?: 'video' | 'image' | 'audio'
+    images?: string[] | null
+    coverUrl?: string | null
+}
+
+function normalizeResultImages(images?: string[] | null): string[] {
+    const normalized = (images ?? [])
+        .map((value) => value.trim())
+        .filter((value) => value.length > 0)
+
+    return Array.from(new Set(normalized))
+}
+
+export function resolveResultDisplayImages({
+    noteType,
+    images,
+    coverUrl,
+}: ResultDisplayImagesInput): string[] {
+    const normalizedImages = normalizeResultImages(images)
+
+    if (noteType === 'image') {
+        return normalizedImages
+    }
+
+    if (noteType === 'video' || noteType === 'audio') {
+        return []
+    }
+
+    const normalizedCoverUrl = typeof coverUrl === 'string' ? coverUrl.trim() : ''
+    if (!normalizedCoverUrl) {
+        return normalizedImages
+    }
+
+    return normalizedImages.filter((imageUrl) => imageUrl !== normalizedCoverUrl)
+}
+
 export function shouldUseFrontendImageProxy(imageUrl: string | null | undefined): boolean {
     if (!hasSourceUrl(imageUrl)) {
         return false

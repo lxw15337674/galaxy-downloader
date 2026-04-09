@@ -2,10 +2,12 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { i18n } from './lib/i18n/config'
 import {
+    LOCALE_REDIRECT_VARY_HEADERS,
     isBotUserAgent,
     normalizeCookieLocale,
     resolveLocaleForRequest,
 } from './lib/seo-routing'
+import { appendVaryHeader } from './lib/seo'
 import { LOCALE_COOKIE_NAME, LOCALE_COOKIE_MAX_AGE } from './lib/constants'
 
 const ACCEPT_LANGUAGE_CACHE_LIMIT = 64
@@ -85,6 +87,7 @@ export function proxy(request: NextRequest) {
     request.nextUrl.pathname = `/${locale}${pathname}`
 
     const response = NextResponse.redirect(request.nextUrl)
+    appendVaryHeader(response.headers, [...LOCALE_REDIRECT_VARY_HEADERS])
 
     // 设置 Cookie 记住用户语言偏好（仅在真实用户请求且非已有 cookie 时设置）
     if (!isBotUserAgent(userAgent) && !cookieLocale) {

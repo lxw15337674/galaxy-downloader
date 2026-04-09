@@ -106,11 +106,11 @@
         "installAction": "立即安装"
     },
     "metadata": {
-        "title": "通用媒体下载器 - 支持哔哩哔哩、抖音、Telegram、Threads、微信公众号、微博、Niconico、Instagram、小红书、TikTok、X 内容下载",
-        "description": "免费在线通用媒体下载工具。一键下载哔哩哔哩音视频、抖音视频与纯音乐、Telegram 公开视频消息、Threads 视频/图文、微信公众号文章视频、微博视频/图文/混合媒体、Niconico 视频/音频、Instagram Reels/帖子/图文、小红书视频/图文、TikTok 视频，以及 X 视频，自动识别平台。",
+        "title": "通用媒体下载器｜Bilibili、抖音、Instagram、TikTok、X 下载工具",
+        "description": "免费在线媒体下载工具，支持 Bilibili、抖音、Telegram、Threads、微信公众号、微博、Niconico、Instagram、小红书、TikTok 和 X。自动识别链接并下载视频、音频或图文内容。",
         "keywords": "在线媒体下载器,哔哩哔哩视频下载,哔哩哔哩音频下载,抖音视频下载,抖音纯音乐下载,Telegram视频下载,Threads视频下载,Threads图文下载,微信公众号视频下载,微博视频下载,微博图文下载,微博混合媒体下载,Niconico视频下载,Niconico音频下载,Instagram Reels下载,Instagram帖子下载,Instagram图文帖子下载,小红书视频下载,小红书图文下载,TikTok视频下载,X视频下载",
-        "ogTitle": "通用媒体下载器 - 免费在线工具",
-        "ogDescription": "专业的通用媒体下载工具。自动识别链接平台，一键下载哔哩哔哩音视频、抖音视频与纯音乐、Telegram 公开视频消息、Threads 视频/图文、微信公众号文章视频、微博视频/图文/混合媒体、Niconico 视频/音频、Instagram Reels/帖子/图文、小红书视频/图文、TikTok 视频，以及 X 视频。",
+        "ogTitle": "通用媒体下载器｜免费在线下载工具",
+        "ogDescription": "自动识别 Bilibili、抖音、Telegram、Threads、微信公众号、微博、Niconico、Instagram、小红书、TikTok 和 X 链接，在线下载视频、音频或图文内容。",
         "siteName": "通用媒体下载器"
     },
     "common": {
@@ -435,7 +435,6 @@
                 "无需注册",
                 "支持多种媒体格式",
                 "浏览器内处理",
-                "????????????????",
                 "下载 Threads 视频和图文帖子",
                 "下载微博视频、图文与混合媒体帖子"
             ],
@@ -576,6 +575,10 @@
         "mergeDownloadVideo": "下载完整视频",
         "mergeDownloadVideoHint": "当前视频需要先合并音频后再下载",
         "downloadAudio": "下载音频",
+        "sharePlayLink": "分享播放",
+        "sharePlayLinkCopied": "播放分享链接已复制",
+        "sharePlayPlayerTitle": "分享视频播放",
+        "sharePlayUnavailable": "该内容暂不支持直接播放，请使用下载按钮。",
         "originDownloadVideo": "视频直链",
         "originDownloadAudio": "音频直链",
         "totalParts": "共 {count} 个分P",

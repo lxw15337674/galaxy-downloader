@@ -106,11 +106,11 @@
         "installAction": "インストール"
     },
     "metadata": {
-        "title": "ユニバーサルメディアダウンローダー - Bilibili・Douyin・Telegram・Threads・WeChat・Weibo・Niconico・Instagram・Xiaohongshu・TikTok・X に対応",
-        "description": "無料のオンラインメディアダウンローダー。Bilibili の動画・音声、Douyin の動画と純音楽、Telegram の公開動画メッセージ、Threads の動画・画像投稿、WeChat の記事内動画、Weibo の動画・混合メディア投稿、Niconico の動画・音声、Instagram の Reels・投稿・画像投稿、Xiaohongshu の動画・画像ノート、TikTok の動画、X の動画をワンクリックでダウンロードできます。",
+        "title": "ユニバーサルメディアダウンローダー | Bilibili・Douyin・Instagram・TikTok・X",
+        "description": "無料のオンラインメディアダウンローダー。Bilibili、Douyin、Telegram、Threads、WeChat、Weibo、Niconico、Instagram、Xiaohongshu、TikTok、X のリンクを自動判別し、動画・音声・画像投稿をダウンロードできます。",
         "keywords": "オンラインメディアダウンローダー,Bilibili動画ダウンロード,Bilibili音声ダウンロード,Douyin動画ダウンロード,Douyin音楽ダウンロード,Telegram動画ダウンロード,Threads動画ダウンロード,Threads画像投稿ダウンロード,WeChat動画ダウンロード,Weibo動画ダウンロード,Weibo混合メディアダウンロード,Niconico動画ダウンロード,Niconico音声ダウンロード,Instagram Reelsダウンロード,Instagram投稿ダウンロード,Instagram画像投稿ダウンロード,Xiaohongshu動画ダウンロード,Xiaohongshu画像ノートダウンロード,TikTok動画ダウンロード,X動画ダウンロード",
-        "ogTitle": "ユニバーサルメディアダウンローダー - 無料オンラインツール",
-        "ogDescription": "Bilibili、Douyin、Telegram、Threads、WeChat、Weibo、Niconico、Instagram、Xiaohongshu、TikTok、X に対応したメディアダウンローダー。リンクを自動判別して、動画・音声・画像投稿・混合メディアをワンクリックでダウンロードできます。",
+        "ogTitle": "ユニバーサルメディアダウンローダー | 無料オンラインツール",
+        "ogDescription": "Bilibili、Douyin、Telegram、Threads、WeChat、Weibo、Niconico、Instagram、Xiaohongshu、TikTok、X のリンクを自動判別し、動画・音声・画像投稿をオンラインでダウンロードできます。",
         "siteName": "ユニバーサルメディアダウンローダー"
     },
     "common": {
@@ -573,6 +573,10 @@
         "mergeDownloadVideo": "完全な動画をダウンロード",
         "mergeDownloadVideoHint": "ダウンロード前に音声と動画を結合します。",
         "downloadAudio": "音声をダウンロード",
+        "sharePlayLink": "再生共有",
+        "sharePlayLinkCopied": "再生共有リンクをコピーしました",
+        "sharePlayPlayerTitle": "共有動画プレーヤー",
+        "sharePlayUnavailable": "この結果は直接再生できません。ダウンロードをご利用ください。",
         "originDownloadVideo": "動画直リンク",
         "originDownloadAudio": "音声直リンク",
         "totalParts": "全 {count} パート",

@@ -120,6 +120,7 @@ export interface Dictionary {
             bilibili: string;
             bilibiliTv: string;
             douyin: string;
+            youtube: string;
             telegram: string;
             threads: string;
             wechat: string;
@@ -252,6 +253,12 @@ export interface Dictionary {
                         url: string;
                     };
                 };
+            };
+            youtube: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
             };
             telegram: {
                 name: string;

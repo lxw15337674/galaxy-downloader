@@ -84,6 +84,7 @@
             "bilibili": "嗶哩嗶哩",
             "bilibiliTv": "Bilibili TV",
             "douyin": "抖音",
+            "youtube": "YouTube",
             "telegram": "Telegram",
             "wechat": "微信公眾號",
             "niconico": "Niconico",
@@ -266,6 +267,14 @@
                 "features": [
                     "影片",
                     "圖文",
+                    "音訊"
+                ]
+            },
+            "youtube": {
+                "name": "YouTube",
+                "summary": "影片 / 音訊",
+                "features": [
+                    "影片",
                     "音訊"
                 ]
             },

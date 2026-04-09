@@ -117,6 +117,7 @@ export type Platform =
     | 'bilibili'
     | 'bilibili_tv'
     | 'douyin'
+    | 'youtube'
     | 'telegram'
     | 'threads'
     | 'wechat'

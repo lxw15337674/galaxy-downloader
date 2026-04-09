@@ -10,6 +10,7 @@ export type PlatformSupportKey =
     | 'bilibili'
     | 'bilibiliTv'
     | 'douyin'
+    | 'youtube'
     | 'telegram'
     | 'threads'
     | 'wechat'
@@ -51,6 +52,10 @@ const PLATFORM_SUPPORT_VISUALS: Record<PlatformSupportKey, PlatformSupportVisual
         src: '/platform-icons/douyin.ico',
         frameClassName: 'border-zinc-900/10 bg-zinc-900/5 dark:border-zinc-700/80 dark:bg-zinc-900',
         iconClassName: 'rounded-[4px]',
+    },
+    youtube: {
+        src: '/platform-icons/youtube.svg',
+        frameClassName: 'border-[#FF0033]/20 bg-[#FF0033]/10',
     },
     telegram: {
         src: '/platform-icons/telegram.svg',
@@ -124,6 +129,7 @@ export function getPlatformSupportItems(dict: Pick<Dictionary, 'guide'>): Platfo
         buildPlatformSupportItem('bilibili', support.bilibili),
         buildPlatformSupportItem('bilibiliTv', support.bilibiliTv),
         buildPlatformSupportItem('douyin', support.douyin),
+        buildPlatformSupportItem('youtube', support.youtube),
         buildPlatformSupportItem('telegram', support.telegram),
         buildPlatformSupportItem('threads', support.threads),
         buildPlatformSupportItem('wechat', support.wechat),

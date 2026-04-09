@@ -13,6 +13,10 @@ it('normalizes x aliases to canonical platform', () => {
     expect(normalizePlatform('twitter')).toBe('x')
 })
 
+it('normalizes youtube platform', () => {
+    expect(normalizePlatform('youtube')).toBe('youtube')
+})
+
 it('normalizes niconico aliases to canonical platform', () => {
     expect(normalizePlatform('niconico')).toBe('niconico')
     expect(normalizePlatform('nico')).toBe('niconico')
@@ -28,6 +32,7 @@ it('marks supported social platforms as audio-extractable when needed', () => {
     expect(supportsAudioExtraction('x')).toBe(true)
     expect(supportsAudioExtraction('threads')).toBe(true)
     expect(supportsAudioExtraction('weibo')).toBe(true)
+    expect(supportsAudioExtraction('youtube')).toBe(false)
     expect(supportsAudioExtraction('niconico')).toBe(false)
     expect(supportsAudioExtraction('bilibili')).toBe(false)
 })

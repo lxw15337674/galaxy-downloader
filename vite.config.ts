@@ -52,6 +52,7 @@ export default defineConfig({
     vinext(),
     normalizeVinextTreeshakePlugin(),
     ...cloudflare({
+      inspectorPort: false,
       viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
     }),
     ...serwist({

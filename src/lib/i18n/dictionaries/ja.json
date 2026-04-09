@@ -84,6 +84,7 @@
             "bilibili": "Bilibili",
             "bilibiliTv": "Bilibili TV",
             "douyin": "Douyin",
+            "youtube": "YouTube",
             "telegram": "Telegram",
             "wechat": "WeChat",
             "niconico": "Niconico",
@@ -266,6 +267,14 @@
                 "features": [
                     "動画",
                     "画像投稿",
+                    "音声"
+                ]
+            },
+            "youtube": {
+                "name": "YouTube",
+                "summary": "動画 / 音声",
+                "features": [
+                    "動画",
                     "音声"
                 ]
             },

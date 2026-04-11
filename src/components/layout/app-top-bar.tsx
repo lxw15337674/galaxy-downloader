@@ -75,22 +75,6 @@ export function AppTopBar({
             </div>
             <div className="hidden md:flex max-w-7xl mx-auto px-3 sm:px-4 md:px-5 py-3 items-center justify-between gap-2">
                 <div className="flex items-center gap-1">
-                    {showHomeButton && (
-                        <Button variant="ghost" size="sm" className="gap-1.5" asChild>
-                            <Link href={homeHref}>
-                                <Home className="h-4 w-4" />
-                                <span>{dict.common.home}</span>
-                            </Link>
-                        </Button>
-                    )}
-                </div>
-                <div className="flex items-center gap-1">
-                    <Button variant="ghost" size="sm" asChild>
-                        <a href="https://github.com/lxw15337674/galaxy-downloader" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                            <Github className="h-4 w-4" />
-                            <span>GitHub</span>
-                        </a>
-                    </Button>
                     {showHistoryShortcut && onHistoryClick && (
                         <Button
                             variant="ghost"
@@ -113,6 +97,22 @@ export function AppTopBar({
                             <span>{dict.audioTool.triggerButton}</span>
                         </Button>
                     )}
+                </div>
+                <div className="flex items-center gap-1">
+                    {showHomeButton && (
+                        <Button variant="ghost" size="sm" className="gap-1.5" asChild>
+                            <Link href={homeHref}>
+                                <Home className="h-4 w-4" />
+                                <span>{dict.common.home}</span>
+                            </Link>
+                        </Button>
+                    )}
+                    <Button variant="ghost" size="sm" asChild>
+                        <a href="https://github.com/lxw15337674/galaxy-downloader" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                            <Github className="h-4 w-4" />
+                            <span>GitHub</span>
+                        </a>
+                    </Button>
                     <DeferredFeedbackDialog />
                     <DeferredChangelogDialog />
                     <ThemeSwitcher />

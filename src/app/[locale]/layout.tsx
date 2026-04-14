@@ -144,7 +144,6 @@ export default async function RootLayout({
             <body className="antialiased">
                 <NextIntlClientProvider locale={locale} messages={dict}>
                     <AppI18nProvider locale={locale} dictionary={dict}>
-                        <DeferredToaster />
                         <DeferredRuntimeServices />
                         <ThemeProvider
                             attribute="class"
@@ -153,6 +152,7 @@ export default async function RootLayout({
                             disableTransitionOnChange
                         >
                             {children}
+                            <DeferredToaster />
                         </ThemeProvider>
                     </AppI18nProvider>
                 </NextIntlClientProvider>

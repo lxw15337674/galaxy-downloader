@@ -56,6 +56,49 @@ it('keeps image lists for image notes', () => {
     ).toEqual(['https://img.example.com/1.jpg', 'https://img.example.com/2.jpg'])
 })
 
+it('extracts display urls from object-based image payloads', () => {
+    expect(
+        resolveResultDisplayImages({
+            noteType: 'image',
+            images: [
+                {
+                    index: 0,
+                    url: ' https://img.example.com/1.jpg ',
+                    downloadUrl: 'https://download.example.com/1.jpg',
+                },
+                {
+                    index: 1,
+                    url: 'https://img.example.com/2.jpg',
+                    downloadUrl: 'https://download.example.com/2.jpg',
+                },
+                {
+                    index: 2,
+                    url: 'https://img.example.com/2.jpg',
+                },
+            ],
+            coverUrl: 'https://img.example.com/1.jpg',
+        })
+    ).toEqual(['https://img.example.com/1.jpg', 'https://img.example.com/2.jpg'])
+})
+
+it('falls back to download urls when object-based image payloads omit direct urls', () => {
+    expect(
+        resolveResultDisplayImages({
+            noteType: 'image',
+            images: [
+                {
+                    index: 0,
+                    downloadUrl: ' https://download.example.com/1.jpg ',
+                },
+                {
+                    index: 1,
+                    downloadUrl: 'https://download.example.com/2.jpg',
+                },
+            ],
+        })
+    ).toEqual(['https://download.example.com/1.jpg', 'https://download.example.com/2.jpg'])
+})
+
 it('removes duplicated cover from mixed content without noteType', () => {
     expect(
         resolveResultDisplayImages({

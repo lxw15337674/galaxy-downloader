@@ -42,32 +42,38 @@ function normalizeVinextTreeshakePlugin(): Plugin {
   };
 }
 
-export default defineConfig({
-  resolve: {
-    alias: {
-      "next-intl/config": fileURLToPath(new URL("./src/i18n/request.ts", import.meta.url)),
+export default defineConfig(({ command, mode }) => {
+  const enableSerwist = command === "build" && mode === "production";
+
+  return {
+    resolve: {
+      alias: {
+        "next-intl/config": fileURLToPath(new URL("./src/i18n/request.ts", import.meta.url)),
+      },
     },
-  },
-  plugins: [
-    vinext(),
-    normalizeVinextTreeshakePlugin(),
-    ...cloudflare({
-      inspectorPort: false,
-      viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
-    }),
-    ...serwist({
-      swSrc: "src/sw.ts",
-      swDest: "client/sw.js",
-      globDirectory: "dist/client",
-      globPatterns: [
-        "assets/**/*.{js,css}",
-        "icons/**/*.{png}",
-        "og/**/*.{png}",
-        "*.{html,ico,svg,txt}",
-      ],
-      globIgnores: ["sw.js", "workbox-*.js", "worker-*.js"],
-      injectionPoint: "self.__SW_MANIFEST",
-      rollupFormat: "iife",
-    }),
-  ],
+    plugins: [
+      vinext(),
+      normalizeVinextTreeshakePlugin(),
+      ...cloudflare({
+        inspectorPort: false,
+        viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
+      }),
+      ...(enableSerwist
+        ? serwist({
+            swSrc: "src/sw.ts",
+            swDest: "client/sw.js",
+            globDirectory: "dist/client",
+            globPatterns: [
+              "assets/**/*.{js,css}",
+              "icons/**/*.{png}",
+              "og/**/*.{png}",
+              "*.{html,ico,svg,txt}",
+            ],
+            globIgnores: ["sw.js", "workbox-*.js", "worker-*.js"],
+            injectionPoint: "self.__SW_MANIFEST",
+            rollupFormat: "iife",
+          })
+        : []),
+    ],
+  };
 });

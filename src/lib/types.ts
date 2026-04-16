@@ -61,6 +61,12 @@ export interface EmbeddedVideoInfo {
     mediaActions?: MediaActions;
 }
 
+export interface UnifiedParseResultImage {
+    index?: number;
+    url?: string | null;
+    downloadUrl?: string | null;
+}
+
 export interface UnifiedParseResult {
     success: boolean;
     code?: ApiErrorCode | string;
@@ -86,7 +92,7 @@ export interface UnifiedParseResult {
         pages?: PageInfo[];
         // 小红书相关字段
         noteType?: 'video' | 'image' | 'audio';
-        images?: string[];
+        images?: Array<string | UnifiedParseResultImage>;
         // 微信公众号文章视频列表
         videos?: EmbeddedVideoInfo[];
     };

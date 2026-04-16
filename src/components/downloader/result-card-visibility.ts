@@ -1,4 +1,4 @@
-import type { MediaActions } from '@/lib/types'
+import type { MediaActions, UnifiedParseResultImage } from '@/lib/types'
 
 type LegacyVideoAudioMode = 'muxed' | 'separate' | 'pure_music' | 'not_applicable'
 
@@ -120,13 +120,33 @@ export function shouldShowVideoDownloadButton(videoDownloadUrl: string | null | 
 
 interface ResultDisplayImagesInput {
     noteType?: 'video' | 'image' | 'audio'
-    images?: string[] | null
+    images?: Array<string | UnifiedParseResultImage> | null
     coverUrl?: string | null
 }
 
-function normalizeResultImages(images?: string[] | null): string[] {
+function extractResultImageUrl(value: string | UnifiedParseResultImage | null | undefined): string {
+    if (typeof value === 'string') {
+        return value.trim()
+    }
+
+    if (!value || typeof value !== 'object') {
+        return ''
+    }
+
+    if (typeof value.url === 'string') {
+        return value.url.trim()
+    }
+
+    if (typeof value.downloadUrl === 'string') {
+        return value.downloadUrl.trim()
+    }
+
+    return ''
+}
+
+function normalizeResultImages(images?: Array<string | UnifiedParseResultImage> | null): string[] {
     const normalized = (images ?? [])
-        .map((value) => value.trim())
+        .map((value) => extractResultImageUrl(value))
         .filter((value) => value.length > 0)
 
     return Array.from(new Set(normalized))

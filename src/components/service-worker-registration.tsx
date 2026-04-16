@@ -4,11 +4,21 @@ import { useEffect } from 'react'
 
 export function ServiceWorkerRegistration() {
     useEffect(() => {
-        if (process.env.NODE_ENV !== 'production' || !('serviceWorker' in navigator)) {
+        if (!('serviceWorker' in navigator)) {
             return
         }
 
         let cancelled = false
+
+        const unregisterServiceWorkers = async () => {
+            const registrations = await navigator.serviceWorker.getRegistrations()
+            await Promise.all(registrations.map((registration) => registration.unregister()))
+        }
+
+        if (process.env.NODE_ENV !== 'production') {
+            void unregisterServiceWorkers()
+            return
+        }
 
         const registerServiceWorker = async () => {
             const { Serwist } = await import('@serwist/window')

@@ -1,0 +1,28 @@
+[config]
+model = "gemini/gemini-2.5-flash"
+fallback_models = ["gemini/gemini-2.5-flash"]
+response_language = "zh-CN"
+ai_timeout = 300
+publish_output_progress = false
+
+[pr_reviewer]
+require_tests_review = true
+require_estimate_effort_to_review = true
+require_can_be_split_review = false
+require_security_review = true
+require_estimate_contribution_time_cost = false
+require_todo_scan = false
+require_ticket_analysis_review = true
+persistent_comment = true
+publish_output_no_suggestions = true
+num_max_findings = 3
+enable_help_text = false
+extra_instructions = """
+优先关注会影响线上行为的真实问题：
+- 明确的 bug 风险和回归风险
+- 缺失或不足的测试覆盖
+- 前端交互、状态同步、接口联动和可访问性回归
+- 安全、输入校验、边界条件、SEO 或运行时配置问题
+
+避免给出样式偏好、纯重构建议或低价值措辞优化，除非它们会导致明显的维护或正确性问题。
+"""

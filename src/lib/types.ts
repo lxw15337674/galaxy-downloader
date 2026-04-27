@@ -57,7 +57,9 @@ export interface EmbeddedVideoInfo {
     duration?: number;
     qualityOptions?: VideoQualityOption[];
     downloadVideoUrl?: string | null;
+    downloadAudioUrl?: string | null;
     originDownloadVideoUrl?: string | null;
+    originDownloadAudioUrl?: string | null;
     mediaActions?: MediaActions;
 }
 

@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { X, Download, ExternalLink, Loader2, Package, Share2 } from 'lucide-react';
 import Image from "next/image";
 import { useDictionary } from '@/i18n/client';
@@ -422,59 +423,58 @@ function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; currentPage?
             <div className="text-sm text-foreground/75">
                 {replaceTemplate(dict.result.totalParts, '{count}', String(pages.length))}
             </div>
-            <div className="max-h-[300px] overflow-y-auto space-y-2 pr-1">
-                {pages.map((page) => (
-                    <div
-                        key={page.page}
-                        className={`flex flex-col md:flex-row md:items-center gap-2 p-2 md:p-3 rounded-lg border ${
-                            page.page === currentPage
-                                ? 'border-primary bg-primary/5'
-                                : 'border-border hover:bg-muted/50'
-                        }`}
-                    >
-                        <div className="flex items-start md:items-center gap-2 flex-1 min-w-0">
-                            <span className="text-xs font-medium text-foreground/70 shrink-0">
-                                P{page.page}
-                            </span>
-                            <div className="flex-1 min-w-0">
-                                <div className="text-sm line-clamp-2 md:truncate break-words" title={page.part}>
-                                    {page.part}
-                                </div>
-                                <span className="text-xs text-foreground/65 md:hidden">
-                                    {formatDuration(page.duration)}
+            <ScrollArea className="max-h-[300px]">
+                <div className="space-y-2 pr-2">
+                    {pages.map((page) => (
+                        <div
+                            key={page.page}
+                            className={`flex flex-col gap-2 p-2 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-2 md:p-3 rounded-lg border ${
+                                page.page === currentPage
+                                    ? 'border-primary bg-primary/5'
+                                    : 'border-border hover:bg-muted/50'
+                            }`}
+                        >
+                            <div className="flex items-start gap-2 min-w-0">
+                                <span className="text-xs font-medium text-foreground/70 shrink-0">
+                                    P{page.page}
                                 </span>
+                                <div className="flex items-center gap-2 flex-1 min-w-0">
+                                    <div className="text-sm truncate" title={page.part}>
+                                        {page.part}
+                                    </div>
+                                    <span className="text-xs text-foreground/65 shrink-0">
+                                        {formatDuration(page.duration)}
+                                    </span>
+                                </div>
                             </div>
-                            <span className="text-xs text-foreground/65 shrink-0 hidden md:inline">
-                                {formatDuration(page.duration)}
-                            </span>
+                            <div className="grid grid-cols-2 gap-2 md:flex md:gap-1 md:shrink-0">
+                                {page.downloadVideoUrl && (
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        disabled={loadingKeys.has(`${page.page}-video`)}
+                                        onClick={() => handleDownload(page.downloadVideoUrl!, `${page.page}-video`)}
+                                    >
+                                        {loadingKeys.has(`${page.page}-video`) && <Loader2 className="h-3 w-3 animate-spin mr-1" />}
+                                        {dict.result.downloadVideo}
+                                    </Button>
+                                )}
+                                {page.downloadAudioUrl && (
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        disabled={loadingKeys.has(`${page.page}-audio`)}
+                                        onClick={() => handleDownload(page.downloadAudioUrl!, `${page.page}-audio`)}
+                                    >
+                                        {loadingKeys.has(`${page.page}-audio`) && <Loader2 className="h-3 w-3 animate-spin mr-1" />}
+                                        {dict.result.downloadAudio}
+                                    </Button>
+                                )}
+                            </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-2 md:flex md:gap-1 md:shrink-0">
-                            {page.downloadVideoUrl && (
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    disabled={loadingKeys.has(`${page.page}-video`)}
-                                    onClick={() => handleDownload(page.downloadVideoUrl!, `${page.page}-video`)}
-                                >
-                                    {loadingKeys.has(`${page.page}-video`) && <Loader2 className="h-3 w-3 animate-spin mr-1" />}
-                                    {dict.result.downloadVideo}
-                                </Button>
-                            )}
-                            {page.downloadAudioUrl && (
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    disabled={loadingKeys.has(`${page.page}-audio`)}
-                                    onClick={() => handleDownload(page.downloadAudioUrl!, `${page.page}-audio`)}
-                                >
-                                    {loadingKeys.has(`${page.page}-audio`) && <Loader2 className="h-3 w-3 animate-spin mr-1" />}
-                                    {dict.result.downloadAudio}
-                                </Button>
-                            )}
-                        </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            </ScrollArea>
         </div>
     );
 }
@@ -503,55 +503,65 @@ function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
                     {replaceTemplate(dict.result.videoCount, '{count}', String(videos.length))}
                 </span>
             </div>
-            <div className="max-h-[300px] overflow-y-auto space-y-2 pr-1">
-                {videos.map((video, index) => {
-                    const videoDownloadUrl = video.downloadVideoUrl || video.originDownloadVideoUrl || null;
-                    const loadingKey = `${video.id || index}-video`;
-                    const displayTitle = video.title?.trim()
-                        || replaceTemplate(dict.result.articleVideoUntitled, '{index}', String(index + 1));
+            <ScrollArea className="max-h-[300px]">
+                <div className="space-y-2 pr-2">
+                    {videos.map((video, index) => {
+                        const videoDownloadUrl = video.downloadVideoUrl || video.originDownloadVideoUrl || null;
+                        const audioDownloadUrl = video.downloadAudioUrl || video.originDownloadAudioUrl || null;
+                        const displayTitle = video.title?.trim()
+                            || replaceTemplate(dict.result.articleVideoUntitled, '{index}', String(index + 1));
+                        const videoKey = `${video.id || index}-video`;
+                        const audioKey = `${video.id || index}-audio`;
 
-                    return (
-                        <div
-                            key={video.id || index}
-                            className="flex flex-col md:flex-row md:items-center gap-2 p-2 md:p-3 rounded-lg border border-border hover:bg-muted/50"
-                        >
-                            <div className="flex items-start md:items-center gap-2 flex-1 min-w-0">
-                                <span className="text-xs font-medium text-foreground/70 shrink-0">
-                                    {index + 1}
-                                </span>
-                                <div className="flex-1 min-w-0">
-                                    <div className="text-sm line-clamp-2 md:truncate break-words" title={displayTitle}>
-                                        {displayTitle}
+                        return (
+                            <div
+                                key={video.id || index}
+                                className="flex flex-col gap-2 p-2 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-2 md:p-3 rounded-lg border border-border hover:bg-muted/50"
+                            >
+                                <div className="flex items-start gap-2 min-w-0">
+                                    <span className="text-xs font-medium text-foreground/70 shrink-0">
+                                        {index + 1}
+                                    </span>
+                                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                                        <div className="text-sm truncate" title={displayTitle}>
+                                            {displayTitle}
+                                        </div>
+                                        {video.duration != null && (
+                                            <span className="text-xs text-foreground/65 shrink-0">
+                                                {formatDuration(video.duration)}
+                                            </span>
+                                        )}
                                     </div>
-                                    {video.duration != null && (
-                                        <span className="text-xs text-foreground/65 md:hidden">
-                                            {formatDuration(video.duration)}
-                                        </span>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2 md:flex md:gap-1 md:shrink-0">
+                                    {shouldShowVideoDownloadButton(videoDownloadUrl) && (
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            disabled={loadingKeys.has(videoKey)}
+                                            onClick={() => handleDownload(videoDownloadUrl!, videoKey)}
+                                        >
+                                            {loadingKeys.has(videoKey) && <Loader2 className="h-3 w-3 animate-spin mr-1" />}
+                                            {dict.result.downloadVideo}
+                                        </Button>
+                                    )}
+                                    {audioDownloadUrl && (
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            disabled={loadingKeys.has(audioKey)}
+                                            onClick={() => handleDownload(audioDownloadUrl, audioKey)}
+                                        >
+                                            {loadingKeys.has(audioKey) && <Loader2 className="h-3 w-3 animate-spin mr-1" />}
+                                            {dict.result.downloadAudio}
+                                        </Button>
                                     )}
                                 </div>
-                                {video.duration != null && (
-                                    <span className="text-xs text-foreground/65 shrink-0 hidden md:inline">
-                                        {formatDuration(video.duration)}
-                                    </span>
-                                )}
                             </div>
-                            <div className="md:shrink-0">
-                                {shouldShowVideoDownloadButton(videoDownloadUrl) && (
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        disabled={loadingKeys.has(loadingKey)}
-                                        onClick={() => handleDownload(videoDownloadUrl!, loadingKey)}
-                                    >
-                                        {loadingKeys.has(loadingKey) && <Loader2 className="h-3 w-3 animate-spin mr-1" />}
-                                        {dict.result.downloadVideo}
-                                    </Button>
-                                )}
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
+                        );
+                    })}
+                </div>
+            </ScrollArea>
         </div>
     );
 }

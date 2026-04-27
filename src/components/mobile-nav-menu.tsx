@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Github, Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -23,6 +23,10 @@ export function MobileNavMenu({
 }: MobileNavMenuProps) {
     const dict = useDictionary()
     const [open, setOpen] = useState(defaultOpen)
+    const [dialogContentEl, setDialogContentEl] = useState<HTMLDivElement | null>(null)
+    const handleDialogContentRef = useCallback((node: HTMLDivElement | null) => {
+        setDialogContentEl(node)
+    }, [])
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -31,7 +35,11 @@ export function MobileNavMenu({
                     <Menu className="h-5 w-5" />
                 </Button>
             </DialogTrigger>
-            <DialogContent className="top-auto bottom-4 left-1/2 w-[calc(100%-2rem)] max-w-sm translate-x-[-50%] translate-y-0 rounded-xl p-4">
+            <DialogContent
+                ref={handleDialogContentRef}
+                showCloseButton={false}
+                className="top-auto bottom-4 left-1/2 w-[calc(100%-2rem)] max-w-sm translate-x-[-50%] translate-y-0 rounded-xl p-4"
+            >
                 <DialogHeader className="sr-only">
                     <DialogTitle>{dict.page.openMenuLabel}</DialogTitle>
                 </DialogHeader>
@@ -49,7 +57,7 @@ export function MobileNavMenu({
                     </Button>
                     <ChangelogDialog triggerClassName="w-full justify-start" />
                     <div className="rounded-md border border-border p-1">
-                        <ThemeSwitcher fullWidth />
+                        <ThemeSwitcher fullWidth portalContainer={dialogContentEl} />
                     </div>
                 </div>
             </DialogContent>

@@ -1,6 +1,28 @@
 {
   "versions": [
     {
+      "version": "4.1.1",
+      "date": "2026-04-27",
+      "changes": {
+        "zh": [
+          "Bilibili 合集视频列表新增每条音频下载按钮",
+          "修复移动端下载音频时文件格式名错误的问题"
+        ],
+        "en": [
+          "Added per-item audio download buttons to Bilibili season video lists",
+          "Fixed incorrect audio filename extension when downloading on mobile"
+        ],
+        "ja": [
+          "Bilibili 合集動画リストで各項目の音声ダウンロードボタンを追加しました",
+          "モバイルで音声をダウンロードする際にファイル拡張子が誤っていた問題を修正しました"
+        ],
+        "zh-tw": [
+          "Bilibili 合集影片列表新增每條音訊下載按鈕",
+          "修復行動端下載音訊時檔案格式名稱錯誤的問題"
+        ]
+      }
+    },
+    {
       "version": "4.1.0",
       "date": "2026-04-07",
       "changes": {

@@ -37,6 +37,7 @@ export interface ResultDict {
 
 export interface CommonDict {
     home: string;
+    backToTop: string;
     relatedPages: string;
     privacy: string;
     terms: string;
@@ -119,10 +120,21 @@ export interface Dictionary {
         platforms: {
             bilibili: string;
             bilibiliTv: string;
+            dailymotion: string;
             douyin: string;
+            newgrounds: string;
+            okru: string;
+            pinterest: string;
+            reddit: string;
+            soundcloud: string;
+            streamable: string;
+            twitch: string;
+            tumblr: string;
             youtube: string;
             telegram: string;
             threads: string;
+            vk: string;
+            vimeo: string;
             wechat: string;
             niconico: string;
             weibo: string;
@@ -156,6 +168,8 @@ export interface Dictionary {
         'zh-tw': string;
         en: string;
         ja: string;
+        es: string;
+        ru: string;
     };
     douyin: {
         apiLimitDownload: string;
@@ -314,6 +328,72 @@ export interface Dictionary {
                 features?: string[];
                 limitations?: string[];
             };
+            vimeo: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
+            dailymotion: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
+            streamable: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
+            reddit: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
+            newgrounds: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
+            tumblr: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
+            pinterest: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
+            vk: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
+            okru: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
+            twitch: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
+            soundcloud: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
             audioTip?: {
                 title: string;
                 steps: string;
@@ -367,6 +447,8 @@ export interface Dictionary {
             zh: string[];
             'zh-tw': string[];
             ja: string[];
+            es: string[];
+            ru: string[];
         };
         howTo: {
             title: {
@@ -374,6 +456,8 @@ export interface Dictionary {
                 zh: string;
                 'zh-tw': string;
                 ja: string;
+                es: string;
+                ru: string;
             };
             steps: {
                 en: Array<{
@@ -389,6 +473,14 @@ export interface Dictionary {
                     text: string;
                 }>;
                 ja: Array<{
+                    name: string;
+                    text: string;
+                }>;
+                es: Array<{
+                    name: string;
+                    text: string;
+                }>;
+                ru: Array<{
                     name: string;
                     text: string;
                 }>;

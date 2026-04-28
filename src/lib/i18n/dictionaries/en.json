@@ -94,7 +94,18 @@
             "instagram": "Instagram",
             "x": "X",
             "threads": "Threads",
-            "weibo": "Weibo"
+            "weibo": "Weibo",
+            "dailymotion": "Dailymotion",
+            "newgrounds": "Newgrounds",
+            "okru": "OK.ru",
+            "pinterest": "Pinterest",
+            "reddit": "Reddit",
+            "soundcloud": "SoundCloud",
+            "streamable": "Streamable",
+            "twitch": "Twitch",
+            "tumblr": "Tumblr",
+            "vk": "VK",
+            "vimeo": "Vimeo"
         }
     },
     "toast": {
@@ -107,15 +118,16 @@
         "installAction": "Install"
     },
     "metadata": {
-        "title": "Universal Media Downloader | Bilibili, Douyin, Instagram, TikTok, X",
+        "title": "sparkdownloader | Bilibili, Douyin, Instagram, TikTok, X",
         "description": "Free online media downloader for Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X. Auto-detect links and download video, audio, or image posts.",
         "keywords": "online media downloader,Bilibili video downloader,Bilibili audio downloader,Douyin video downloader,Douyin music downloader,Telegram video downloader,Threads video downloader,Threads image post downloader,WeChat video downloader,Weibo video downloader,Weibo mixed media downloader,Niconico video downloader,Niconico audio downloader,Instagram reels downloader,Instagram post downloader,Instagram image post downloader,Xiaohongshu video downloader,Xiaohongshu image note downloader,TikTok video downloader,X video downloader",
-        "ogTitle": "Universal Media Downloader | Free Online Tool",
+        "ogTitle": "sparkdownloader | Free Online Tool",
         "ogDescription": "Auto-detect links from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X, then download video, audio, or image posts online.",
-        "siteName": "Universal Media Downloader"
+        "siteName": "sparkdownloader"
     },
     "common": {
         "home": "Home",
+        "backToTop": "Back to top",
         "relatedPages": "Related pages",
         "privacy": "Privacy Policy",
         "terms": "Terms of Use",
@@ -123,16 +135,16 @@
         "trustAndPolicies": "Trust & Policies"
     },
     "contactPage": {
-        "metaTitle": "Contact | Universal Media Downloader",
-        "metaDescription": "Contact Universal Media Downloader for support, bug reports, feature requests, and SEO feedback.",
+        "metaTitle": "Contact | sparkdownloader",
+        "metaDescription": "Contact sparkdownloader for support, bug reports, feature requests, and SEO feedback.",
         "title": "Contact",
         "intro": "Use the channels below to report issues or request new features.",
         "github": "Open a GitHub Issue",
         "githubHint": "Best for bug reports and feature requests."
     },
     "privacyPage": {
-        "metaTitle": "Privacy Policy | Universal Media Downloader",
-        "metaDescription": "How Universal Media Downloader handles data, browser storage, analytics, and privacy protection.",
+        "metaTitle": "Privacy Policy | sparkdownloader",
+        "metaDescription": "How sparkdownloader handles data, browser storage, analytics, and privacy protection.",
         "title": "Privacy Policy",
         "intro": "This page explains what data is processed when using the downloader.",
         "points": [
@@ -144,8 +156,8 @@
         "updated": "Last updated: February 18, 2026"
     },
     "termsPage": {
-        "metaTitle": "Terms of Use | Universal Media Downloader",
-        "metaDescription": "Usage terms, legal limitations, and user responsibilities for Universal Media Downloader.",
+        "metaTitle": "Terms of Use | sparkdownloader",
+        "metaDescription": "Usage terms, legal limitations, and user responsibilities for sparkdownloader.",
         "title": "Terms of Use",
         "intro": "By using this service, you agree to follow applicable copyright and platform rules.",
         "points": [
@@ -160,7 +172,9 @@
         "zh": "简体中文",
         "zh-tw": "繁體中文",
         "en": "English",
-        "ja": "日本語"
+        "ja": "日本語",
+        "es": "Español",
+        "ru": "Русский"
     },
     "douyin": {
         "apiLimitDownload": "If automatic download fails, please click open link to download manually (download feature is in the bottom right corner of the video)"
@@ -318,7 +332,7 @@
                     "Audio"
                 ]
             },
-            "comingSoon": "More platforms on the way",
+            "comingSoon": "More platforms now supported",
             "instagram": {
                 "name": "Instagram",
                 "summary": "Video / Image Post / Carousel",
@@ -351,6 +365,83 @@
                     "Video",
                     "Image Post",
                     "Multi-video"
+                ]
+            },
+            "vimeo": {
+                "name": "Vimeo",
+                "summary": "Content Download",
+                "features": [
+                    "Content Download"
+                ]
+            },
+            "dailymotion": {
+                "name": "Dailymotion",
+                "summary": "Content Download",
+                "features": [
+                    "Content Download"
+                ]
+            },
+            "streamable": {
+                "name": "Streamable",
+                "summary": "Content Download",
+                "features": [
+                    "Content Download"
+                ]
+            },
+            "reddit": {
+                "name": "Reddit",
+                "summary": "Content Download",
+                "features": [
+                    "Content Download"
+                ]
+            },
+            "newgrounds": {
+                "name": "Newgrounds",
+                "summary": "Content Download",
+                "features": [
+                    "Content Download"
+                ]
+            },
+            "tumblr": {
+                "name": "Tumblr",
+                "summary": "Content Download",
+                "features": [
+                    "Content Download"
+                ]
+            },
+            "pinterest": {
+                "name": "Pinterest",
+                "summary": "Content Download",
+                "features": [
+                    "Content Download"
+                ]
+            },
+            "vk": {
+                "name": "VK",
+                "summary": "Content Download",
+                "features": [
+                    "Content Download"
+                ]
+            },
+            "okru": {
+                "name": "OK.ru",
+                "summary": "Content Download",
+                "features": [
+                    "Content Download"
+                ]
+            },
+            "twitch": {
+                "name": "Twitch",
+                "summary": "Content Download",
+                "features": [
+                    "Content Download"
+                ]
+            },
+            "soundcloud": {
+                "name": "SoundCloud",
+                "summary": "Content Download",
+                "features": [
+                    "Content Download"
                 ]
             }
         },
@@ -491,6 +582,56 @@
                 "ブラウザ内で処理",
                 "Threads の動画と画像投稿をダウンロード",
                 "Weibo の動画・画像・混合メディア投稿をダウンロード"
+            ],
+            "es": [
+                "Extract MP3 audio from Bilibili videos",
+                "Download Douyin videos without watermark",
+                "Download Telegram public video posts",
+                "Download WeChat article videos",
+                "Download Niconico videos",
+                "Download Niconico audio",
+                "Download Instagram reels and posts",
+                "Download Instagram image posts",
+                "Extract audio from Instagram videos",
+                "Download Xiaohongshu image notes",
+                "Download Xiaohongshu videos",
+                "Extract audio from Xiaohongshu videos",
+                "Download TikTok videos without watermark",
+                "Download X videos",
+                "Extract audio from X videos",
+                "Auto-detect supported platforms",
+                "High-quality media downloads",
+                "Free online tool",
+                "No registration required",
+                "Support multiple media formats",
+                "Browser-based processing",
+                "Download Threads videos and image posts",
+                "Download Weibo videos and mixed-media posts"
+            ],
+            "ru": [
+                "Extract MP3 audio from Bilibili videos",
+                "Download Douyin videos without watermark",
+                "Download Telegram public video posts",
+                "Download WeChat article videos",
+                "Download Niconico videos",
+                "Download Niconico audio",
+                "Download Instagram reels and posts",
+                "Download Instagram image posts",
+                "Extract audio from Instagram videos",
+                "Download Xiaohongshu image notes",
+                "Download Xiaohongshu videos",
+                "Extract audio from Xiaohongshu videos",
+                "Download TikTok videos without watermark",
+                "Download X videos",
+                "Extract audio from X videos",
+                "Auto-detect supported platforms",
+                "High-quality media downloads",
+                "Free online tool",
+                "No registration required",
+                "Support multiple media formats",
+                "Browser-based processing",
+                "Download Threads videos and image posts",
+                "Download Weibo videos and mixed-media posts"
             ]
         },
         "howTo": {
@@ -498,7 +639,9 @@
                 "en": "How to download content from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X",
                 "zh": "如何下载哔哩哔哩、抖音、Telegram、Threads、微信公众号、微博、Niconico、Instagram、小红书、TikTok 和 X 内容",
                 "zh-tw": "如何下載嗶哩嗶哩、抖音、Telegram、Threads、微信公眾號、微博、Niconico、Instagram、小紅書、TikTok 與 X 內容",
-                "ja": "Bilibili・Douyin・Telegram・Threads・WeChat・Weibo・Niconico・Instagram・Xiaohongshu・TikTok・X のコンテンツをダウンロードする方法"
+                "ja": "Bilibili・Douyin・Telegram・Threads・WeChat・Weibo・Niconico・Instagram・Xiaohongshu・TikTok・X のコンテンツをダウンロードする方法",
+                "es": "How to download content from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X",
+                "ru": "How to download content from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X"
             },
             "steps": {
                 "en": [
@@ -571,6 +714,42 @@
                     {
                         "name": "ダウンロード",
                         "text": "動画・音声・画像のダウンロード方法を選択してコンテンツを取得します"
+                    }
+                ],
+                "es": [
+                    {
+                        "name": "Copy link",
+                        "text": "Copy the video, post, image-post, mixed-media post, or article link from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, or X"
+                    },
+                    {
+                        "name": "Paste link",
+                        "text": "Paste the link into the input field on our website"
+                    },
+                    {
+                        "name": "Auto-detect",
+                        "text": "The tool will automatically detect the platform (Bilibili/Douyin/Telegram/Threads/WeChat/Weibo/Niconico/Instagram/Xiaohongshu/TikTok/X)"
+                    },
+                    {
+                        "name": "Download",
+                        "text": "Choose video, audio, or image download options to get your media content"
+                    }
+                ],
+                "ru": [
+                    {
+                        "name": "Copy link",
+                        "text": "Copy the video, post, image-post, mixed-media post, or article link from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, or X"
+                    },
+                    {
+                        "name": "Paste link",
+                        "text": "Paste the link into the input field on our website"
+                    },
+                    {
+                        "name": "Auto-detect",
+                        "text": "The tool will automatically detect the platform (Bilibili/Douyin/Telegram/Threads/WeChat/Weibo/Niconico/Instagram/Xiaohongshu/TikTok/X)"
+                    },
+                    {
+                        "name": "Download",
+                        "text": "Choose video, audio, or image download options to get your media content"
                     }
                 ]
             }

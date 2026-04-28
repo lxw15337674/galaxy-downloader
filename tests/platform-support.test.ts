@@ -18,15 +18,31 @@ const dict = {
             tiktok: { name: 'TikTok', summary: 'video' },
             instagram: { name: 'Instagram', summary: 'post' },
             x: { name: 'X', summary: 'post' },
+            vimeo: { name: 'Vimeo', summary: 'content' },
+            dailymotion: { name: 'Dailymotion', summary: 'content' },
+            streamable: { name: 'Streamable', summary: 'content' },
+            reddit: { name: 'Reddit', summary: 'content' },
+            newgrounds: { name: 'Newgrounds', summary: 'content' },
+            tumblr: { name: 'Tumblr', summary: 'content' },
+            pinterest: { name: 'Pinterest', summary: 'content' },
+            vk: { name: 'VK', summary: 'content' },
+            okru: { name: 'OK.ru', summary: 'content' },
+            twitch: { name: 'Twitch', summary: 'content' },
+            soundcloud: { name: 'SoundCloud', summary: 'content' },
             comingSoon: 'Coming soon',
         },
     },
 } as const;
 
 describe('getPlatformSupportItems', () => {
-    it('hides youtube from the platform support list', () => {
+    it('includes all configured platforms in the first-screen support list', () => {
         const items = getPlatformSupportItems(dict);
 
-        expect(items.map((item) => item.key)).not.toContain('youtube');
+        const keys = items.map((item) => item.key);
+        expect(keys).toContain('youtube');
+        expect(keys).toContain('soundcloud');
+        expect(keys).toContain('vk');
+        expect(keys).toContain('okru');
+        expect(keys).toContain('pinterest');
     });
 });

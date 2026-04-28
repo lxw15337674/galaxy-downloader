@@ -1,6 +1,48 @@
 {
   "versions": [
     {
+      "version": "5.0.0",
+      "date": "2026-04-28",
+      "changes": {
+        "zh": [
+          "首页新增悬浮回到顶部按钮",
+          "新增西班牙语与俄语界面支持",
+          "增加更多平台支持",
+          "站点品牌文案统一为 sparkdownloader"
+        ],
+        "en": [
+          "Added a floating back-to-top button",
+          "Introduced Spanish and Russian UI support",
+          "Expanded platform support",
+          "Unified site branding as sparkdownloader"
+        ],
+        "ja": [
+          "ホームページに「ページ上部へ戻る」フローティングボタンを追加しました",
+          "スペイン語・ロシア語UIに対応しました",
+          "対応プラットフォームを拡充しました",
+          "サイトブランド表記を sparkdownloader に統一しました"
+        ],
+        "zh-tw": [
+          "首頁新增懸浮回到頂部按鈕",
+          "新增西班牙語與俄語介面支援",
+          "增加更多平台支援",
+          "站點品牌文案統一為 sparkdownloader"
+        ],
+        "es": [
+          "Se añadió un botón flotante para volver arriba",
+          "Se añadió soporte de interfaz en español y ruso",
+          "Se amplió la compatibilidad con más plataformas",
+          "La marca del sitio se unificó como sparkdownloader"
+        ],
+        "ru": [
+          "Добавлена плавающая кнопка «Наверх»",
+          "Добавлена поддержка интерфейса на испанском и русском языках",
+          "Расширена поддержка платформ",
+          "Бренд сайта унифицирован как sparkdownloader"
+        ]
+      }
+    },
+    {
       "version": "4.1.1",
       "date": "2026-04-27",
       "changes": {
@@ -19,6 +61,14 @@
         "zh-tw": [
           "Bilibili 合集影片列表新增每條音訊下載按鈕",
           "修復行動端下載音訊時檔案格式名稱錯誤的問題"
+        ],
+        "es": [
+          "Se agregaron botones de descarga de audio por elemento a las listas de videos de colecciones de Bilibili.",
+          "Se corrigió la extensión incorrecta del archivo de audio al descargar en dispositivos móviles."
+        ],
+        "ru": [
+          "В списки серийных видео Bilibili добавлены кнопки загрузки аудио для каждой серии.",
+          "Исправлена проблема с неверным расширением файла при скачивании аудио на мобильных устройствах."
         ]
       }
     },
@@ -45,6 +95,16 @@
           "新增獨立分享播放頁，可透過連結直接進入播放",
           "結果卡新增分享播放入口，並優化行動端按鈕呈現",
           "頂欄支援首頁快捷入口，歷史記錄入口改為圖示加文字"
+        ],
+        "es": [
+          "Se agregó una página de reproducción compartida independiente para que los usuarios puedan abrir y reproducir directamente desde un enlace.",
+          "Se agregó una acción de compartir para reproducir en las tarjetas de resultados y se mejoró la presentación de botones en móviles.",
+          "Se mejoró la barra superior con un acceso directo a la página de inicio y se actualizó el acceso directo del historial a un estilo de ícono y etiqueta."
+        ],
+        "ru": [
+          "Добавлена отдельная страница воспроизведения по ссылке для прямого доступа к просмотру.",
+          "В карточки результатов добавлена кнопка «Поделиться и воспроизвести», улучшено отображение кнопок на мобильных.",
+          "Верхняя панель теперь содержит быстрый доступ на главную страницу, а кнопка истории изменена на иконку с текстом."
         ]
       }
     },
@@ -67,6 +127,14 @@
         "zh-tw": [
           "新增支援 Threads、微博、微信公眾號文章等更多內容類型的解析與顯示",
           "重構支援平台展示區塊，改為更緊湊的圖示化布局，行動端瀏覽更清楚"
+        ],
+        "es": [
+          "Se amplió el soporte de análisis y visualización para más tipos de contenido de Threads, Weibo y artículos de WeChat.",
+          "Se rediseñó la sección de plataformas soportadas con un diseño más compacto basado en íconos para una navegación más clara en móviles."
+        ],
+        "ru": [
+          "Расширена поддержка разбора и отображения новых типов контента: Threads, Weibo и статьи WeChat.",
+          "Секция поддерживаемых платформ переработана в более компактный макет на основе иконок для удобного просмотра с мобильных устройств."
         ]
       }
     },
@@ -89,6 +157,14 @@
         "zh-tw": [
           "新增 Telegram 公開影片訊息支援",
           "最佳化行動端頂欄布局，左側顯示歷史記錄與處理工具，右側顯示回饋、語言與選單"
+        ],
+        "es": [
+          "Se agregó soporte para mensajes de video públicos de Telegram.",
+          "Se optimizó el diseño de la barra superior en móviles, con el historial y las herramientas a la izquierda, y comentarios, idioma y menú a la derecha."
+        ],
+        "ru": [
+          "Добавлена поддержка публичных видеосообщений из Telegram.",
+          "Оптимизирован макет верхней панели для мобильных экранов: слева история и инструменты, справа отзывы, язык и меню."
         ]
       }
     },
@@ -111,6 +187,14 @@
         "zh-tw": [
           "最佳化首頁引導文案，首屏說明更精簡",
           "新增可點擊的示例連結，點擊後可自動填入輸入框"
+        ],
+        "es": [
+          "Se perfeccionó el texto de orientación en la página de inicio para una descripción más clara en la primera pantalla.",
+          "Se agregó un enlace de ejemplo en el que se puede hacer clic para completar automáticamente el campo de entrada."
+        ],
+        "ru": [
+          "Улучшен текст первого экрана на главной странице для большей лаконичности и понятности.",
+          "Добавлена кликабельная ссылка с примером, автоматически заполняющая поле ввода."
         ]
       }
     },
@@ -129,6 +213,12 @@
         ],
         "zh-tw": [
           "新增「音訊處理」功能，支援提取音訊與音影片合併"
+        ],
+        "es": [
+          "Se agregó la función \"Herramientas de audio\", que admite la extracción de audio y la fusión de video y audio."
+        ],
+        "ru": [
+          "Добавлена функция «Обработка звука» с поддержкой извлечения аудио и объединения видео со звуком."
         ]
       }
     },
@@ -147,6 +237,12 @@
         ],
         "zh-tw": [
           "新增支援微信公眾號文章影片解析與下載"
+        ],
+        "es": [
+          "Se agregó soporte para el análisis y descarga de videos de artículos de WeChat."
+        ],
+        "ru": [
+          "Добавлена поддержка парсинга и скачивания видео из статей WeChat."
         ]
       }
     },
@@ -169,6 +265,14 @@
         "zh-tw": [
           "平台新增支援 Instagram 與 X",
           "最佳化瀏覽器端音訊提取器載入流程，降低初始化失敗問題"
+        ],
+        "es": [
+          "Se incorporó soporte para las plataformas Instagram y X.",
+          "Se mejoró el flujo de carga del extractor de audio en el navegador para reducir los fallos de inicialización."
+        ],
+        "ru": [
+          "Добавлена поддержка платформ Instagram и X (ранее Twitter).",
+          "Улучшен процесс загрузки экстрактора аудио в браузере, минимизировано количество ошибок инициализации."
         ]
       }
     },
@@ -199,6 +303,18 @@
           "無語言偏好時預設進入英文頁面，同時保留瀏覽器自動判斷語言",
           "頂欄新增主題切換，並最佳化頂欄間距與行動端語言顯示",
           "解析失敗與回饋提交失敗提示支援多語系在地化，錯誤訊息更清楚"
+        ],
+        "es": [
+          "Se añadió soporte para el idioma japonés.",
+          "Los usuarios sin preferencia de idioma ahora acceden a la página en inglés por defecto, mientras se mantiene la detección automática del navegador.",
+          "Se añadió el cambio de tema en la barra superior y se mejoró el espaciado, además de optimizar la visualización de idioma en móviles.",
+          "Los errores de análisis y de envío de comentarios ahora están localizados, haciendo los mensajes más claros."
+        ],
+        "ru": [
+          "Добавлена поддержка японского языка.",
+          "Теперь для пользователей без языковых настроек по умолчанию открывается английская версия, автоматическое определение языка в браузере сохранено.",
+          "В верхнюю панель добавлен переключатель тем, улучшены интервалы и отображение языков на мобильных устройствах.",
+          "Уведомления об ошибках парсинга и отправки отзывов теперь локализованы, сообщения стали более понятными."
         ]
       }
     },
@@ -229,6 +345,18 @@
           "清空歷史操作新增二次確認，並改為警示樣式按鈕，降低誤觸風險",
           "最佳化「重新解析」提示邏輯，移除重複提示，互動更簡潔",
           "最佳化首頁操作引導文案，明確「貼上連結/口令 → 點擊解析按鈕 → 自動識別 → 選擇下載」流程"
+        ],
+        "es": [
+          "Se agregó búsqueda al historial, permitiendo un filtrado rápido por título.",
+          "Se añadió confirmación antes de borrar el historial y se cambió a un botón de estilo advertencia para reducir clics accidentales.",
+          "Se optimizaron las notificaciones de reanálisis eliminando los mensajes duplicados para una interacción más limpia.",
+          "Se perfeccionó el texto de guía de la página de inicio para aclarar el flujo: pegar enlace/código -> clic en Analizar -> detección automática -> elegir descarga."
+        ],
+        "ru": [
+          "В историю поиска добавлена функция фильтрации по названию для быстрого нахождения результатов.",
+          "Добавлено подтверждение при очистке истории, кнопка выполнена в виде предупреждения для предотвращения случайных нажатий.",
+          "Оптимизирована логика уведомлений о повторном парсинге, удалены дублирующиеся сообщения для более чистого взаимодействия.",
+          "Улучшено руководство на главной странице, уточнена последовательность: вставка ссылки -> Парсинг -> Автоопределение -> Выбор загрузки."
         ]
       }
     },
@@ -259,6 +387,18 @@
           "新增支援 Bilibili TV 音訊下載",
           "行動端頂欄新增反饋按鈕，快速入口更便捷",
           "最佳化平台支援指南說明文案"
+        ],
+        "es": [
+          "Se añadió soporte para la descarga de videos y audios de TikTok.",
+          "Se añadió soporte para la descarga de audio de Bilibili TV.",
+          "Se agregó el botón de Comentarios en la barra superior para móviles para un acceso rápido.",
+          "Se mejoraron las descripciones en la guía de plataformas soportadas."
+        ],
+        "ru": [
+          "Добавлена поддержка скачивания видео и аудио из TikTok.",
+          "Добавлена поддержка загрузки аудио из видео на Bilibili TV.",
+          "На мобильной версии в верхнюю панель добавлена кнопка обратной связи для быстрого доступа.",
+          "Улучшены описания в руководстве по поддерживаемым платформам."
         ]
       }
     },
@@ -297,6 +437,22 @@
           "行動端廣告調整至解析結果下方，內容優先展示",
           "修復使用口令解析後歷史記錄查看原影片連結失效的問題",
           "優化介面文案與布局"
+        ],
+        "es": [
+          "Soporte para visualización y descarga de publicaciones de imágenes de Douyin.",
+          "Soporte para visualización y descarga de la portada del video.",
+          "Se optimizó el punto de interrupción del diseño de tres columnas a 1024 px para que la barra lateral sea visible en más dispositivos.",
+          "La publicidad en móviles se ajustó para que aparezca debajo de los resultados de análisis, priorizando el contenido.",
+          "Se corrigió un fallo donde el enlace en el historial al video original no funcionaba al ingresar un código de acceso.",
+          "Se mejoró el diseño y los textos de la interfaz."
+        ],
+        "ru": [
+          "Поддержка отображения и скачивания графических постов Douyin.",
+          "Поддержка отображения и скачивания обложек видео.",
+          "Оптимизирована ширина макета с тремя колонками до 1024px, боковая панель теперь видна на большем числе устройств.",
+          "Отображение рекламы на мобильных перемещено под результаты парсинга для приоритета контента.",
+          "Исправлена ошибка неработающей ссылки на исходное видео в истории после ввода токенов.",
+          "Улучшены тексты и макет интерфейса."
         ]
       }
     },
@@ -323,6 +479,16 @@
           "最佳化廣告顯示邏輯，提升填充率和使用者體驗",
           "精簡平台支援指南，使介面更簡潔清爽",
           "廣告位調整至側欄底部，內容優先展示"
+        ],
+        "es": [
+          "Se optimizó la lógica de visualización de anuncios para obtener una mejor tasa de relleno y experiencia de usuario.",
+          "Se simplificó la guía de plataformas para lograr una interfaz más limpia.",
+          "Se movieron los anuncios a la parte inferior de la barra lateral para priorizar el contenido."
+        ],
+        "ru": [
+          "Оптимизирована логика показа рекламы для лучшей заполняемости и удобства пользователей.",
+          "Руководство по платформам упрощено для большей чистоты интерфейса.",
+          "Рекламный блок перемещен в нижнюю часть боковой панели для фокуса на контенте."
         ]
       }
     },
@@ -341,6 +507,12 @@
         ],
         "zh-tw": [
           "全面最佳化行動端介面佈局"
+        ],
+        "es": [
+          "Optimización integral del diseño de la interfaz en plataformas móviles."
+        ],
+        "ru": [
+          "Комплексная оптимизация мобильного интерфейса."
         ]
       }
     },
@@ -363,6 +535,14 @@
         "zh-tw": [
           "支援抖音口令解析，可直接貼上分享口令",
           "支援小紅書口令解析，可直接貼上分享口令"
+        ],
+        "es": [
+          "Soporte para el análisis de códigos compartidos de Douyin; pégalos directamente.",
+          "Soporte para el análisis de códigos compartidos de Xiaohongshu; pégalos directamente."
+        ],
+        "ru": [
+          "Поддержка обмена токенами Douyin: просто скопируйте и вставьте текст.",
+          "Поддержка токенов Xiaohongshu: просто скопируйте и вставьте текст."
         ]
       }
     },
@@ -381,6 +561,12 @@
         ],
         "zh-tw": [
           "支援小紅書影片音訊提取"
+        ],
+        "es": [
+          "Soporte para la extracción de video y audio de Xiaohongshu."
+        ],
+        "ru": [
+          "Поддержка извлечения видео и аудио из Xiaohongshu."
         ]
       }
     },
@@ -399,6 +585,12 @@
         ],
         "zh-tw": [
           "支援抖音 /video/ 格式連結解析"
+        ],
+        "es": [
+          "Soporte para el análisis de enlaces de Douyin en formato /video/."
+        ],
+        "ru": [
+          "Поддержка разбора ссылок Douyin в формате /video/."
         ]
       }
     },
@@ -421,6 +613,14 @@
         "zh-tw": [
           "支援小紅書圖片預覽",
           "支援小紅書圖片打包下載"
+        ],
+        "es": [
+          "Soporte para vista previa de imágenes de Xiaohongshu.",
+          "Soporte para descargar paquetes de imágenes de Xiaohongshu."
+        ],
+        "ru": [
+          "Поддержка предварительного просмотра изображений Xiaohongshu.",
+          "Поддержка пакетного скачивания изображений из Xiaohongshu."
         ]
       }
     },
@@ -439,6 +639,12 @@
         ],
         "zh-tw": [
           "支援小紅書影片和圖片下載"
+        ],
+        "es": [
+          "Soporte para la descarga de videos e imágenes de Xiaohongshu."
+        ],
+        "ru": [
+          "Поддержка скачивания изображений и видео из Xiaohongshu."
         ]
       }
     },
@@ -457,6 +663,12 @@
         ],
         "zh-tw": [
           "新增抖音影片音訊提取功能（瀏覽器端轉換）"
+        ],
+        "es": [
+          "Se añadió la extracción de audio de videos de Douyin (conversión en el lado del navegador)."
+        ],
+        "ru": [
+          "Добавлено извлечение аудио из видео Douyin (локальная конвертация в браузере)."
         ]
       }
     },
@@ -475,6 +687,12 @@
         ],
         "zh-tw": [
           "更換獨立域名"
+        ],
+        "es": [
+          "Cambio a un dominio independiente."
+        ],
+        "ru": [
+          "Запуск на независимом домене."
         ]
       }
     },
@@ -497,6 +715,14 @@
         "zh-tw": [
           "支援B站多P影片下載",
           "顯示影片時長"
+        ],
+        "es": [
+          "Soporte para descarga de videos de múltiples partes de Bilibili.",
+          "Mostrar la duración del video."
+        ],
+        "ru": [
+          "Поддержка скачивания многочастных видео на Bilibili.",
+          "Отображение продолжительности видео."
         ]
       }
     },
@@ -519,6 +745,14 @@
         "zh-tw": [
           "新增抖音影片下載功能",
           "自動識別影片平台"
+        ],
+        "es": [
+          "Se añadió la función de descarga de videos de Douyin.",
+          "Detección automática de la plataforma de video."
+        ],
+        "ru": [
+          "Добавлено скачивание видео из Douyin.",
+          "Автоматическое определение платформы для видео."
         ]
       }
     },
@@ -541,6 +775,14 @@
         "zh-tw": [
           "首次發佈",
           "支援B站影片音訊下載"
+        ],
+        "es": [
+          "Lanzamiento inicial.",
+          "Soporte para la descarga de audio y video de Bilibili."
+        ],
+        "ru": [
+          "Первый релиз.",
+          "Поддержка скачивания аудио и видео с Bilibili."
         ]
       }
     }

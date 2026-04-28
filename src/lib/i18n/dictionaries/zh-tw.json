@@ -94,7 +94,18 @@
             "instagram": "Instagram",
             "x": "X",
             "threads": "Threads",
-            "weibo": "微博"
+            "weibo": "微博",
+            "dailymotion": "Dailymotion",
+            "newgrounds": "Newgrounds",
+            "okru": "OK.ru",
+            "pinterest": "Pinterest",
+            "reddit": "Reddit",
+            "soundcloud": "SoundCloud",
+            "streamable": "Streamable",
+            "twitch": "Twitch",
+            "tumblr": "Tumblr",
+            "vk": "VK",
+            "vimeo": "Vimeo"
         }
     },
     "toast": {
@@ -107,15 +118,16 @@
         "installAction": "立即安裝"
     },
     "metadata": {
-        "title": "通用媒體下載器｜Bilibili、抖音、Instagram、TikTok、X 下載工具",
+        "title": "sparkdownloader｜Bilibili、抖音、Instagram、TikTok、X 下載工具",
         "description": "免費線上媒體下載工具，支援 Bilibili、抖音、Telegram、Threads、微信公眾號、微博、Niconico、Instagram、小紅書、TikTok 與 X。自動識別連結並下載影片、音訊或圖文內容。",
         "keywords": "線上媒體下載器,嗶哩嗶哩影片下載,嗶哩嗶哩音訊下載,抖音影片下載,抖音純音樂下載,Telegram影片下載,Threads影片下載,Threads圖文下載,微信公眾號影片下載,微博影片下載,微博圖文下載,微博混合媒體下載,Niconico影片下載,Niconico音訊下載,Instagram Reels下載,Instagram貼文下載,Instagram圖文貼文下載,小紅書影片下載,小紅書圖文下載,TikTok影片下載,X影片下載",
-        "ogTitle": "通用媒體下載器｜免費線上下載工具",
+        "ogTitle": "sparkdownloader｜免費線上下載工具",
         "ogDescription": "自動識別 Bilibili、抖音、Telegram、Threads、微信公眾號、微博、Niconico、Instagram、小紅書、TikTok 與 X 連結，線上下載影片、音訊或圖文內容。",
-        "siteName": "通用媒體下載器"
+        "siteName": "sparkdownloader"
     },
     "common": {
         "home": "首頁",
+        "backToTop": "回到頂部",
         "relatedPages": "相關頁面",
         "privacy": "隱私政策",
         "terms": "使用條款",
@@ -123,7 +135,7 @@
         "trustAndPolicies": "信任與政策"
     },
     "contactPage": {
-        "metaTitle": "聯絡我們｜通用媒體下載器",
+        "metaTitle": "聯絡我們｜sparkdownloader",
         "metaDescription": "聯絡下載工具團隊，提交問題回報、功能建議或 SEO 反饋。",
         "title": "聯絡我們",
         "intro": "你可以透過以下方式提交問題回報或功能建議。",
@@ -131,7 +143,7 @@
         "githubHint": "適合回報錯誤與提出功能需求。"
     },
     "privacyPage": {
-        "metaTitle": "隱私政策｜通用媒體下載器",
+        "metaTitle": "隱私政策｜sparkdownloader",
         "metaDescription": "說明本站如何處理資料、瀏覽器儲存、分析服務與隱私保護。",
         "title": "隱私政策",
         "intro": "本頁說明在使用下載工具時，網站如何處理相關資料。",
@@ -144,7 +156,7 @@
         "updated": "最後更新：2026-02-18"
     },
     "termsPage": {
-        "metaTitle": "使用條款｜通用媒體下載器",
+        "metaTitle": "使用條款｜sparkdownloader",
         "metaDescription": "說明下載工具的使用條件、限制與責任範圍。",
         "title": "使用條款",
         "intro": "使用本服務即表示你同意遵守相關版權規範與平台規則。",
@@ -160,7 +172,9 @@
         "zh": "简体中文",
         "zh-tw": "繁體中文",
         "en": "English",
-        "ja": "日本語"
+        "ja": "日本語",
+        "es": "Español",
+        "ru": "Русский"
     },
     "douyin": {
         "apiLimitDownload": "如果自動下載失敗，請點擊開啟連結手動下載（下載功能在影片右下角）"
@@ -318,7 +332,7 @@
                     "音訊"
                 ]
             },
-            "comingSoon": "更多平台陸續支援",
+            "comingSoon": "已支援更多平台",
             "instagram": {
                 "name": "Instagram",
                 "summary": "影片 / 圖文 / 輪播圖",
@@ -351,6 +365,83 @@
                     "影片",
                     "圖文",
                     "多影片"
+                ]
+            },
+            "vimeo": {
+                "name": "Vimeo",
+                "summary": "內容下載",
+                "features": [
+                    "內容下載"
+                ]
+            },
+            "dailymotion": {
+                "name": "Dailymotion",
+                "summary": "內容下載",
+                "features": [
+                    "內容下載"
+                ]
+            },
+            "streamable": {
+                "name": "Streamable",
+                "summary": "內容下載",
+                "features": [
+                    "內容下載"
+                ]
+            },
+            "reddit": {
+                "name": "Reddit",
+                "summary": "內容下載",
+                "features": [
+                    "內容下載"
+                ]
+            },
+            "newgrounds": {
+                "name": "Newgrounds",
+                "summary": "內容下載",
+                "features": [
+                    "內容下載"
+                ]
+            },
+            "tumblr": {
+                "name": "Tumblr",
+                "summary": "內容下載",
+                "features": [
+                    "內容下載"
+                ]
+            },
+            "pinterest": {
+                "name": "Pinterest",
+                "summary": "內容下載",
+                "features": [
+                    "內容下載"
+                ]
+            },
+            "vk": {
+                "name": "VK",
+                "summary": "內容下載",
+                "features": [
+                    "內容下載"
+                ]
+            },
+            "okru": {
+                "name": "OK.ru",
+                "summary": "內容下載",
+                "features": [
+                    "內容下載"
+                ]
+            },
+            "twitch": {
+                "name": "Twitch",
+                "summary": "內容下載",
+                "features": [
+                    "內容下載"
+                ]
+            },
+            "soundcloud": {
+                "name": "SoundCloud",
+                "summary": "內容下載",
+                "features": [
+                    "內容下載"
                 ]
             }
         },
@@ -493,6 +584,52 @@
                 "ブラウザ内で処理",
                 "Threads の動画と画像投稿をダウンロード",
                 "Weibo の動画・画像・混合メディア投稿をダウンロード"
+            ],
+            "es": [
+                "Extract MP3 audio from Bilibili videos",
+                "Download Douyin videos without watermark",
+                "Download Telegram public video posts",
+                "Download WeChat article videos",
+                "Download Instagram reels and posts",
+                "Download Instagram image posts",
+                "Extract audio from Instagram videos",
+                "Download Xiaohongshu image notes",
+                "Download Xiaohongshu videos",
+                "Extract audio from Xiaohongshu videos",
+                "Download TikTok videos without watermark",
+                "Download X videos",
+                "Extract audio from X videos",
+                "Auto-detect supported platforms",
+                "High-quality media downloads",
+                "Free online tool",
+                "No registration required",
+                "Support multiple media formats",
+                "Browser-based processing",
+                "Download Threads videos and image posts",
+                "Download Weibo videos and mixed-media posts"
+            ],
+            "ru": [
+                "Extract MP3 audio from Bilibili videos",
+                "Download Douyin videos without watermark",
+                "Download Telegram public video posts",
+                "Download WeChat article videos",
+                "Download Instagram reels and posts",
+                "Download Instagram image posts",
+                "Extract audio from Instagram videos",
+                "Download Xiaohongshu image notes",
+                "Download Xiaohongshu videos",
+                "Extract audio from Xiaohongshu videos",
+                "Download TikTok videos without watermark",
+                "Download X videos",
+                "Extract audio from X videos",
+                "Auto-detect supported platforms",
+                "High-quality media downloads",
+                "Free online tool",
+                "No registration required",
+                "Support multiple media formats",
+                "Browser-based processing",
+                "Download Threads videos and image posts",
+                "Download Weibo videos and mixed-media posts"
             ]
         },
         "howTo": {
@@ -500,7 +637,9 @@
                 "en": "How to download content from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X",
                 "zh": "如何下载哔哩哔哩、抖音、Telegram、Threads、微信公众号、微博、Niconico、Instagram、小红书、TikTok 和 X 内容",
                 "zh-tw": "如何下載嗶哩嗶哩、抖音、Telegram、Threads、微信公眾號、微博、Niconico、Instagram、小紅書、TikTok 與 X 內容",
-                "ja": "Bilibili・Douyin・Telegram・Threads・WeChat・Weibo・Niconico・Instagram・Xiaohongshu・TikTok・X のコンテンツをダウンロードする方法"
+                "ja": "Bilibili・Douyin・Telegram・Threads・WeChat・Weibo・Niconico・Instagram・Xiaohongshu・TikTok・X のコンテンツをダウンロードする方法",
+                "es": "How to download content from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X",
+                "ru": "How to download content from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X"
             },
             "steps": {
                 "en": [
@@ -573,6 +712,42 @@
                     {
                         "name": "ダウンロード",
                         "text": "動画・音声・画像のダウンロード方法を選択してコンテンツを取得します"
+                    }
+                ],
+                "es": [
+                    {
+                        "name": "Copy link",
+                        "text": "Copy the video, post, image-post, mixed-media post, or article link from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, or X"
+                    },
+                    {
+                        "name": "Paste link",
+                        "text": "Paste the link into the input field on our website"
+                    },
+                    {
+                        "name": "Auto-detect",
+                        "text": "The tool will automatically detect the platform (Bilibili/Douyin/Telegram/Threads/WeChat/Weibo/Niconico/Instagram/Xiaohongshu/TikTok/X)"
+                    },
+                    {
+                        "name": "Download",
+                        "text": "Choose video, audio, or image download options to get your media content"
+                    }
+                ],
+                "ru": [
+                    {
+                        "name": "Copy link",
+                        "text": "Copy the video, post, image-post, mixed-media post, or article link from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, or X"
+                    },
+                    {
+                        "name": "Paste link",
+                        "text": "Paste the link into the input field on our website"
+                    },
+                    {
+                        "name": "Auto-detect",
+                        "text": "The tool will automatically detect the platform (Bilibili/Douyin/Telegram/Threads/WeChat/Weibo/Niconico/Instagram/Xiaohongshu/TikTok/X)"
+                    },
+                    {
+                        "name": "Download",
+                        "text": "Choose video, audio, or image download options to get your media content"
                     }
                 ]
             }

@@ -1,0 +1,833 @@
+{
+    "home": {
+        "title": "Выберите сервис",
+        "description": "Выберите сервис, с которого хотите скачать контент.",
+        "bilibiliButton": "Загрузчик Bilibili",
+        "douyinButton": "Загрузчик Douyin"
+    },
+    "unified": {
+        "pageTitle": "Загрузчик соцсетей",
+        "pageDescription": "Вставьте ссылку, и сервис автоматически определит контент для загрузки видео, аудио, музыки или изображений.",
+        "placeholder": "Вставьте сюда ссылку или код из шеринга...",
+        "newBadge": "Новое: примечания к изображениям Douyin",
+        "exampleLabel": "Пример:",
+        "exampleUrl": "https://www.bilibili.com/video/BV1Wv3ez2Ex8/"
+    },
+    "page": {
+        "feedback": "Есть предложения или замечания? Нажмите кнопку «Feedback» в правом верхнем углу.",
+        "feedbackLinkText": "",
+        "openMenuLabel": "Открыть меню",
+        "switchLanguageLabel": "Сменить язык",
+        "copyrightVideo": "Уведомление об авторских правах: права на видео принадлежат авторам и исходным платформам.",
+        "copyrightStorage": "Сайт не хранит и не размещает видео или изображения.",
+        "copyrightYear": "Авторское право © {year}",
+        "copyrightBilibiliRestriction": "⚠️ Загрузка контента с ограничениями по авторским правам (например, платный или VIP) и контента с ограниченным доступом (например, Telegram / X, требующий входа или с ограничениями) не поддерживается."
+    },
+    "form": {
+        "pasteButton": "Вставить",
+        "downloadButton": "Анализировать",
+        "downloading": "Анализ..."
+    },
+    "errors": {
+        "emptyUrl": "Ссылка не может быть пустой.",
+        "downloadError": "Во время обработки произошла неизвестная ошибка.",
+        "downloadFailed": "Не удалось обработать",
+        "getVideoInfoFailed": "Не удалось получить информацию о видео. Повторите попытку позже.",
+        "clipboardFailed": "Не удалось прочитать буфер обмена.",
+        "clipboardPermission": "Проверьте, выдано ли разрешение на доступ к буферу обмена.",
+        "allImagesLoadFailed": "Не удалось загрузить все изображения. Невозможно сформировать пакет.",
+        "packageFailed": "Ошибка упаковки. Попробуйте снова.",
+        "confirmPartialDownload": "Не удалось загрузить {failCount} изображений. Скачать оставшиеся {successCount}?",
+        "continue": "Продолжить",
+        "cancel": "Отмена",
+        "fileTooLarge": "Файл слишком большой. Максимум: 500 МБ.",
+        "videoFileTooLarge": "Видео слишком большое. Максимум: 500 МБ.",
+        "audioFileTooLarge": "Аудио слишком большое. Максимум: 100 МБ.",
+        "totalSizeTooLarge": "Общий размер файлов превышает 800 МБ.",
+        "fileEmpty": "Файл пуст. Выберите корректный файл.",
+        "fileFormatNotSupported": "Формат не поддерживается. Загрузите видео MP4/WebM/MOV/MKV/AVI/MPEG.",
+        "audioFormatNotSupported": "Формат не поддерживается. Загрузите аудио MP3/AAC/WAV/OGG/FLAC/M4A.",
+        "fileReadFailed": "Не удалось прочитать файл. Повторите попытку.",
+        "noVideoSelected": "Выберите видеофайл.",
+        "noAudioSelected": "Выберите аудиофайл.",
+        "api": {
+            "BAD_REQUEST": "Параметры запроса недействительны.",
+            "INVALID_JSON": "Неверный формат тела запроса.",
+            "UNSUPPORTED_PLATFORM": "Эта платформа не поддерживается.",
+            "PLATFORM_MISMATCH": "Ссылка не соответствует выбранному интерфейсу загрузки.",
+            "INVALID_DOWNLOAD_TYPE": "Недопустимый тип загрузки.",
+            "INVALID_QUALITY": "Выбранное качество недействительно.",
+            "NOT_FOUND": "Ресурс не существует или больше не доступен.",
+            "DOWNLOAD_URL_NOT_FOUND": "Ссылка на загружаемый медиафайл не найдена.",
+            "RATE_LIMITED": "Слишком много запросов. Пожалуйста, повторите попытку позже.",
+            "UPSTREAM_ERROR": "Запрос вышестоящей платформы не выполнен. Пожалуйста, повторите попытку позже.",
+            "SERVICE_UNAVAILABLE": "Услуга временно недоступна.",
+            "INTERNAL_ERROR": "Произошла внутренняя ошибка сервера.",
+            "FEEDBACK_SUBMIT_FAILED": "Не удалось отправить отзыв.",
+            "MEDIA_PROCESSOR_INIT_FAILED": "Не удалось инициализировать медиапроцессор.",
+            "PARSE_FAILED": "Не удалось разобрать ссылку. Пожалуйста, проверьте, действителен ли он."
+        }
+    },
+    "history": {
+        "title": "История",
+        "description": "Описание функции истории",
+        "clear": "Очистить",
+        "cleared": "История очищена",
+        "searchPlaceholder": "Поиск по названию...",
+        "noSearchResults": "Совпадений не найдено",
+        "viewSource": "Открыть исходную ссылку",
+        "redownload": "Повторный анализ",
+        "linkFilled": "Ссылка подставлена",
+        "clickToRedownload": "Нажмите «Анализировать», чтобы обработать снова",
+        "unknownTitle": "Неизвестное название",
+        "platforms": {
+            "bilibili": "Билибили",
+            "bilibiliTv": "Билибили ТВ",
+            "douyin": "Дуин",
+            "youtube": "Ютуб",
+            "telegram": "Телеграмма",
+            "wechat": "Вичат",
+            "niconico": "Никонико",
+            "xiaohongshu": "Сяохуншу",
+            "tiktok": "ТикТок",
+            "unknown": "Неизвестный",
+            "instagram": "Инстаграм",
+            "x": "Х",
+            "threads": "Темы",
+            "weibo": "Вейбо",
+            "dailymotion": "Ежедневное движение",
+            "newgrounds": "Ньюграундс",
+            "okru": "ОК.ру",
+            "pinterest": "Пинтерест",
+            "reddit": "Реддит",
+            "soundcloud": "Саундклауд",
+            "streamable": "Потоковое",
+            "twitch": "Твич",
+            "tumblr": "Тамблер",
+            "vk": "ВК",
+            "vimeo": "Вимео"
+        }
+    },
+    "toast": {
+        "linkFilled": "Ссылка вставлена.",
+        "douyinParseSuccess": "Анализ успешно завершен",
+        "linkFilledForRedownload": "Ссылка подставлена",
+        "clickToRedownloadDesc": "Нажмите «Анализировать», чтобы обработать снова",
+        "installTitle": "Добавить на главный экран",
+        "installDescription": "Установите приложение для быстрого запуска в один тап",
+        "installAction": "Установить"
+    },
+    "metadata": {
+        "title": "sparkdownloader | Bilibili, Douyin, Instagram, TikTok, X",
+        "description": "Бесплатный онлайн-инструмент для загрузки контента с Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok и X.",
+        "keywords": "Загрузчик онлайн-медиа, Загрузчик видео Bilibili, Загрузчик аудио Bilibili, Загрузчик видео Douyin, Загрузчик музыки Douyin, Загрузчик видео Telegram, Загрузчик видео Threads, Загрузчик изображений Threads, Загрузчик видео WeChat, Загрузчик видео Weibo, Загрузчик смешанного мультимедиа Weibo, Загрузчик видео Niconico, Загрузчик аудио Niconico, Загрузчик роликов Instagram, Загрузчик сообщений Instagram, Публикация изображений Instagram загрузчик, загрузчик видео Xiaohongshu, загрузчик заметок изображений Xiaohongshu, загрузчик видео TikTok, загрузчик видео X",
+        "ogTitle": "sparkdownloader | Бесплатный онлайн-инструмент",
+        "ogDescription": "Автоматически распознает ссылки и позволяет скачать видео, аудио или изображения.",
+        "siteName": "sparkdownloader"
+    },
+    "common": {
+        "home": "Главная",
+        "backToTop": "Наверх",
+        "relatedPages": "Связанные страницы",
+        "privacy": "Политика конфиденциальности",
+        "terms": "Условия использования",
+        "contact": "Контакты",
+        "trustAndPolicies": "Надежность и политики"
+    },
+    "contactPage": {
+        "metaTitle": "Контакты | sparkdownloader",
+        "metaDescription": "Свяжитесь со sparkdownloader по вопросам поддержки, отчетов об ошибках, предложений функций и SEO-обратной связи.",
+        "title": "Контакты",
+        "intro": "Вы можете использовать каналы ниже для сообщений об ошибках и предложений.",
+        "github": "Открыть issue на GitHub",
+        "githubHint": "Лучший вариант для баг-репортов и запросов новых функций."
+    },
+    "privacyPage": {
+        "metaTitle": "Политика конфиденциальности | sparkdownloader",
+        "metaDescription": "Как sparkdownloader обрабатывает данные, локальное хранилище браузера, аналитику и защиту приватности.",
+        "title": "Политика конфиденциальности",
+        "intro": "На этой странице описано, как обрабатываются данные при использовании сервиса.",
+        "points": [
+            "Никакой регистрации аккаунта не требуется.",
+            "История загрузок хранится в локальном хранилище вашего браузера.",
+            "Сервис не хранит ваши личные медиафайлы на этом сайте.",
+            "Сторонние службы, такие как аналитика или реклама, могут собирать данные об использовании в соответствии со своими собственными политиками."
+        ],
+        "updated": "Последнее обновление: 18 февраля 2026"
+    },
+    "termsPage": {
+        "metaTitle": "Условия использования | sparkdownloader",
+        "metaDescription": "Условия использования, юридические ограничения и ответственность пользователя в sparkdownloader.",
+        "title": "Условия использования",
+        "intro": "Используя сервис, вы соглашаетесь соблюдать правила платформ и нормы авторского права.",
+        "points": [
+            "Используйте этот инструмент только для законного и авторизованного доступа к контенту.",
+            "Не используйте услугу для обхода оплаты, членства или защиты авторских прав.",
+            "Вы несете ответственность за использование загруженных файлов.",
+            "The service may change functionality at any time without prior notice."
+        ],
+        "updated": "Последнее обновление: 18 февраля 2026"
+    },
+    "languages": {
+        "zh": "简体中文",
+        "zh-tw": "繁體中文",
+        "en": "English",
+        "ja": "日本語",
+        "es": "Español",
+        "ru": "Русский"
+    },
+    "douyin": {
+        "apiLimitDownload": "Если автоматическая загрузка не удалась, нажмите «Открыть ссылку», чтобы загрузить вручную (функция загрузки находится в правом нижнем углу видео)."
+    },
+    "extractAudio": {
+        "button": "Извлечь аудио",
+        "loading": "Загрузка...",
+        "downloading": "Загрузка {progress}%",
+        "downloadingWithSize": "Загрузка {progress}% ({loaded} / {total})",
+        "converting": "Преобразование {progress}%",
+        "completed": "Извлечение завершено",
+        "retry": "Повторить попытку",
+        "errorLoad": "Не удалось загрузить инструменты. Обновите страницу и повторите попытку.",
+        "errorDownload": "Не удалось загрузить видео. Используйте резервную ссылку и извлеките его с помощью других инструментов.",
+        "errorConvert": "Не удалось преобразовать аудио, формат видео может не поддерживаться",
+        "errorMemory": "Видеофайл слишком велик, недостаточно памяти браузера, используйте инструменты рабочего стола."
+    },
+    "audioTool": {
+        "triggerButton": "Инструменты",
+        "title": "Инструменты",
+        "description": "Используйте инструменты для извлечения аудио или объединения медиафайлов. Загрузка начнется автоматически после завершения обработки.",
+        "extractDescription": "Извлеките аудио из локального видеофайла и выведите MP3.",
+        "mergeDescription": "Выберите один видеофайл и один аудиофайл, а затем выведите MP4.",
+        "placeholder": "Вставьте видео или опубликуйте ссылку для обмена...",
+        "strategyHint": "Предпочитайте загрузку аудио на родной платформе; если оно недоступно, извлечение браузера будет использоваться автоматически.",
+        "pasteButton": "Вставить",
+        "submitButton": "Начать извлечение",
+        "processingButton": "Обработка...",
+        "statusIdle": "Выберите видеофайл, чтобы начать извлечение",
+        "statusMergeIdle": "Выберите видео и аудио файлы, чтобы начать объединение.",
+        "statusParsing": "Разбор...",
+        "statusPreparingMerge": "Загрузка источников видео и аудио...",
+        "statusDirectDownloading": "Обнаружен собственный звук, загрузка...",
+        "statusFallbackExtracting": "Собственный звук не найден, готовится извлечение браузера...",
+        "statusCompleted": "Готово, загрузка началась",
+        "noAudioSource": "Анализ выполнен успешно, но доступный источник аудио или видео не найден.",
+        "noMergeSource": "Анализ выполнен успешно, но источник видео или аудио для объединения недоступен.",
+        "urlTab": "С URL-адреса",
+        "fileTab": "Извлечь аудио",
+        "mergeTab": "Объединить видео + аудио",
+        "videoFile": "Видеофайл",
+        "audioFile": "Аудио файл",
+        "dropHint": "Перетащите сюда файл или нажмите, чтобы выбрать",
+        "fileSizeLimit": "До 500 МБ",
+        "fileSelected": "Выбрано: {name} ({size})",
+        "selectFileButton": "Выберите видео",
+        "changeFileButton": "Изменить видео",
+        "selectVideoButton": "Выберите видео",
+        "selectAudioButton": "Выберите аудио",
+        "videoSizeLimit": "До 500 МБ",
+        "audioSizeLimit": "До 100 МБ",
+        "videoSelected": "Выбрано: {name} ({size})",
+        "audioSelected": "Выбрано: {name} ({size})",
+        "mergeButton": "Начать объединение",
+        "changeVideoButton": "Изменить видео",
+        "changeAudioButton": "Изменить аудио",
+        "closeButton": "Закрывать",
+        "statusReadingFile": "Чтение видео…",
+        "statusFileReady": "Видео готово. Вы можете начать добычу",
+        "statusReadingVideo": "Чтение видео…",
+        "statusReadingAudio": "Чтение аудио…",
+        "statusMerging": "Объединение…"
+    },
+    "guide": {
+        "quickStart": {
+            "title": "Простая трехэтапная загрузка",
+            "steps": [
+                {
+                    "title": "Копировать медиа-ссылку",
+                    "description": "Копирование медиа-ссылок с поддерживаемых платформ"
+                },
+                {
+                    "title": "Вставить и проанализировать",
+                    "description": "Вставьте ссылку в поле ввода, нажмите кнопку анализа."
+                },
+                {
+                    "title": "Выберите тип загрузки",
+                    "description": "Выберите параметры загрузки видео, аудио или изображений, чтобы начать загрузку."
+                }
+            ]
+        },
+        "platformSupport": {
+            "title": "Платформы",
+            "bilibili": {
+                "name": "Билибили",
+                "summary": "Видео/Аудио/Поделиться кодом",
+                "features": [
+                    "Видео",
+                    "Аудио",
+                    "Поделиться кодом"
+                ]
+            },
+            "bilibiliTv": {
+                "name": "Билибили ТВ",
+                "summary": "Видео / Аудио",
+                "features": [
+                    "Видео",
+                    "Аудио"
+                ]
+            },
+            "douyin": {
+                "name": "Дуин",
+                "summary": "Видео / Публикация изображения / Аудио",
+                "features": [
+                    "Видео",
+                    "Сообщение с изображением",
+                    "Аудио"
+                ]
+            },
+            "youtube": {
+                "name": "Ютуб",
+                "summary": "Видео / Аудио",
+                "features": [
+                    "Видео",
+                    "Аудио"
+                ]
+            },
+            "telegram": {
+                "name": "Телеграмма",
+                "summary": "Ссылка на видео/сообщение",
+                "features": [
+                    "Видео",
+                    "Ссылка на сообщение"
+                ]
+            },
+            "wechat": {
+                "name": "Вичат",
+                "summary": "Статья Видео / Мульти-видео",
+                "features": [
+                    "Видео статьи",
+                    "Мульти-видео"
+                ]
+            },
+            "niconico": {
+                "name": "Никонико",
+                "summary": "Видео / Аудио",
+                "features": [
+                    "Видео",
+                    "Аудио"
+                ]
+            },
+            "xiaohongshu": {
+                "name": "Сяохуншу",
+                "summary": "Видео/изображение",
+                "features": [
+                    "Видео",
+                    "Сообщение с изображением"
+                ]
+            },
+            "tiktok": {
+                "name": "ТикТок",
+                "summary": "Видео / Аудио",
+                "features": [
+                    "Видео",
+                    "Аудио"
+                ]
+            },
+            "comingSoon": "Теперь поддерживается больше платформ",
+            "instagram": {
+                "name": "Инстаграм",
+                "summary": "Видео / Публикация с изображением / Карусель",
+                "features": [
+                    "Видео",
+                    "Сообщение с изображением",
+                    "Карусель"
+                ]
+            },
+            "x": {
+                "name": "Х",
+                "summary": "Видео / Аудио",
+                "features": [
+                    "Видео",
+                    "Аудио"
+                ]
+            },
+            "threads": {
+                "name": "Темы",
+                "summary": "Видео/изображение",
+                "features": [
+                    "Видео",
+                    "Сообщение с изображением"
+                ]
+            },
+            "weibo": {
+                "name": "Вейбо",
+                "summary": "Видео / Публикация изображений / Мульти-видео",
+                "features": [
+                    "Видео",
+                    "Сообщение с изображением",
+                    "Мульти-видео"
+                ]
+            },
+            "vimeo": {
+                "name": "Вимео",
+                "summary": "Загрузка контента",
+                "features": [
+                    "Загрузка контента"
+                ]
+            },
+            "dailymotion": {
+                "name": "Ежедневное движение",
+                "summary": "Загрузка контента",
+                "features": [
+                    "Загрузка контента"
+                ]
+            },
+            "streamable": {
+                "name": "Потоковое",
+                "summary": "Загрузка контента",
+                "features": [
+                    "Загрузка контента"
+                ]
+            },
+            "reddit": {
+                "name": "Реддит",
+                "summary": "Загрузка контента",
+                "features": [
+                    "Загрузка контента"
+                ]
+            },
+            "newgrounds": {
+                "name": "Ньюграундс",
+                "summary": "Загрузка контента",
+                "features": [
+                    "Загрузка контента"
+                ]
+            },
+            "tumblr": {
+                "name": "Тамблер",
+                "summary": "Загрузка контента",
+                "features": [
+                    "Загрузка контента"
+                ]
+            },
+            "pinterest": {
+                "name": "Пинтерест",
+                "summary": "Загрузка контента",
+                "features": [
+                    "Загрузка контента"
+                ]
+            },
+            "vk": {
+                "name": "ВК",
+                "summary": "Загрузка контента",
+                "features": [
+                    "Загрузка контента"
+                ]
+            },
+            "okru": {
+                "name": "ОК.ру",
+                "summary": "Загрузка контента",
+                "features": [
+                    "Загрузка контента"
+                ]
+            },
+            "twitch": {
+                "name": "Твич",
+                "summary": "Загрузка контента",
+                "features": [
+                    "Загрузка контента"
+                ]
+            },
+            "soundcloud": {
+                "name": "Саундклауд",
+                "summary": "Загрузка контента",
+                "features": [
+                    "Загрузка контента"
+                ]
+            }
+        },
+        "linkFormats": {
+            "title": "Поддерживаемые форматы ссылок",
+            "bilibili": {
+                "title": "🔗 Примеры ссылок на билибили:",
+                "examples": [
+                    "https://www.bilibili.com/video/BV1xx411c7mD",
+                    "https://b23.tv/BV1xx411c7mD"
+                ]
+            },
+            "douyin": {
+                "title": "🔗 Примеры ссылок Douyin:",
+                "examples": [
+                    "https://www.douyin.com/video/7491698414288260387",
+                    "https://v.douyin.com/fiU6t9rA3QU"
+                ]
+            },
+            "telegram": {
+                "title": "🔗 Примеры ссылок в Telegram:",
+                "examples": [
+                    "https://t.me/zhijiang/8187",
+                    "https://t.me/europa_press/613"
+                ]
+            },
+            "tip": "Совет: просто скопируйте ссылку «Поделиться», никаких изменений вручную не требуется."
+        }
+    },
+    "freeSupport": {
+        "title": "Постоянно бесплатная услуга",
+        "features": {
+            "freeToUse": "Полностью бесплатное использование",
+            "noRegistration": "Регистрация не требуется",
+            "unlimitedDownloads": "Неограниченное скачивание"
+        },
+        "privacy": {
+            "title": "Обязательства по защите конфиденциальности",
+            "noUserRecords": "Сервер не хранит записи пользователей",
+            "localStorage": "История хранится в браузере"
+        },
+        "revenue": {
+            "adsSupport": "Эта услуга монетизируется за счет рекламы.",
+            "serverCosts": "Для поддержки расходов на сервер и трафик"
+        }
+    },
+    "seo": {
+        "features": {
+            "en": [
+                "Извлечение аудио MP3 из видео Bilibili",
+                "Скачать видео Douyin без водяных знаков",
+                "Скачать публичные видеопосты Telegram",
+                "Загрузите видео со статьями WeChat",
+                "Download Niconico videos",
+                "Скачать аудио Никонико",
+                "Загрузите ролики и посты из Instagram",
+                "Загрузите посты с изображениями из Instagram",
+                "Извлечение аудио из видео Instagram",
+                "Загрузить заметки к изображениям Xiaohongshu",
+                "Скачать видео Сяохуншу",
+                "Извлечение аудио из видео Xiaohongshu",
+                "Скачать видео TikTok без водяных знаков",
+                "Скачать X видео",
+                "Извлечь аудио из X видео",
+                "Автоматическое определение поддерживаемых платформ",
+                "Качественная загрузка мультимедиа",
+                "Бесплатный онлайн-инструмент",
+                "Регистрация не требуется",
+                "Поддержка нескольких медиаформатов",
+                "Обработка на основе браузера",
+                "Загрузите видео и посты с изображениями из Threads",
+                "Скачивайте видеоролики и посты Weibo в смешанной технике."
+            ],
+            "zh": [
+                "提取哔哩哔哩视频MP3音频",
+                "下载抖音无水印视频",
+                "下载 Telegram 公开视频消息",
+                "下载Instagram Reels和帖子",
+                "下载Instagram图文帖子",
+                "提取Instagram视频音频",
+                "下载小红书图文笔记",
+                "下载小红书无水印视频",
+                "提取小红书视频音频",
+                "下载TikTok无水印视频",
+                "下载X视频",
+                "提取X视频音频",
+                "自动识别支持的平台",
+                "高清媒体内容下载",
+                "免费在线工具",
+                "无需注册",
+                "支持多种媒体格式",
+                "浏览器内处理",
+                "??????????????????",
+                "下载 Темы 视频和图文帖子",
+                "下载微博视频、图文与混合媒体帖子"
+            ],
+            "zh-tw": [
+                "mp3-файл с изображением MP3-файла",
+                "китайская кухня фото",
+                "下載 Telegram 公開影片訊息",
+                "下載Instagram Reels與貼文",
+                "下載Instagram圖文貼文",
+                "片音訊 в Instagram",
+                "下載小紅書圖文筆記",
+                "китайское фото с фото",
+                "китайское фото 音訊",
+                "лучшие фотографии TikTok для фото",
+                "下載X影 фото",
+                "提取X影片音訊",
+                "自動識別支援的平台",
+                "高清媒體內容下載",
+                "免費線上工具",
+                "無需註冊",
+                "支援多種媒體格式",
+                "瀏覽器內處理",
+                "??????????????????",
+                "下載 Темы 影片與圖文貼文",
+                "下載微博影 фото, 圖文混合媒體貼文"
+            ],
+            "ja": [
+                "Bilibili動画からMP3音声を抽出",
+                "Доуинь動画をダウンロード",
+                "Telegramの公開動画メッセージをダウンロード",
+                "InstagramのReelsと投稿をダウンロード",
+                "Instagramの画像投稿をダウンロード",
+                "Instagram動画から音声を抽出",
+                "Сяохуншуの画像ノートをダウンロード",
+                "Сяохуншу動画をダウンロード",
+                "Сяохуншу動画から音声を抽出",
+                "TikTok動画をダウンロード",
+                "X動画をダウンロード",
+                "X動画から音声を抽出",
+                "対応プラットフォームを自動判別",
+                "高品質なメディアダウンロード",
+                "無料のオンラインツール",
+                "登録不要",
+                "複数のメディア形式に対応",
+                "ブラウザ内で処理",
+                "Темы",
+                "Weibo の動画・画像・混合メディア投稿をダウンロード"
+            ],
+            "es": [
+                "Extract MP3 audio from Bilibili videos",
+                "Download Douyin videos without watermark",
+                "Download Telegram public video posts",
+                "Download WeChat article videos",
+                "Download Niconico videos",
+                "Download Niconico audio",
+                "Download Instagram reels and posts",
+                "Download Instagram image posts",
+                "Extract audio from Instagram videos",
+                "Download Xiaohongshu image notes",
+                "Download Xiaohongshu videos",
+                "Extract audio from Xiaohongshu videos",
+                "Download TikTok videos without watermark",
+                "Download X videos",
+                "Extract audio from X videos",
+                "Auto-detect supported platforms",
+                "High-quality media downloads",
+                "Free online tool",
+                "No registration required",
+                "Support multiple media formats",
+                "Browser-based processing",
+                "Download Threads videos and image posts",
+                "Download Weibo videos and mixed-media posts"
+            ],
+            "ru": [
+                "Извлечение аудио MP3 из видео Bilibili",
+                "Скачать видео Douyin без водяных знаков",
+                "Скачать публичные видеопосты Telegram",
+                "Загрузите видео со статьями WeChat",
+                "Скачать видео Никонико",
+                "Скачать аудио Никонико",
+                "Загрузите ролики и посты из Instagram",
+                "Загрузите посты с изображениями из Instagram",
+                "Извлечение аудио из видео Instagram",
+                "Загрузить заметки к изображениям Xiaohongshu",
+                "Скачать видео Сяохуншу",
+                "Извлечение аудио из видео Xiaohongshu",
+                "Скачать видео TikTok без водяных знаков",
+                "Скачать X видео",
+                "Извлечь аудио из X видео",
+                "Автоматическое определение поддерживаемых платформ",
+                "Качественная загрузка мультимедиа",
+                "Бесплатный онлайн-инструмент",
+                "Регистрация не требуется",
+                "Поддержка нескольких медиаформатов",
+                "Обработка на основе браузера",
+                "Загрузите видео и посты с изображениями из Threads",
+                "Скачивайте видеоролики и посты Weibo в смешанной технике."
+            ]
+        },
+        "howTo": {
+            "title": {
+                "en": "Как загрузить контент из Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok и X",
+                "zh": "如何下载哔哩哔哩、抖音、Telegram、Threads、微信公众号、微博、Niconico、Instagram、小红书、TikTok 和 X 内容",
+                "zh-tw": "如何下載嗶哩嗶哩、抖音、Telegram、Threads、微信公眾號、微博、Niconico、Instagram、小紅書、TikTok 與 X 內容",
+                "ja": "Bilibili・Douyin・Telegram・Threads・WeChat・Weibo・Niconico・Instagram・Xiaohongshu・TikTok・Xのコンテンツをダウンロードする方法",
+                "es": "How to download content from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X",
+                "ru": "Как загрузить контент из Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok и X"
+            },
+            "steps": {
+                "en": [
+                    {
+                        "name": "Копировать ссылку",
+                        "text": "Скопируйте видео, публикацию, публикацию изображения, публикацию смешанного типа или ссылку на статью из Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok или X."
+                    },
+                    {
+                        "name": "Вставить ссылку",
+                        "text": "Вставьте ссылку в поле ввода на нашем сайте."
+                    },
+                    {
+                        "name": "Автообнаружение",
+                        "text": "Инструмент автоматически определит платформу (Bilibili/Douyin/Telegram/Threads/WeChat/Weibo/Niconico/Instagram/Xiaohongshu/TikTok/X)."
+                    },
+                    {
+                        "name": "Скачать",
+                        "text": "Выберите параметры загрузки видео, аудио или изображений, чтобы получить медиаконтент."
+                    }
+                ],
+                "zh": [
+                    {
+                        "name": "复制链接",
+                        "text": "从浏览器复制哔哩哔哩、抖音、Telegram、Threads、微信公众号、微博、Niconico、Instagram、小红书、TikTok 或 X的视频、帖子、图文、混合媒体或文章链接"
+                    },
+                    {
+                        "name": "粘贴链接",
+                        "text": "将链接粘贴到网站的输入框中"
+                    },
+                    {
+                        "name": "自动识别",
+                        "text": "工具会自动识别平台（哔哩哔哩/抖音/Telegram/Threads/微信公众号/微博/Niconico/Instagram/小红书/TikTok/X）"
+                    },
+                    {
+                        "name": "下载",
+                        "text": "选择视频、音频或图片下载选项,获取对应内容"
+                    }
+                ],
+                "zh-tw": [
+                    {
+                        "name": "複製連結",
+                        "text": "從瀏覽器複製嗶哩嗶哩、抖音、Telegram、Threads、微信公眾號、微博、Niconico、Instagram、小紅書、TikTok 或 X的影片、貼文、圖文、混合媒體或文章連結"
+                    },
+                    {
+                        "name": "貼上連結",
+                        "text": "將連結貼上到網站的輸入框中"
+                    },
+                    {
+                        "name": "自動識別",
+                        "text": "工具會自動識別平台（嗶哩嗶哩/抖音/Telegram/Threads/微信公眾號/微博/Niconico/Instagram/小紅書/TikTok/X）"
+                    },
+                    {
+                        "name": "下載",
+                        "text": "選擇影 фото, 音訊或圖 фото 下載 選項, 取得對應內容"
+                    }
+                ],
+                "ja": [
+                    {
+                        "name": "リンクをコピー",
+                        "text": "Bilibili、Douyin、Telegram、Threads、WeChat、Weibo、Niconico、Instagram、Xiaohongshu、TikTok、または Xの動画・投稿・画像投稿・混合メディア投稿・記事リンクをコピーします"
+                    },
+                    {
+                        "name": "リンクを貼り付け",
+                        "text": "サイト上の入力欄にリンクを貼り付けます"
+                    },
+                    {
+                        "name": "自動判別",
+                        "text": "ツールがプラットフォームを自動で判別します(Bilibili / Douyin / Telegram / Threads / WeChat / Weibo / Niconico / Instagram / Xiaohongshu / TikTok / X)"
+                    },
+                    {
+                        "name": "ダウンロード",
+                        "text": "動画・音声・画像のダウンロード方法を選択してコンテンツを取得します"
+                    }
+                ],
+                "es": [
+                    {
+                        "name": "Copy link",
+                        "text": "Copy the video, post, image-post, mixed-media post, or article link from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, or X"
+                    },
+                    {
+                        "name": "Paste link",
+                        "text": "Paste the link into the input field on our website"
+                    },
+                    {
+                        "name": "Auto-detect",
+                        "text": "The tool will automatically detect the platform (Bilibili/Douyin/Telegram/Threads/WeChat/Weibo/Niconico/Instagram/Xiaohongshu/TikTok/X)"
+                    },
+                    {
+                        "name": "Download",
+                        "text": "Choose video, audio, or image download options to get your media content"
+                    }
+                ],
+                "ru": [
+                    {
+                        "name": "Копировать ссылку",
+                        "text": "Скопируйте видео, публикацию, публикацию изображения, публикацию смешанного типа или ссылку на статью из Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok или X."
+                    },
+                    {
+                        "name": "Вставить ссылку",
+                        "text": "Вставьте ссылку в поле ввода на нашем сайте."
+                    },
+                    {
+                        "name": "Автообнаружение",
+                        "text": "Инструмент автоматически определит платформу (Bilibili/Douyin/Telegram/Threads/WeChat/Weibo/Niconico/Instagram/Xiaohongshu/TikTok/X)."
+                    },
+                    {
+                        "name": "Скачать",
+                        "text": "Выберите параметры загрузки видео, аудио или изображений, чтобы получить медиаконтент."
+                    }
+                ]
+            }
+        }
+    },
+    "result": {
+        "title": "Результат анализа",
+        "downloadVideo": "Скачать видео",
+        "mergeDownloadVideo": "Скачать полное видео",
+        "mergeDownloadVideoHint": "Аудио и видео будут объединены перед началом загрузки.",
+        "downloadAudio": "Скачать аудио",
+        "sharePlayLink": "Поделиться, чтобы играть",
+        "sharePlayLinkCopied": "Ссылка для общего доступа к воспроизведению скопирована.",
+        "sharePlayPlayerTitle": "Совместное воспроизведение видео",
+        "sharePlayUnavailable": "Для этого результата прямое воспроизведение недоступно. Пожалуйста, используйте параметры загрузки.",
+        "originDownloadVideo": "Видео Прямая ссылка",
+        "originDownloadAudio": "Прямая ссылка на аудио",
+        "totalParts": "Всего {count} деталей",
+        "articleVideoList": "Видео статьи",
+        "articleVideoCount": "Всего {count} видео",
+        "articleVideoUntitled": "Видео {index}",
+        "downloadImage": "Загрузить изображение",
+        "coverLabel": "Крышка",
+        "imageIndexLabel": "Изображение №{index}",
+        "imageAlt": "Изображение {index}",
+        "imageNote": "Примечание к изображению",
+        "imageCount": "Всего {count} изображений",
+        "packaging": "Упаковка",
+        "packageDownload": "Загрузка пакета",
+        "loading": "Загрузка",
+        "loadFailed": "Загрузка не удалась",
+        "viewLargeImage": "Посмотреть большое изображение",
+        "imageLoadingProgress": "Загрузка {loaded}/{total}",
+        "imageAutoLoadedTip": "💡 Изображения загружаются автоматически, нажмите, чтобы скачать",
+        "packagingProgress": "Изображение упаковки {current}/{total}",
+        "videoList": "Список видео",
+        "videoCount": "{count} видео",
+        "pureMusicHint": "Этот контент представляет собой чистую музыку/аудио. Загрузите аудиофайл напрямую."
+    },
+    "changelog": {
+        "title": "История изменений"
+    },
+    "feedback": {
+        "title": "Отзывы и предложения",
+        "triggerButton": "Feedback",
+        "typeLabel": "Тип обращения",
+        "typeRequired": "Выберите тип обращения",
+        "types": {
+            "bug": "🐛 Отчет об ошибке",
+            "feature": "💡 Запрос на добавление функции",
+            "other": "💬 Другие отзывы"
+        },
+        "contentLabel": "Подробности",
+        "contentRequired": "Опишите обращение (минимум 10 символов)",
+        "contentTooShort": "Минимум {min} символов",
+        "contentPlaceholder": {
+            "bug": "Пожалуйста, опишите проблему, шаги по воспроизведению, ожидаемый результат...",
+            "feature": "Опишите функцию, которую вы хотели бы видеть...",
+            "other": "Поделитесь, пожалуйста, своими мыслями..."
+        },
+        "contentCounter": "{current} / {max} символов",
+        "emailLabel": "Email для связи",
+        "emailPlaceholder": "your@email.com",
+        "emailInvalid": "Некорректный формат email",
+        "emailRequired": "Необязательно. Оставьте email, если нужен ответ",
+        "emailHint": "Оставьте email, если хотите получить обратную связь",
+        "cancelButton": "Отмена",
+        "submitButton": "Отправить",
+        "submittingButton": "Отправка...",
+        "closeButton": "Закрыть",
+        "successTitle": "Успешно отправлено!",
+        "successMessage": "Спасибо за отзыв! Мы внимательно рассматриваем каждое предложение.",
+        "successNote": "Если вы оставили email, мы можем связаться для уточнений.",
+        "errorTitle": "Не удалось отправить",
+        "errorMessage": "Отправка не удалась. Проверьте соединение и попробуйте снова.",
+        "errorFallback": "Также можно связаться через:",
+        "retryButton": "Повторить",
+        "toastSuccess": "Отзыв успешно отправлен!",
+        "toastError": "Не удалось отправить. Попробуйте снова."
+    }
+}

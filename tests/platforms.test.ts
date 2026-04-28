@@ -17,6 +17,20 @@ it('normalizes youtube platform', () => {
     expect(normalizePlatform('youtube')).toBe('youtube')
 })
 
+it('normalizes newly added foreign platforms', () => {
+    expect(normalizePlatform('vimeo')).toBe('vimeo')
+    expect(normalizePlatform('dailymotion')).toBe('dailymotion')
+    expect(normalizePlatform('streamable')).toBe('streamable')
+    expect(normalizePlatform('reddit')).toBe('reddit')
+    expect(normalizePlatform('newgrounds')).toBe('newgrounds')
+    expect(normalizePlatform('tumblr')).toBe('tumblr')
+    expect(normalizePlatform('pinterest')).toBe('pinterest')
+    expect(normalizePlatform('vk')).toBe('vk')
+    expect(normalizePlatform('okru')).toBe('okru')
+    expect(normalizePlatform('twitch')).toBe('twitch')
+    expect(normalizePlatform('soundcloud')).toBe('soundcloud')
+})
+
 it('normalizes niconico aliases to canonical platform', () => {
     expect(normalizePlatform('niconico')).toBe('niconico')
     expect(normalizePlatform('nico')).toBe('niconico')

@@ -107,6 +107,6 @@ export default proxy
 export const config = {
     matcher: [
         // 仅匹配“无 locale 前缀”的页面请求，减少中间件对已本地化路由的额外开销
-        '/((?!api|_next/static|_next/image|favicon.ico|.*\\.|(?:zh|zh-tw|en|ja)(?:/|$)).*)',
+        '/((?!api|_next/static|_next/image|favicon.ico|.*\\.|(?:zh|zh-tw|en|ja|es|ru)(?:/|$)).*)',
     ],
 } 

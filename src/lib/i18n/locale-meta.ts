@@ -6,6 +6,8 @@ export const LOCALE_LABELS: Record<Locale, string> = {
     'zh-tw': '繁體中文',
     en: 'English',
     ja: '日本語',
+    es: 'Español',
+    ru: 'Русский',
 }
 
 export function getLocaleLabel(locale: Locale): string {

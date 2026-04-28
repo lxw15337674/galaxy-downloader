@@ -3,10 +3,21 @@ import type { Dictionary } from '@/lib/i18n/types'
 export type CanonicalPlatform =
     | 'bilibili'
     | 'bilibili_tv'
+    | 'dailymotion'
     | 'douyin'
+    | 'newgrounds'
+    | 'okru'
+    | 'pinterest'
+    | 'reddit'
+    | 'soundcloud'
+    | 'streamable'
+    | 'twitch'
+    | 'tumblr'
     | 'youtube'
     | 'telegram'
     | 'threads'
+    | 'vk'
+    | 'vimeo'
     | 'wechat'
     | 'niconico'
     | 'weibo'
@@ -20,10 +31,21 @@ const PLATFORM_ALIASES: Record<string, CanonicalPlatform> = {
     bili: 'bilibili',
     bilibili: 'bilibili',
     bilibili_tv: 'bilibili_tv',
+    dailymotion: 'dailymotion',
     douyin: 'douyin',
+    newgrounds: 'newgrounds',
+    okru: 'okru',
+    pinterest: 'pinterest',
+    reddit: 'reddit',
+    soundcloud: 'soundcloud',
+    streamable: 'streamable',
+    twitch: 'twitch',
+    tumblr: 'tumblr',
     youtube: 'youtube',
     telegram: 'telegram',
     threads: 'threads',
+    vk: 'vk',
+    vimeo: 'vimeo',
     wechat: 'wechat',
     niconico: 'niconico',
     nico: 'niconico',
@@ -64,14 +86,36 @@ export function getPlatformLabel(
             return dict.history.platforms.bilibili
         case 'bilibili_tv':
             return dict.history.platforms.bilibiliTv
+        case 'dailymotion':
+            return dict.history.platforms.dailymotion
         case 'douyin':
             return dict.history.platforms.douyin
+        case 'newgrounds':
+            return dict.history.platforms.newgrounds
+        case 'okru':
+            return dict.history.platforms.okru
+        case 'pinterest':
+            return dict.history.platforms.pinterest
+        case 'reddit':
+            return dict.history.platforms.reddit
+        case 'soundcloud':
+            return dict.history.platforms.soundcloud
+        case 'streamable':
+            return dict.history.platforms.streamable
+        case 'twitch':
+            return dict.history.platforms.twitch
+        case 'tumblr':
+            return dict.history.platforms.tumblr
         case 'youtube':
             return dict.history.platforms.youtube
         case 'telegram':
             return dict.history.platforms.telegram
         case 'threads':
             return dict.history.platforms.threads
+        case 'vk':
+            return dict.history.platforms.vk
+        case 'vimeo':
+            return dict.history.platforms.vimeo
         case 'wechat':
             return dict.history.platforms.wechat
         case 'niconico':
@@ -106,10 +150,55 @@ export function getPlatformBadge(
                 text: dict.history.platforms.bilibiliTv,
                 className: 'bg-violet-100 text-violet-700 dark:bg-violet-900 dark:text-violet-300',
             }
+        case 'dailymotion':
+            return {
+                text: dict.history.platforms.dailymotion,
+                className: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+            }
         case 'douyin':
             return {
                 text: dict.history.platforms.douyin,
                 className: 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300',
+            }
+        case 'newgrounds':
+            return {
+                text: dict.history.platforms.newgrounds,
+                className: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+            }
+        case 'okru':
+            return {
+                text: dict.history.platforms.okru,
+                className: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+            }
+        case 'pinterest':
+            return {
+                text: dict.history.platforms.pinterest,
+                className: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+            }
+        case 'reddit':
+            return {
+                text: dict.history.platforms.reddit,
+                className: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+            }
+        case 'soundcloud':
+            return {
+                text: dict.history.platforms.soundcloud,
+                className: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+            }
+        case 'streamable':
+            return {
+                text: dict.history.platforms.streamable,
+                className: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+            }
+        case 'twitch':
+            return {
+                text: dict.history.platforms.twitch,
+                className: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+            }
+        case 'tumblr':
+            return {
+                text: dict.history.platforms.tumblr,
+                className: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
             }
         case 'youtube':
             return {
@@ -125,6 +214,16 @@ export function getPlatformBadge(
             return {
                 text: dict.history.platforms.threads,
                 className: 'bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-200',
+            }
+        case 'vk':
+            return {
+                text: dict.history.platforms.vk,
+                className: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+            }
+        case 'vimeo':
+            return {
+                text: dict.history.platforms.vimeo,
+                className: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
             }
         case 'wechat':
             return {

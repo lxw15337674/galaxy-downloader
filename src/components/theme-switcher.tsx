@@ -49,6 +49,18 @@ const THEME_LABELS = {
         dark: 'ダーク',
         system: 'システム',
     },
+    es: {
+        title: 'Tema',
+        light: 'Claro',
+        dark: 'Oscuro',
+        system: 'Sistema',
+    },
+    ru: {
+        title: 'Тема',
+        light: 'Светлая',
+        dark: 'Темная',
+        system: 'Системная',
+    },
 } as const
 
 function ThemeIcon({ theme }: { theme: ThemeOption }) {

@@ -23,6 +23,10 @@ const localeMapping: Record<string, string> = {
     'zh': 'zh',
     'ja-JP': 'ja',
     'ja': 'ja',
+    'es-ES': 'es',
+    'es': 'es',
+    'ru-RU': 'ru',
+    'ru': 'ru',
 }
 
 export function isBotUserAgent(userAgent: string): boolean {

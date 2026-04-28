@@ -4,10 +4,12 @@ import { appendVaryHeader, resolveSiteAlternateName, sanitizeStructuredDataTextL
 
 describe('seo helpers', () => {
 it('returns locale-specific alternate site names', () => {
-    expect(resolveSiteAlternateName('zh')).toBe('通用媒体下载器')
-    expect(resolveSiteAlternateName('zh-tw')).toBe('通用媒體下載器')
-    expect(resolveSiteAlternateName('ja')).toBe('ユニバーサルメディアダウンローダー')
-    expect(resolveSiteAlternateName('en')).toBe('Universal Media Downloader')
+    expect(resolveSiteAlternateName('zh')).toBe('sparkdownloader')
+    expect(resolveSiteAlternateName('zh-tw')).toBe('sparkdownloader')
+    expect(resolveSiteAlternateName('ja')).toBe('sparkdownloader')
+    expect(resolveSiteAlternateName('en')).toBe('sparkdownloader')
+    expect(resolveSiteAlternateName('es')).toBe('sparkdownloader')
+    expect(resolveSiteAlternateName('ru')).toBe('sparkdownloader')
 })
 
 it('sanitizes structured data text lists', () => {

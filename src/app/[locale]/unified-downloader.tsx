@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from '@/lib/deferred-toast';
 import { DeferredAudioExtractDialog } from '@/components/deferred-audio-extract-dialog';
 import type { AudioExtractTask } from '@/components/audio-tool/types';
-import { Loader2, Link2 } from 'lucide-react';
+import { ArrowUp, Loader2, Link2 } from 'lucide-react';
 import { AppTopBar } from '@/components/layout/app-top-bar';
 
 import type { DownloadRecord } from './download-history';
@@ -66,6 +66,7 @@ export function UnifiedDownloader({
     const [audioToolTask, setAudioToolTask] = useState<AudioExtractTask | null>(null);
     const [parseResult, setParseResult] = useState<UnifiedParseResult['data'] | null>(null);
     const [sharePlaybackEnabled, setSharePlaybackEnabled] = useState(false);
+    const [showBackToTop, setShowBackToTop] = useState(false);
     const historyRef = useRef<HTMLDivElement>(null);
     const urlInputRef = useRef<HTMLTextAreaElement>(null);
     const handledShareTaskRef = useRef<string | null>(null);
@@ -294,6 +295,31 @@ export function UnifiedDownloader({
         };
     }, []);
 
+    useEffect(() => {
+        let ticking = false;
+
+        const updateVisibility = () => {
+            const shouldShow = window.scrollY > 800;
+            setShowBackToTop((prev) => (prev === shouldShow ? prev : shouldShow));
+            ticking = false;
+        };
+
+        const handleScroll = () => {
+            if (ticking) {
+                return;
+            }
+            ticking = true;
+            window.requestAnimationFrame(updateVisibility);
+        };
+
+        handleScroll();
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     return (
         <div className="min-h-screen flex flex-col bg-background">
             <AppTopBar
@@ -473,6 +499,22 @@ export function UnifiedDownloader({
             </main>
 
             {footer}
+
+            <Button
+                type="button"
+                size="icon"
+                className={`fixed right-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-30 h-10 w-10 rounded-full shadow-md transition-all duration-300 ease-out ${
+                    showBackToTop
+                        ? 'pointer-events-auto opacity-100 translate-y-0 scale-100'
+                        : 'pointer-events-none opacity-0 translate-y-2 scale-95'
+                }`}
+                aria-label={dict.common.backToTop}
+                onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+            >
+                <ArrowUp className="h-4 w-4" />
+            </Button>
         </div>
     );
 }

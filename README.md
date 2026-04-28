@@ -1,6 +1,6 @@
 # 通用媒体下载器
 
-这是一个基于 [vinext](https://github.com/cloudflare/vinext) 运行的 Next.js App Router 兼容项目，支持从 Bilibili、抖音、Instagram、小红书、TikTok、X 等平台下载视频、音频和图文内容。
+这是一个基于 [vinext](https://github.com/cloudflare/vinext) 运行的 Next.js App Router 兼容项目，支持从 Bilibili、抖音、Instagram、小红书、TikTok、X、Telegram、Threads、微信公众号、微博、Niconico、Vimeo、Dailymotion、Streamable、Reddit、Newgrounds、Tumblr、Pinterest、VK、OK.ru、Twitch、SoundCloud 等平台下载媒体内容。
 
 ## 功能特点
 
@@ -9,7 +9,8 @@
 - 📱 支持 Instagram Reels、帖子和图文内容下载
 - 📷 支持小红书视频笔记和图文笔记下载
 - 🎞️ 支持 TikTok 视频下载
-- 🐦 支持 X 视频下载及音频提取
+- 🐦 支持 X 视频下载
+- 🌐 支持 Vimeo、Dailymotion、Streamable、Reddit、Newgrounds、Tumblr、Pinterest、VK、OK.ru、Twitch、SoundCloud 等平台内容解析与下载
 - 🔍 自动识别平台链接
 - 🎨 现代化的用户界面设计
 - 💾 本地下载历史记录
@@ -27,7 +28,7 @@ pnpm dev
 
 ## 使用方法
 
-1. 复制媒体链接（支持 Bilibili、抖音、Instagram、小红书、TikTok、X 等平台）
+1. 复制媒体链接（支持首页展示的平台）
 2. 粘贴到输入框中
 3. 点击解析按钮
 4. 选择下载视频、音频或图片
@@ -41,6 +42,11 @@ pnpm dev
 - **小红书**: `https://www.xiaohongshu.com/explore/...` 或 `https://xhslink.com/...`
 - **TikTok**: `https://www.tiktok.com/@.../video/...`
 - **X**: `https://x.com/.../status/...`
+- **Pinterest**: `https://www.pinterest.com/pin/70437485604603/`
+- **VK**: `https://vk.com/video-1_456239018`
+- **OK.ru**: `https://ok.ru/video/14627121662690`
+- **Twitch**: `https://m.twitch.tv/ninja/clip/SuaveNeighborlySrirachaHeyGirl-1J8kzeLFWxdUBZ4C`
+- **SoundCloud**: `https://soundcloud.com/forss/flickermood`
 
 ## 技术栈
 
@@ -64,6 +70,22 @@ pnpm dev
 - **小红书**: 视频、图文
 - **TikTok**: 视频
 - **X**: 视频
+- **Telegram**: 视频
+- **Threads**: 视频、图文
+- **微信公众号**: 文章视频、多视频
+- **微博**: 视频、图文、多视频
+- **Niconico**: 视频
+- **Vimeo**: 内容下载
+- **Dailymotion**: 内容下载
+- **Streamable**: 内容下载
+- **Reddit**: 内容下载
+- - **Newgrounds**: 内容下载
+- **Tumblr**: 内容下载
+- **Pinterest**: 内容下载
+- **VK**: 内容下载
+- **OK.ru**: 内容下载
+- **Twitch**: 内容下载
+- **SoundCloud**: 内容下载
 
 说明：
 

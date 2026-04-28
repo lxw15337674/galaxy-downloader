@@ -19,11 +19,23 @@ export type PlatformSupportKey =
     | 'xiaohongshu'
     | 'tiktok'
     | 'instagram'
-    | 'x';
+    | 'x'
+    | 'vimeo'
+    | 'dailymotion'
+    | 'streamable'
+    | 'reddit'
+    | 'newgrounds'
+    | 'tumblr'
+    | 'pinterest'
+    | 'vk'
+    | 'okru'
+    | 'twitch'
+    | 'soundcloud';
 
 type PlatformSupportVisual = {
-    src: string;
+    src?: string;
     darkSrc?: string;
+    fallbackLabel?: string;
     frameClassName: string;
     iconClassName?: string;
     badgeLabel?: string;
@@ -37,67 +49,114 @@ export type PlatformSupportItem = {
     visual: PlatformSupportVisual;
 };
 
-const HIDDEN_PLATFORM_SUPPORT_KEYS = new Set<PlatformSupportKey>(['youtube']);
+const HIDDEN_PLATFORM_SUPPORT_KEYS = new Set<PlatformSupportKey>(['vimeo', 'dailymotion']);
+
+const UNIFIED_FRAME_CLASS_NAME = 'border-slate-200 bg-slate-100/70 dark:border-slate-300/40 dark:bg-slate-800/45';
 
 const PLATFORM_SUPPORT_VISUALS: Record<PlatformSupportKey, PlatformSupportVisual> = {
     bilibili: {
         src: '/platform-icons/bilibili.svg',
-        frameClassName: 'border-[#00A1D6]/20 bg-[#00A1D6]/10',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
     },
     bilibiliTv: {
         src: '/platform-icons/bilibili.svg',
-        frameClassName: 'border-[#00A1D6]/20 bg-[#00A1D6]/10',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
         badgeLabel: 'TV',
-        badgeClassName: 'bg-[#00A1D6] text-white',
+        badgeClassName: 'bg-primary text-primary-foreground',
     },
     douyin: {
         src: '/platform-icons/douyin.ico',
-        frameClassName: 'border-zinc-900/10 bg-zinc-900/5 dark:border-zinc-700/80 dark:bg-zinc-900',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
         iconClassName: 'rounded-[4px]',
     },
     youtube: {
         src: '/platform-icons/youtube.svg',
-        frameClassName: 'border-[#FF0033]/20 bg-[#FF0033]/10',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
     },
     telegram: {
         src: '/platform-icons/telegram.svg',
-        frameClassName: 'border-[#229ED9]/20 bg-[#229ED9]/10',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
     },
     threads: {
         src: '/platform-icons/threads.svg',
         darkSrc: '/platform-icons/threads-dark.svg',
-        frameClassName: 'border-zinc-900/10 bg-zinc-900/5 dark:border-zinc-700/80 dark:bg-zinc-900',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
     },
     wechat: {
         src: '/platform-icons/wechat.svg',
-        frameClassName: 'border-[#07C160]/20 bg-[#07C160]/10',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
     },
     niconico: {
         src: '/platform-icons/niconico.svg',
         darkSrc: '/platform-icons/niconico-dark.svg',
-        frameClassName: 'border-zinc-900/10 bg-zinc-900/5 dark:border-zinc-700/80 dark:bg-zinc-900',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
     },
     weibo: {
         src: '/platform-icons/weibo.svg',
-        frameClassName: 'border-[#E6162D]/20 bg-[#E6162D]/10',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
     },
     xiaohongshu: {
         src: '/platform-icons/xiaohongshu.svg',
-        frameClassName: 'border-[#FF2442]/20 bg-[#FF2442]/10',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
     },
     tiktok: {
         src: '/platform-icons/tiktok.svg',
         darkSrc: '/platform-icons/tiktok-dark.svg',
-        frameClassName: 'border-zinc-900/10 bg-zinc-900/5 dark:border-zinc-700/80 dark:bg-zinc-900',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
     },
     instagram: {
         src: '/platform-icons/instagram.svg',
-        frameClassName: 'border-[#E4405F]/20 bg-[#E4405F]/10',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
     },
     x: {
         src: '/platform-icons/x.svg',
         darkSrc: '/platform-icons/x-dark.svg',
-        frameClassName: 'border-zinc-900/10 bg-zinc-900/5 dark:border-zinc-700/80 dark:bg-zinc-900',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
+    },
+    vimeo: {
+        src: '/platform-icons/vimeo.svg',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
+    },
+    dailymotion: {
+        src: '/platform-icons/dailymotion.svg',
+        darkSrc: '/platform-icons/dailymotion-dark.svg',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
+    },
+    streamable: {
+        src: '/platform-icons/streamable.png',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
+    },
+    reddit: {
+        src: '/platform-icons/reddit.svg',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
+    },
+    newgrounds: {
+        src: '/platform-icons/newgrounds.svg',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
+    },
+    tumblr: {
+        src: '/platform-icons/tumblr.svg',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
+    },
+    pinterest: {
+        src: '/platform-icons/pinterest.svg',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
+    },
+    vk: {
+        src: '/platform-icons/vk.svg',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
+    },
+    okru: {
+        src: '/platform-icons/okru.svg',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
+    },
+    twitch: {
+        src: '/platform-icons/twitch.svg',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
+    },
+    soundcloud: {
+        src: '/platform-icons/soundcloud.svg',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
     },
 };
 
@@ -141,5 +200,16 @@ export function getPlatformSupportItems(dict: Pick<Dictionary, 'guide'>): Platfo
         buildPlatformSupportItem('tiktok', support.tiktok),
         buildPlatformSupportItem('instagram', support.instagram),
         buildPlatformSupportItem('x', support.x),
+        buildPlatformSupportItem('vimeo', support.vimeo),
+        buildPlatformSupportItem('dailymotion', support.dailymotion),
+        buildPlatformSupportItem('streamable', support.streamable),
+        buildPlatformSupportItem('reddit', support.reddit),
+        buildPlatformSupportItem('newgrounds', support.newgrounds),
+        buildPlatformSupportItem('tumblr', support.tumblr),
+        buildPlatformSupportItem('pinterest', support.pinterest),
+        buildPlatformSupportItem('vk', support.vk),
+        buildPlatformSupportItem('okru', support.okru),
+        buildPlatformSupportItem('twitch', support.twitch),
+        buildPlatformSupportItem('soundcloud', support.soundcloud),
     ].filter((item) => !HIDDEN_PLATFORM_SUPPORT_KEYS.has(item.key));
 }

@@ -24,7 +24,7 @@ export function PlatformSupportGrid({ dict }: PlatformSupportGridProps) {
                                 item.visual.frameClassName,
                             )}
                         >
-                            {item.visual.darkSrc ? (
+                            {item.visual.src && item.visual.darkSrc ? (
                                 <>
                                     <Image
                                         src={item.visual.src}
@@ -51,7 +51,7 @@ export function PlatformSupportGrid({ dict }: PlatformSupportGridProps) {
                                         )}
                                     />
                                 </>
-                            ) : (
+                            ) : item.visual.src ? (
                                 <Image
                                     src={item.visual.src}
                                     alt=""
@@ -64,6 +64,10 @@ export function PlatformSupportGrid({ dict }: PlatformSupportGridProps) {
                                         item.visual.iconClassName,
                                     )}
                                 />
+                            ) : (
+                                <span className="text-[9px] font-semibold uppercase tracking-[0.02em] text-foreground/80">
+                                    {item.visual.fallbackLabel || item.name.slice(0, 2)}
+                                </span>
                             )}
                             {item.visual.badgeLabel ? (
                                 <span

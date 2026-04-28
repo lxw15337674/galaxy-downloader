@@ -35,6 +35,8 @@ export function localeToHrefLang(locale: Locale): string {
     if (locale === "zh") return "zh-CN"
     if (locale === "zh-tw") return "zh-TW"
     if (locale === "ja") return "ja-JP"
+    if (locale === "es") return "es-ES"
+    if (locale === "ru") return "ru-RU"
     return "en"
 }
 
@@ -42,6 +44,8 @@ export function localeToOpenGraphLocale(locale: Locale): string {
     if (locale === "zh") return "zh_CN"
     if (locale === "zh-tw") return "zh_TW"
     if (locale === "ja") return "ja_JP"
+    if (locale === "es") return "es_ES"
+    if (locale === "ru") return "ru_RU"
     return "en_US"
 }
 
@@ -49,14 +53,13 @@ export function localeToHtmlLang(locale: Locale): string {
     if (locale === "zh") return "zh-CN"
     if (locale === "zh-tw") return "zh-TW"
     if (locale === "ja") return "ja-JP"
+    if (locale === "es") return "es-ES"
+    if (locale === "ru") return "ru-RU"
     return "en"
 }
 
-export function resolveSiteAlternateName(locale: Locale): string {
-    if (locale === "en") return "Universal Media Downloader"
-    if (locale === "ja") return "ユニバーサルメディアダウンローダー"
-    if (locale === "zh-tw") return "通用媒體下載器"
-    return "通用媒体下载器"
+export function resolveSiteAlternateName(_locale: Locale): string {
+    return "sparkdownloader"
 }
 
 export function sanitizeStructuredDataTextList(values: string[]): string[] {

@@ -7,7 +7,7 @@ import {
     resolveLocaleFromAcceptLanguage,
 } from '../src/lib/seo-routing.ts'
 
-const locales = ['zh', 'zh-tw', 'en', 'ja'] as const
+const locales = ['zh', 'zh-tw', 'en', 'ja', 'es', 'ru'] as const
 const defaultLocale = 'en'
 
 describe('seo routing', () => {
@@ -58,6 +58,14 @@ it('accept-language mapping supports zh-Hant fallback to zh-tw', () => {
 
 it('accept-language mapping supports ja fallback to ja', () => {
     expect(resolveLocaleFromAcceptLanguage(['ja-JP', 'en-US'], locales, defaultLocale)).toBe('ja')
+})
+
+it('accept-language mapping supports es fallback to es', () => {
+    expect(resolveLocaleFromAcceptLanguage(['es-ES', 'en-US'], locales, defaultLocale)).toBe('es')
+})
+
+it('accept-language mapping supports ru fallback to ru', () => {
+    expect(resolveLocaleFromAcceptLanguage(['ru-RU', 'en-US'], locales, defaultLocale)).toBe('ru')
 })
 
 it('falls back to default locale for unsupported accept-language', () => {

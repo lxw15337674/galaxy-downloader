@@ -96,7 +96,7 @@ export function FeedbackDialog({
             await submitFeedback({
                 type: feedbackType,
                 content: content.trim(),
-                email: email.trim(),
+                contact: email.trim(),
             })
 
             setSubmitStatus('success')

@@ -11,7 +11,7 @@ export async function submitFeedback(data: FeedbackData): Promise<void> {
     const requestBody = {
       type: data.type,
       content: data.content.trim(),
-      email: data.email?.trim() || undefined,
+      contact: data.contact?.trim() || undefined,
     }
 
     // 发送POST请求到自建API
@@ -85,4 +85,3 @@ export function validateEmail(email: string): boolean {
 
   return FEEDBACK_CONFIG.validation.emailRegex.test(email.trim())
 }
-

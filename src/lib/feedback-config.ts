@@ -18,5 +18,5 @@ export type FeedbackType = 'bug' | 'feature' | 'other'
 export interface FeedbackData {
   type: FeedbackType
   content: string
-  email?: string
+  contact?: string
 }

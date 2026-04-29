@@ -21,7 +21,7 @@
         "copyrightVideo": "Уведомление об авторских правах: права на видео принадлежат авторам и исходным платформам.",
         "copyrightStorage": "Сайт не хранит и не размещает видео или изображения.",
         "copyrightYear": "Авторское право © {year}",
-        "copyrightBilibiliRestriction": "⚠️ Загрузка контента с ограничениями по авторским правам (например, платный или VIP) и контента с ограниченным доступом (например, Telegram / X, требующий входа или с ограничениями) не поддерживается."
+        "copyrightBilibiliRestriction": "⚠️ Контент с авторскими ограничениями, платный, только для участников или требующий входа не поддерживается."
     },
     "form": {
         "pasteButton": "Вставить",
@@ -768,6 +768,12 @@
         "originDownloadVideo": "Видео Прямая ссылка",
         "originDownloadAudio": "Прямая ссылка на аудио",
         "totalParts": "Всего {count} деталей",
+        "showAllParts": "Показать всё (ещё {count})",
+        "collapseParts": "Свернуть до первых {count}",
+        "loadMoreItems": "Загрузить ещё (+{count})",
+        "shownItems": "Показано {shown}/{total}",
+        "collectionSearchPlaceholder": "Поиск по названию...",
+        "collectionNoSearchResults": "Подходящих видео в подборке не найдено",
         "articleVideoList": "Видео статьи",
         "articleVideoCount": "Всего {count} видео",
         "articleVideoUntitled": "Видео {index}",

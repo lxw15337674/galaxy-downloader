@@ -1,6 +1,36 @@
 {
   "versions": [
     {
+      "version": "5.0.1",
+      "date": "2026-04-29",
+      "changes": {
+        "zh": [
+          "优化了 Bilibili 多 P 视频解析结果的展示样式",
+          "优化下载历史和结果列表在小屏下的滚动与按钮布局"
+        ],
+        "en": [
+          "Improved the display style for Bilibili multi-part video parse results",
+          "Improved scrolling and button layout for download history and result lists on small screens"
+        ],
+        "ja": [
+          "Bilibili の複数パート動画の解析結果表示を改善しました",
+          "小さい画面でのダウンロード履歴と結果リストのスクロールおよびボタン配置を改善しました"
+        ],
+        "zh-tw": [
+          "最佳化了 Bilibili 多 P 影片解析結果的顯示樣式",
+          "最佳化下載歷史與結果列表在小螢幕下的捲動與按鈕布局"
+        ],
+        "es": [
+          "Se mejoró la presentación de los resultados de análisis de videos multiparte de Bilibili",
+          "Se mejoraron el desplazamiento y la disposición de botones del historial de descargas y las listas de resultados en pantallas pequeñas"
+        ],
+        "ru": [
+          "Улучшено отображение результатов разбора многочастных видео Bilibili",
+          "Улучшены прокрутка и расположение кнопок в истории загрузок и списках результатов на небольших экранах"
+        ]
+      }
+    },
+    {
       "version": "5.0.0",
       "date": "2026-04-28",
       "changes": {

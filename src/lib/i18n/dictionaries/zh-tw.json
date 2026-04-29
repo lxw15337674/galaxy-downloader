@@ -21,7 +21,7 @@
         "copyrightVideo": "版權說明：影片版權歸相關網站及作者所有",
         "copyrightStorage": "本站不提供和儲存任何影片及圖片",
         "copyrightYear": "Copyright © {year}",
-        "copyrightBilibiliRestriction": "⚠️ 不支援下載版權受限（如會員專享、付費）或平台存取受限（如 Telegram / X 限制級、需登入或受限內容）的影片。"
+        "copyrightBilibiliRestriction": "⚠️ 不支援下載版權、付費、會員或需登入存取的受限內容。"
     },
     "form": {
         "pasteButton": "貼上",
@@ -766,6 +766,12 @@
         "originDownloadVideo": "影片直鏈",
         "originDownloadAudio": "音訊直鏈",
         "totalParts": "共 {count} 個分P",
+        "showAllParts": "展開全部（剩餘 {count} 條）",
+        "collapseParts": "收起到前 {count} 條",
+        "loadMoreItems": "載入更多（+{count}）",
+        "shownItems": "已顯示 {shown}/{total}",
+        "collectionSearchPlaceholder": "搜尋標題...",
+        "collectionNoSearchResults": "找不到符合的合集影片",
         "articleVideoList": "文章影片",
         "articleVideoCount": "共 {count} 個影片",
         "articleVideoUntitled": "影片 {index}",

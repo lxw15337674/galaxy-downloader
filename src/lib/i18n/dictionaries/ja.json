@@ -21,7 +21,7 @@
         "copyrightVideo": "著作権に関するご注意: 動画の著作権は各サイトおよび投稿者に帰属します",
         "copyrightStorage": "本サイトは動画や画像を保存または提供していません",
         "copyrightYear": "Copyright © {year}",
-        "copyrightBilibiliRestriction": "⚠️ 著作権保護された動画（会員限定・有料コンテンツなど）や、プラットフォーム側でアクセス制限された動画（Telegram / X の制限級・ログイン必須・その他の制限コンテンツなど）のダウンロードには対応していません。"
+        "copyrightBilibiliRestriction": "⚠️ 著作権、有料、会員限定、またはログインが必要な制限付きコンテンツのダウンロードには対応していません。"
     },
     "form": {
         "pasteButton": "貼り付け",
@@ -762,6 +762,12 @@
         "originDownloadVideo": "動画直リンク",
         "originDownloadAudio": "音声直リンク",
         "totalParts": "全 {count} パート",
+        "showAllParts": "すべて表示（残り {count} 件）",
+        "collapseParts": "先頭 {count} 件に折りたたむ",
+        "loadMoreItems": "さらに読み込む（+{count}）",
+        "shownItems": "{shown}/{total} を表示中",
+        "collectionSearchPlaceholder": "タイトルを検索...",
+        "collectionNoSearchResults": "一致する合集動画が見つかりません",
         "articleVideoList": "記事内動画",
         "articleVideoCount": "全 {count} 本の動画",
         "articleVideoUntitled": "動画 {index}",

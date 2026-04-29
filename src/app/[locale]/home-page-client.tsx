@@ -62,7 +62,6 @@ export function HomePageClient() {
                     <footer className="border-t bg-muted/30 py-6">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                             <div className="text-center text-xs text-muted-foreground space-y-1">
-                                <p className="text-yellow-600 font-medium">{dict.page.copyrightBilibiliRestriction}</p>
                                 <p>
                                     {dict.common.trustAndPolicies}
                                     {': '}

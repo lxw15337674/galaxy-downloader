@@ -16,6 +16,12 @@ export interface ResultDict {
     originDownloadVideo: string;
     originDownloadAudio: string;
     totalParts: string;
+    showAllParts: string;
+    collapseParts: string;
+    loadMoreItems: string;
+    shownItems: string;
+    collectionSearchPlaceholder: string;
+    collectionNoSearchResults: string;
     articleVideoList: string;
     articleVideoCount: string;
     articleVideoUntitled: string;

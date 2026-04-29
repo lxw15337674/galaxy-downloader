@@ -21,7 +21,7 @@
         "copyrightVideo": "版权说明：视频版权归相关网站及作者所有",
         "copyrightStorage": "本站不提供和存储任何视频及图片",
         "copyrightYear": "Copyright © {year}",
-        "copyrightBilibiliRestriction": "⚠️ 不支持下载版权受限（如会员专享、付费）或平台访问受限（如 Telegram / X 限制级、需登录或受限内容）的视频。"
+        "copyrightBilibiliRestriction": "⚠️ 不支持下载版权、付费、会员或需登录访问的受限内容。"
     },
     "form": {
         "pasteButton": "粘贴",
@@ -766,6 +766,12 @@
         "originDownloadVideo": "视频直链",
         "originDownloadAudio": "音频直链",
         "totalParts": "共 {count} 个分P",
+        "showAllParts": "展开全部（剩余 {count} 条）",
+        "collapseParts": "收起到前 {count} 条",
+        "loadMoreItems": "加载更多（+{count}）",
+        "shownItems": "已显示 {shown}/{total}",
+        "collectionSearchPlaceholder": "搜索标题...",
+        "collectionNoSearchResults": "未找到匹配的合集视频",
         "articleVideoList": "文章视频",
         "articleVideoCount": "共 {count} 个视频",
         "articleVideoUntitled": "视频 {index}",

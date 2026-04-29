@@ -394,10 +394,14 @@ export function UnifiedDownloader({
                                         </div>
                                     )}
                                     {heroMeta}
+                                    <div className="rounded-md border border-amber-500/35 bg-amber-500/10 px-3 py-2 text-xs text-foreground/85 break-words">
+                                        {dict.page.copyrightBilibiliRestriction}
+                                    </div>
                                 </CardHeader>
                                 <CardContent className="px-4 pb-4 pt-0">
                                     <form onSubmit={handleSubmit} className="space-y-6">
                                         <div className="space-y-2">
+                                         
                                             <Textarea
                                                 id="url"
                                                 ref={urlInputRef}

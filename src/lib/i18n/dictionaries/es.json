@@ -21,7 +21,7 @@
         "copyrightVideo": "Aviso de copyright: los derechos de los videos pertenecen a sus autores y plataformas de origen.",
         "copyrightStorage": "Este sitio no aloja ni almacena videos o imágenes.",
         "copyrightYear": "Derechos de autor © {year}",
-        "copyrightBilibiliRestriction": "⚠️ No se admite la descarga de contenido restringido por copyright (por ejemplo, de pago o para miembros) ni de contenido con acceso limitado (como contenido de Telegram / X que requiere inicio de sesión o con restricciones)."
+        "copyrightBilibiliRestriction": "⚠️ No se admite contenido restringido por copyright, de pago, exclusivo para miembros o que requiera inicio de sesión."
     },
     "form": {
         "pasteButton": "Pegar",
@@ -768,6 +768,12 @@
         "originDownloadVideo": "Enlace directo de vídeo",
         "originDownloadAudio": "Enlace directo de audio",
         "totalParts": "Total {count} partes",
+        "showAllParts": "Mostrar todo ({count} más)",
+        "collapseParts": "Contraer a las primeras {count}",
+        "loadMoreItems": "Cargar más (+{count})",
+        "shownItems": "Mostrando {shown}/{total}",
+        "collectionSearchPlaceholder": "Buscar por título...",
+        "collectionNoSearchResults": "No se encontraron videos de colección coincidentes",
         "articleVideoList": "Vídeos del artículo",
         "articleVideoCount": "Total de {count} vídeos",
         "articleVideoUntitled": "Vídeo {index}",

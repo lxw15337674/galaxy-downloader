@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { Input } from '@/components/ui/input';
 import { X, Download, ExternalLink, Loader2, Package, Share2 } from 'lucide-react';
 import Image from "next/image";
 import { useDictionary } from '@/i18n/client';
@@ -16,6 +16,9 @@ import {
     shouldShowVideoDownloadButton,
     shouldUseFrontendImageProxy,
 } from "./result-card-visibility";
+
+const DEFAULT_VISIBLE_PARTS = 100;
+const LOAD_MORE_BATCH = 100;
 
 interface ResultCardProps {
     result: UnifiedParseResult['data'] | null | undefined
@@ -39,6 +42,30 @@ function resolveImageSrc(imageUrl: string): string {
 
 function replaceTemplate(template: string, token: string, value: string): string {
     return template.replace(token, value);
+}
+
+function useIsMobileViewport(): boolean {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+            return;
+        }
+
+        const mediaQuery = window.matchMedia('(max-width: 767px)');
+        const update = () => setIsMobile(mediaQuery.matches);
+        update();
+
+        if (typeof mediaQuery.addEventListener === 'function') {
+            mediaQuery.addEventListener('change', update);
+            return () => mediaQuery.removeEventListener('change', update);
+        }
+
+        mediaQuery.addListener(update);
+        return () => mediaQuery.removeListener(update);
+    }, []);
+
+    return isMobile;
 }
 
 function triggerBlobDownload(blob: Blob, filename: string) {
@@ -135,6 +162,15 @@ async function fetchImageBlobCandidates(candidates: string[]): Promise<ResolvedI
 
 export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardProps) {
     const dict = useDictionary()
+    const [activeBiliList, setActiveBiliList] = useState<'pages' | 'season'>('pages');
+
+    useEffect(() => {
+        if (!result) {
+            return;
+        }
+        setActiveBiliList('pages');
+    }, [result?.url, result?.currentPage]);
+
     if (!result) return null;
 
     const displayImages = resolveResultDisplayImages({
@@ -145,6 +181,14 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
     const isMultiPart = result.isMultiPart && result.pages && result.pages.length > 1;
     const isImageNote = result.noteType === 'image' && displayImages.length > 0;
     const hasEmbeddedVideos = !!result.videos?.length;
+    const hasSeasonAlternative = (result.videos?.length || 0) > 1;
+    const hasBilibiliSourceSwitch = (result.platform === 'bili' || result.platform === 'bilibili')
+        && Boolean(isMultiPart)
+        && hasSeasonAlternative;
+    const pageTabLabel = replaceTemplate(dict.result.totalParts, '{count}', String(result.pages?.length || 0));
+    const seasonTabLabel = replaceTemplate(dict.result.videoCount, '{count}', String(result.videos?.length || 0));
+    const showMultiPartList = Boolean(isMultiPart) && (!hasBilibiliSourceSwitch || activeBiliList === 'pages');
+    const showSeasonList = hasEmbeddedVideos && (!isMultiPart || (hasBilibiliSourceSwitch && activeBiliList === 'season'));
     const hasSupplementalImages = !isImageNote && displayImages.length > 0;
     const coverUrl = typeof result.cover === 'string' ? result.cover.trim() : '';
     const shouldShowCover = !isImageNote && coverUrl.length > 0;
@@ -189,6 +233,7 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
     };
 
     const displayTitle = result.title;
+
     return (
         <Card>
             <CardHeader className="p-4">
@@ -238,15 +283,36 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
                         />
                     ) : (
                         <>
-                            {isMultiPart ? (
-                                <MultiPartList
-                                    pages={result.pages!}
-                                    currentPage={result.currentPage}
-                                />
-                            ) : hasEmbeddedVideos ? (
-                                <EmbeddedVideoList videos={result.videos!} />
-                            ) : (
-                                <SinglePartButtons result={result} onOpenExtractAudio={onOpenExtractAudio} />
+                            <SinglePartButtons result={result} onOpenExtractAudio={onOpenExtractAudio} />
+                            {(showMultiPartList || showSeasonList || hasBilibiliSourceSwitch) && (
+                                <div className="space-y-3">
+                                    {hasBilibiliSourceSwitch && (
+                                        <div className="flex items-center gap-2">
+                                            <Button
+                                                variant={activeBiliList === 'pages' ? 'default' : 'outline'}
+                                                size="sm"
+                                                onClick={() => setActiveBiliList('pages')}
+                                            >
+                                                {pageTabLabel}
+                                            </Button>
+                                            <Button
+                                                variant={activeBiliList === 'season' ? 'default' : 'outline'}
+                                                size="sm"
+                                                onClick={() => setActiveBiliList('season')}
+                                            >
+                                                {seasonTabLabel}
+                                            </Button>
+                                        </div>
+                                    )}
+                                    {showMultiPartList ? (
+                                        <MultiPartList
+                                            pages={result.pages!}
+                                            currentPage={result.currentPage}
+                                        />
+                                    ) : showSeasonList ? (
+                                        <EmbeddedVideoList videos={result.videos!} />
+                                    ) : null}
+                                </div>
                             )}
                             {hasSupplementalImages && (
                                 <ImageNoteGrid
@@ -404,7 +470,16 @@ function SinglePartButtons({
  */
 function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; currentPage?: number }) {
     const dict = useDictionary()
+    const isMobile = useIsMobileViewport();
     const [loadingKeys, setLoadingKeys] = useState<Set<string>>(new Set());
+    const [mobileVisibleCount, setMobileVisibleCount] = useState(DEFAULT_VISIBLE_PARTS);
+    const minimumVisibleCount = Math.max(DEFAULT_VISIBLE_PARTS, currentPage || 1);
+    const visibleCount = isMobile
+        ? Math.min(pages.length, mobileVisibleCount)
+        : pages.length;
+    const visiblePages = pages.slice(0, visibleCount);
+    const remainingCount = Math.max(0, pages.length - visibleCount);
+    const canCollapseMobile = isMobile && visibleCount >= pages.length && pages.length > minimumVisibleCount;
 
     const handleDownload = (url: string, key: string) => {
         setLoadingKeys(prev => new Set(prev).add(key));
@@ -418,14 +493,20 @@ function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; currentPage?
         }, 1500);
     };
 
+    useEffect(() => {
+        setMobileVisibleCount(minimumVisibleCount);
+    }, [pages.length, currentPage]);
+
     return (
         <div className="space-y-2">
-            <div className="text-sm text-foreground/75">
-                {replaceTemplate(dict.result.totalParts, '{count}', String(pages.length))}
+            <div className="flex items-center justify-between gap-2 text-sm text-foreground/75">
+                <span>
+                    {replaceTemplate(dict.result.totalParts, '{count}', String(pages.length))}
+                </span>
             </div>
-            <ScrollArea>
+            <div className="max-h-[min(56vh,26rem)] md:max-h-[min(60vh,32rem)] overflow-y-auto overscroll-contain pr-1">
                 <div className="space-y-2 pr-2">
-                    {pages.map((page) => (
+                    {visiblePages.map((page) => (
                         <div
                             key={page.page}
                             className={`flex w-full max-w-full flex-col gap-2 overflow-hidden p-2 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-2 md:p-3 rounded-lg border ${
@@ -473,15 +554,56 @@ function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; currentPage?
                             </div>
                         </div>
                     ))}
+                    {isMobile && (remainingCount > 0 || canCollapseMobile) && (
+                        <div className="rounded-lg border border-border/70 p-2">
+                            {remainingCount > 0 ? (
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="w-full"
+                                    onClick={() => setMobileVisibleCount((prev) => Math.min(pages.length, prev + LOAD_MORE_BATCH))}
+                                >
+                                    {replaceTemplate(
+                                        dict.result.loadMoreItems,
+                                        '{count}',
+                                        String(Math.min(LOAD_MORE_BATCH, remainingCount))
+                                    )}
+                                </Button>
+                            ) : (
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="w-full"
+                                    onClick={() => setMobileVisibleCount(minimumVisibleCount)}
+                                >
+                                    {replaceTemplate(dict.result.collapseParts, '{count}', String(minimumVisibleCount))}
+                                </Button>
+                            )}
+                        </div>
+                    )}
                 </div>
-            </ScrollArea>
+            </div>
         </div>
     );
 }
 
 function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
     const dict = useDictionary();
+    const isMobile = useIsMobileViewport();
     const [loadingKeys, setLoadingKeys] = useState<Set<string>>(new Set());
+    const [searchQuery, setSearchQuery] = useState('');
+    const [mobileVisibleCount, setMobileVisibleCount] = useState(DEFAULT_VISIBLE_PARTS);
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+    const filteredVideos = normalizedQuery
+        ? videos.filter((video) => (video.title || '').toLowerCase().includes(normalizedQuery))
+        : videos;
+    const minimumVisibleCount = DEFAULT_VISIBLE_PARTS;
+    const visibleCount = isMobile
+        ? Math.min(filteredVideos.length, mobileVisibleCount)
+        : filteredVideos.length;
+    const visibleVideos = filteredVideos.slice(0, visibleCount);
+    const remainingCount = Math.max(0, filteredVideos.length - visibleCount);
+    const canCollapseMobile = isMobile && visibleCount >= filteredVideos.length && filteredVideos.length > minimumVisibleCount;
 
     const handleDownload = (url: string, key: string) => {
         setLoadingKeys(prev => new Set(prev).add(key));
@@ -495,17 +617,37 @@ function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
         }, 1500);
     };
 
+    useEffect(() => {
+        setMobileVisibleCount(minimumVisibleCount);
+    }, [videos.length, normalizedQuery]);
+
     return (
         <div className="space-y-2">
-            <div className="text-sm text-foreground/75">
-                <span>{dict.result.videoList}</span>
-                <span className="ml-2">
-                    {replaceTemplate(dict.result.videoCount, '{count}', String(videos.length))}
+            <div className="flex items-center justify-between gap-2 text-sm text-foreground/75">
+                <span className="min-w-0">
+                    <span>{dict.result.videoList}</span>
+                    <span className="ml-2">
+                        {replaceTemplate(dict.result.videoCount, '{count}', String(filteredVideos.length))}
+                    </span>
                 </span>
+                <div className="flex items-center gap-2 shrink-0">
+                    <Input
+                        value={searchQuery}
+                        onChange={(event) => setSearchQuery(event.target.value)}
+                        placeholder={dict.result.collectionSearchPlaceholder}
+                        aria-label={dict.result.collectionSearchPlaceholder}
+                        className="w-32 sm:w-56 h-8"
+                    />
+                </div>
             </div>
-            <ScrollArea>
+            <div className="max-h-[min(56vh,26rem)] md:max-h-[min(60vh,32rem)] overflow-y-auto overscroll-contain pr-1">
                 <div className="space-y-2 pr-2">
-                    {videos.map((video, index) => {
+                    {filteredVideos.length === 0 && (
+                        <p className="py-6 text-center text-sm text-muted-foreground">
+                            {dict.result.collectionNoSearchResults}
+                        </p>
+                    )}
+                    {visibleVideos.map((video, index) => {
                         const videoDownloadUrl = video.downloadVideoUrl || video.originDownloadVideoUrl || null;
                         const audioDownloadUrl = video.downloadAudioUrl || video.originDownloadAudioUrl || null;
                         const displayTitle = video.title?.trim()
@@ -560,8 +702,35 @@ function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
                             </div>
                         );
                     })}
+                    {isMobile && (remainingCount > 0 || canCollapseMobile) && (
+                        <div className="rounded-lg border border-border/70 p-2">
+                            {remainingCount > 0 ? (
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="w-full"
+                                    onClick={() => setMobileVisibleCount((prev) => Math.min(filteredVideos.length, prev + LOAD_MORE_BATCH))}
+                                >
+                                    {replaceTemplate(
+                                        dict.result.loadMoreItems,
+                                        '{count}',
+                                        String(Math.min(LOAD_MORE_BATCH, remainingCount))
+                                    )}
+                                </Button>
+                            ) : (
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="w-full"
+                                    onClick={() => setMobileVisibleCount(minimumVisibleCount)}
+                                >
+                                    {replaceTemplate(dict.result.collapseParts, '{count}', String(minimumVisibleCount))}
+                                </Button>
+                            )}
+                        </div>
+                    )}
                 </div>
-            </ScrollArea>
+            </div>
         </div>
     );
 }

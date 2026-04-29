@@ -35,11 +35,11 @@ const dict = {
 } as const;
 
 describe('getPlatformSupportItems', () => {
-    it('includes all configured platforms in the first-screen support list', () => {
+    it('hides platforms that should not be promoted in the support list', () => {
         const items = getPlatformSupportItems(dict);
 
         const keys = items.map((item) => item.key);
-        expect(keys).toContain('youtube');
+        expect(keys).not.toContain('youtube');
         expect(keys).toContain('soundcloud');
         expect(keys).toContain('vk');
         expect(keys).toContain('okru');

@@ -49,7 +49,7 @@ export type PlatformSupportItem = {
     visual: PlatformSupportVisual;
 };
 
-const HIDDEN_PLATFORM_SUPPORT_KEYS = new Set<PlatformSupportKey>(['vimeo', 'dailymotion']);
+const HIDDEN_PLATFORM_SUPPORT_KEYS = new Set<PlatformSupportKey>(['youtube', 'vimeo', 'dailymotion']);
 
 const UNIFIED_FRAME_CLASS_NAME = 'border-slate-200 bg-slate-100/70 dark:border-slate-300/40 dark:bg-slate-800/45';
 

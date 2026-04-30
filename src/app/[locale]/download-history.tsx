@@ -150,10 +150,7 @@ export function DownloadHistory({
                                                             {record.title}
                                                         </div>
                                                         <div className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap">
-                                                            <PlatformBadge
-                                                                platform={record.platform}
-                                                                className="border border-border bg-muted text-muted-foreground dark:bg-muted dark:text-muted-foreground"
-                                                            />
+                                                            <PlatformBadge platform={record.platform} />
                                                             <span>
                                                                 {formatRecordTimestamp(record.timestamp)}
                                                             </span>

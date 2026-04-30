@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, Check, Shield, Info } from 'lucide-react';
+import { Heart, Check, Info } from 'lucide-react';
 import type { Dictionary } from '@/lib/i18n/types';
 
 interface FreeSupportCardProps {
@@ -28,17 +28,6 @@ export function FreeSupportCard({ dict }: FreeSupportCardProps) {
                     <div className="flex items-center gap-2">
                         <Check className="h-4 w-4 text-green-500" />
                         <span className="text-sm">{dict.freeSupport.features.unlimitedDownloads}</span>
-                    </div>
-                </div>
-
-                <div className="pt-2 border-t">
-                    <div className="flex items-start gap-2">
-                        <Shield className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                        <div className="text-sm">
-                            <p className="font-medium text-foreground">{dict.freeSupport.privacy.title}</p>
-                            <p className="text-foreground/75">{dict.freeSupport.privacy.noUserRecords}</p>
-                            <p className="text-foreground/75">{dict.freeSupport.privacy.localStorage}</p>
-                        </div>
                     </div>
                 </div>
 

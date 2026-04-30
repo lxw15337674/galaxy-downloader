@@ -822,6 +822,7 @@
         "emailInvalid": "Formato de correo no válido",
         "emailRequired": "Opcional. Déjalo si quieres recibir respuesta",
         "emailHint": "Déjanos tu correo si quieres seguimiento",
+        "diagnosticInfoHint": "Se incluirá información del navegador y del sistema para diagnosticar el problema.",
         "cancelButton": "Cancelar",
         "submitButton": "Enviar",
         "submittingButton": "Enviando...",

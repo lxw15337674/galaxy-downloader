@@ -533,6 +533,7 @@ export interface Dictionary {
         emailInvalid: string;
         emailHint: string;
         emailRequired: string;
+        diagnosticInfoHint: string;
         cancelButton: string;
         submitButton: string;
         submittingButton: string;

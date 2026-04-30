@@ -23,7 +23,7 @@ import { MessageSquare, Loader2, CheckCircle2 } from 'lucide-react'
 import { toast } from '@/lib/deferred-toast'
 import { useDictionary } from '@/i18n/client'
 import type { FeedbackType } from '@/lib/feedback-config'
-import { submitFeedback, validateContent, validateEmail } from '@/lib/feedback'
+import { collectFeedbackClientMetadata, submitFeedback, validateContent, validateEmail } from '@/lib/feedback'
 import { FEEDBACK_CONFIG } from '@/lib/feedback-config'
 import { cn } from '@/lib/utils'
 import { isApiRequestError, resolveApiErrorMessageWithFallback } from '@/lib/api-errors'
@@ -97,6 +97,7 @@ export function FeedbackDialog({
                 type: feedbackType,
                 content: content.trim(),
                 contact: email.trim(),
+                metadata: collectFeedbackClientMetadata(),
             })
 
             setSubmitStatus('success')
@@ -227,6 +228,10 @@ export function FeedbackDialog({
                     </p>
                 )}
             </div>
+
+            <p className="text-xs text-muted-foreground">
+                {feedback.diagnosticInfoHint}
+            </p>
 
             {/* 按钮 */}
             <div className="flex justify-end gap-2 pt-4">

@@ -19,4 +19,5 @@ export interface FeedbackData {
   type: FeedbackType
   content: string
   contact?: string
+  metadata?: Record<string, unknown>
 }

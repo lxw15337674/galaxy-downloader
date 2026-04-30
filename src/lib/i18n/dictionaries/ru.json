@@ -822,6 +822,7 @@
         "emailInvalid": "Некорректный формат email",
         "emailRequired": "Необязательно. Оставьте email, если нужен ответ",
         "emailHint": "Оставьте email, если хотите получить обратную связь",
+        "diagnosticInfoHint": "Сведения о браузере и системе будут отправлены для диагностики проблемы.",
         "cancelButton": "Отмена",
         "submitButton": "Отправить",
         "submittingButton": "Отправка...",

@@ -820,6 +820,7 @@
         "emailInvalid": "邮箱格式不正确",
         "emailRequired": "选填。如需我们回复你，可留下邮箱",
         "emailHint": "如果需要我们回复，请留下邮箱",
+        "diagnosticInfoHint": "提交时会附带浏览器和系统信息，便于定位问题。",
         "cancelButton": "取消",
         "submitButton": "提交反馈",
         "submittingButton": "提交中...",

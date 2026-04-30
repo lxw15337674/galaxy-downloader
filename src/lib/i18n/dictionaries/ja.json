@@ -816,6 +816,7 @@
         "emailInvalid": "メールアドレスの形式が正しくありません",
         "emailRequired": "任意です。返信が必要な場合はメールアドレスを入力してください",
         "emailHint": "フォローアップが必要な場合はメールアドレスを残してください",
+        "diagnosticInfoHint": "問題の特定に役立てるため、ブラウザとシステム情報が送信されます。",
         "cancelButton": "キャンセル",
         "submitButton": "フィードバックを送信",
         "submittingButton": "送信中...",

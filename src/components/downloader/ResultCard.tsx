@@ -165,9 +165,6 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
     const [activeBiliList, setActiveBiliList] = useState<'pages' | 'season'>('pages');
 
     useEffect(() => {
-        if (!result) {
-            return;
-        }
         setActiveBiliList('pages');
     }, [result?.url, result?.currentPage]);
 
@@ -236,15 +233,15 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
 
     return (
         <Card>
-            <CardHeader className="p-4">
-                <div className="flex items-center justify-between mb-2">
-                    <CardTitle className="text-lg">{dict.result.title}</CardTitle>
-                    <div className="flex items-center gap-2">
+            <CardHeader className="p-3 pb-2">
+                <div className="flex items-center justify-between gap-2">
+                    <CardTitle className="text-base">{dict.result.title}</CardTitle>
+                    <div className="flex items-center gap-1.5">
                         {canSharePlayLink && (
                             <Button
                                 variant="outline"
                                 size="sm"
-                                className="h-8 gap-1.5"
+                                className="h-8 gap-1.5 text-xs"
                                 onClick={() => void handleCopySharePlayLink()}
                                 title={dict.result.sharePlayLink}
                             >
@@ -252,13 +249,13 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
                                 <span>{dict.result.sharePlayLink}</span>
                             </Button>
                         )}
-                        <Button variant="ghost" size="sm" onClick={onClose}>
+                        <Button variant="ghost" size="sm" className="h-8 w-8 px-0" onClick={onClose}>
                             <X className="h-4 w-4" />
                         </Button>
                     </div>
                 </div>
                 <p
-                    className="line-clamp-2 text-sm text-foreground/80 break-words"
+                    className="line-clamp-2 text-[13px] leading-snug text-foreground/80 break-words"
                     title={displayTitle}
                 >
                     {displayTitle}
@@ -267,8 +264,8 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
                     )}
                 </p>
             </CardHeader>
-            <CardContent className="px-4 py-2">
-                <div className="space-y-4">
+            <CardContent className="px-3 pb-3 pt-0">
+                <div className="space-y-2">
                     {shouldShowCover && (
                         <ImageNoteGrid
                             images={[coverSrc]}
@@ -285,12 +282,13 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
                         <>
                             <SinglePartButtons result={result} onOpenExtractAudio={onOpenExtractAudio} />
                             {(showMultiPartList || showSeasonList || hasBilibiliSourceSwitch) && (
-                                <div className="space-y-3">
+                                <div className="space-y-2">
                                     {hasBilibiliSourceSwitch && (
                                         <div className="flex items-center gap-2">
                                             <Button
                                                 variant={activeBiliList === 'pages' ? 'default' : 'outline'}
                                                 size="sm"
+                                                className="h-8 text-xs"
                                                 onClick={() => setActiveBiliList('pages')}
                                             >
                                                 {pageTabLabel}
@@ -298,6 +296,7 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
                                             <Button
                                                 variant={activeBiliList === 'season' ? 'default' : 'outline'}
                                                 size="sm"
+                                                className="h-8 text-xs"
                                                 onClick={() => setActiveBiliList('season')}
                                             >
                                                 {seasonTabLabel}
@@ -306,11 +305,15 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
                                     )}
                                     {showMultiPartList ? (
                                         <MultiPartList
+                                            key={`pages-${result.url ?? ''}-${result.currentPage ?? ''}-${result.pages?.length ?? 0}`}
                                             pages={result.pages!}
                                             currentPage={result.currentPage}
                                         />
                                     ) : showSeasonList ? (
-                                        <EmbeddedVideoList videos={result.videos!} />
+                                        <EmbeddedVideoList
+                                            key={`videos-${result.url ?? ''}-${result.videos?.length ?? 0}`}
+                                            videos={result.videos!}
+                                        />
                                     ) : null}
                                 </div>
                             )}
@@ -383,7 +386,7 @@ function SinglePartButtons({
                 {showVideoDownload && (
                     <Button
                         variant="outline"
-                        className="flex items-center justify-center gap-2"
+                        className="h-8 flex items-center justify-center gap-2 text-xs"
                         disabled={videoLoading}
                         onClick={() => {
                             if (videoAction === 'merge-then-download') {
@@ -403,7 +406,7 @@ function SinglePartButtons({
                 {showAudioDownload && (
                     <Button
                         variant="outline"
-                        className="flex items-center justify-center gap-2"
+                        className="h-8 flex items-center justify-center gap-2 text-xs"
                         disabled={audioLoading}
                         onClick={() => {
                             if (audioAction === 'extract-audio') {
@@ -472,8 +475,8 @@ function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; currentPage?
     const dict = useDictionary()
     const isMobile = useIsMobileViewport();
     const [loadingKeys, setLoadingKeys] = useState<Set<string>>(new Set());
-    const [mobileVisibleCount, setMobileVisibleCount] = useState(DEFAULT_VISIBLE_PARTS);
     const minimumVisibleCount = Math.max(DEFAULT_VISIBLE_PARTS, currentPage || 1);
+    const [mobileVisibleCount, setMobileVisibleCount] = useState(minimumVisibleCount);
     const visibleCount = isMobile
         ? Math.min(pages.length, mobileVisibleCount)
         : pages.length;
@@ -493,13 +496,9 @@ function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; currentPage?
         }, 1500);
     };
 
-    useEffect(() => {
-        setMobileVisibleCount(minimumVisibleCount);
-    }, [pages.length, currentPage]);
-
     return (
         <div className="space-y-2">
-            <div className="flex items-center justify-between gap-2 text-sm text-foreground/75">
+            <div className="flex items-center justify-between gap-2 text-xs text-foreground/75">
                 <span>
                     {replaceTemplate(dict.result.totalParts, '{count}', String(pages.length))}
                 </span>
@@ -520,7 +519,7 @@ function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; currentPage?
                                     P{page.page}
                                 </span>
                                 <div className="flex w-full items-center gap-2 flex-1 min-w-0 overflow-hidden">
-                                    <div className="text-sm truncate min-w-0 flex-1 max-w-[64vw] sm:max-w-none" title={page.part}>
+                                    <div className="text-[13px] truncate min-w-0 flex-1 max-w-[64vw] sm:max-w-none" title={page.part}>
                                         {page.part}
                                     </div>
                                     <span className="text-xs text-foreground/65 shrink-0">
@@ -533,6 +532,7 @@ function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; currentPage?
                                     <Button
                                         variant="outline"
                                         size="sm"
+                                        className="h-8 text-xs"
                                         disabled={loadingKeys.has(`${page.page}-video`)}
                                         onClick={() => handleDownload(page.downloadVideoUrl!, `${page.page}-video`)}
                                     >
@@ -544,6 +544,7 @@ function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; currentPage?
                                     <Button
                                         variant="outline"
                                         size="sm"
+                                        className="h-8 text-xs"
                                         disabled={loadingKeys.has(`${page.page}-audio`)}
                                         onClick={() => handleDownload(page.downloadAudioUrl!, `${page.page}-audio`)}
                                     >
@@ -560,7 +561,7 @@ function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; currentPage?
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="w-full"
+                                    className="h-8 w-full text-xs"
                                     onClick={() => setMobileVisibleCount((prev) => Math.min(pages.length, prev + LOAD_MORE_BATCH))}
                                 >
                                     {replaceTemplate(
@@ -573,7 +574,7 @@ function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; currentPage?
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="w-full"
+                                    className="h-8 w-full text-xs"
                                     onClick={() => setMobileVisibleCount(minimumVisibleCount)}
                                 >
                                     {replaceTemplate(dict.result.collapseParts, '{count}', String(minimumVisibleCount))}
@@ -617,13 +618,9 @@ function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
         }, 1500);
     };
 
-    useEffect(() => {
-        setMobileVisibleCount(minimumVisibleCount);
-    }, [videos.length, normalizedQuery]);
-
     return (
         <div className="space-y-2">
-            <div className="flex items-center justify-between gap-2 text-sm text-foreground/75">
+            <div className="flex items-center justify-between gap-2 text-xs text-foreground/75">
                 <span className="min-w-0">
                     <span>{dict.result.videoList}</span>
                     <span className="ml-2">
@@ -633,7 +630,10 @@ function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
                 <div className="flex items-center gap-2 shrink-0">
                     <Input
                         value={searchQuery}
-                        onChange={(event) => setSearchQuery(event.target.value)}
+                        onChange={(event) => {
+                            setSearchQuery(event.target.value);
+                            setMobileVisibleCount(minimumVisibleCount);
+                        }}
                         placeholder={dict.result.collectionSearchPlaceholder}
                         aria-label={dict.result.collectionSearchPlaceholder}
                         className="w-32 sm:w-56 h-8"
@@ -665,7 +665,7 @@ function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
                                         {index + 1}
                                     </span>
                                     <div className="flex w-full items-center gap-2 flex-1 min-w-0 overflow-hidden">
-                                        <div className="text-sm truncate min-w-0 flex-1 max-w-[64vw] sm:max-w-none" title={displayTitle}>
+                                        <div className="text-[13px] truncate min-w-0 flex-1 max-w-[64vw] sm:max-w-none" title={displayTitle}>
                                             {displayTitle}
                                         </div>
                                         {video.duration != null && (
@@ -680,6 +680,7 @@ function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
                                         <Button
                                             variant="outline"
                                             size="sm"
+                                            className="h-8 text-xs"
                                             disabled={loadingKeys.has(videoKey)}
                                             onClick={() => handleDownload(videoDownloadUrl!, videoKey)}
                                         >
@@ -691,6 +692,7 @@ function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
                                         <Button
                                             variant="outline"
                                             size="sm"
+                                            className="h-8 text-xs"
                                             disabled={loadingKeys.has(audioKey)}
                                             onClick={() => handleDownload(audioDownloadUrl, audioKey)}
                                         >
@@ -708,7 +710,7 @@ function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="w-full"
+                                    className="h-8 w-full text-xs"
                                     onClick={() => setMobileVisibleCount((prev) => Math.min(filteredVideos.length, prev + LOAD_MORE_BATCH))}
                                 >
                                     {replaceTemplate(
@@ -721,7 +723,7 @@ function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="w-full"
+                                    className="h-8 w-full text-xs"
                                     onClick={() => setMobileVisibleCount(minimumVisibleCount)}
                                 >
                                     {replaceTemplate(dict.result.collapseParts, '{count}', String(minimumVisibleCount))}
@@ -872,10 +874,10 @@ function ImageNoteGrid({
     }
 
     return (
-        <div className="space-y-3">
+        <div className="space-y-2">
             {!singleImageMode && (
                 <div className="flex items-center justify-between">
-                    <div className="text-sm text-foreground/75">
+                    <div className="text-xs text-foreground/75">
                         <span className="inline-flex items-center gap-1">
                             {dict.result.imageNote}
                         </span>
@@ -893,7 +895,7 @@ function ImageNoteGrid({
                         variant="outline"
                         disabled={!allLoaded || isPackaging || successCount === 0}
                         onClick={handlePackageDownload}
-                        className="shrink-0"
+                        className="h-8 shrink-0 text-xs"
                     >
                         {isPackaging ? (
                             <>
@@ -909,7 +911,7 @@ function ImageNoteGrid({
                     </Button>
                 </div>
             )}
-            <div className={`${singleImageMode ? 'grid grid-cols-1' : 'grid grid-cols-2'} gap-3 max-h-[500px] overflow-y-auto pr-1`}>
+            <div className={`${singleImageMode ? 'grid grid-cols-1' : 'grid grid-cols-2'} gap-2 max-h-[500px] overflow-y-auto pr-1`}>
                 {images.map((imageUrl, index) => {
                     const state = imageStates[index];
                     const isLoading = state?.loading ?? true;

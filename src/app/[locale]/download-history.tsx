@@ -82,13 +82,13 @@ export function DownloadHistory({
     return (
         <Card className="flex-1 min-h-0 flex flex-col">
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-                <CardHeader className="flex flex-row items-center justify-between pb-2 shrink-0 p-4">
-                    <CollapsibleTrigger className="flex items-center gap-2 hover:bg-muted/50 rounded-md p-1 -m-1">
-                        <Button variant="ghost" size="icon" className="size-8">
-                            <ChevronsUpDown className="size-8" />
+                <CardHeader className="flex flex-row items-center justify-between gap-2 shrink-0 p-3 pb-2">
+                    <CollapsibleTrigger className="flex items-center gap-1.5 hover:bg-muted/50 rounded-md p-1 -m-1">
+                        <Button variant="ghost" size="icon" className="size-7">
+                            <ChevronsUpDown className="size-4" />
                         </Button>
                         <div className="space-y-1 text-left">
-                            <h2 className="text-lg font-semibold tracking-tight">
+                            <h2 className="text-base font-semibold tracking-tight">
                                 {dict.history.title}
                             </h2>
                         </div>
@@ -99,6 +99,7 @@ export function DownloadHistory({
                                 <Button
                                     variant="destructive"
                                     size="sm"
+                                    className="h-8 text-xs"
                                 >
                                     {dict.history.clear}
                                 </Button>
@@ -124,16 +125,16 @@ export function DownloadHistory({
                             onChange={(e) => setSearchQuery(e.target.value)}
                             placeholder={dict.history.searchPlaceholder}
                             aria-label={dict.history.searchPlaceholder}
-                            className="h-8 w-30 sm:w-56"
+                            className="h-8 w-30 text-xs sm:w-56"
                         />
                     </div>
                 </CardHeader>
                 <CollapsibleContent className="flex-1 min-h-0 flex flex-col">
-                    <CardContent className="flex-1 min-h-0 px-4 py-2 flex flex-col">
+                    <CardContent className="flex-1 min-h-0 px-3 pb-3 pt-0 flex flex-col">
                         <div className="max-h-[min(56vh,26rem)] md:max-h-[min(60vh,32rem)] overflow-y-auto overscroll-contain pr-1">
                             <div className="space-y-2 pr-2">
                                 {filteredHistory.length === 0 ? (
-                                    <p className="py-6 text-center text-sm text-muted-foreground">
+                                    <p className="py-5 text-center text-xs text-muted-foreground">
                                         {dict.history.noSearchResults}
                                     </p>
                                 ) : (
@@ -142,10 +143,10 @@ export function DownloadHistory({
                                             return (
                                                 <div
                                                     key={index}
-                                                    className="flex w-full max-w-full flex-col gap-2 overflow-hidden rounded-lg border border-border p-2 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-2 md:p-3 hover:bg-muted/50"
+                                                    className="flex w-full max-w-full flex-col gap-2 overflow-hidden rounded-lg border border-border p-2 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-2 hover:bg-muted/50"
                                                 >
                                                     <div className="flex w-full min-w-0 flex-col gap-1 overflow-hidden">
-                                                        <div className="line-clamp-2 text-sm font-medium" title={record.title}>
+                                                        <div className="line-clamp-2 text-[13px] font-medium leading-snug" title={record.title}>
                                                             {record.title}
                                                         </div>
                                                         <div className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap">
@@ -162,6 +163,7 @@ export function DownloadHistory({
                                                         <Button
                                                             variant="outline"
                                                             size="sm"
+                                                            className="h-8 text-xs"
                                                             onClick={() => {
                                                                 window.open(record.url, '_blank');
                                                             }}
@@ -171,6 +173,7 @@ export function DownloadHistory({
                                                         <Button
                                                             variant="outline"
                                                             size="sm"
+                                                            className="h-8 text-xs"
                                                             onClick={() => handleRedownload(record.url)}
                                                         >
                                                             {dict.history.redownload}

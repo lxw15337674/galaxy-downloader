@@ -822,6 +822,7 @@
         "emailInvalid": "Invalid email format",
         "emailRequired": "Optional. Leave your email if you want a reply",
         "emailHint": "Leave your email if you'd like us to follow up",
+        "diagnosticInfoHint": "Browser and system info will be included to help diagnose the issue.",
         "cancelButton": "Cancel",
         "submitButton": "Submit Feedback",
         "submittingButton": "Submitting...",

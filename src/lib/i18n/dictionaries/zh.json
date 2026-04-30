@@ -21,7 +21,7 @@
         "copyrightVideo": "版权说明：视频版权归相关网站及作者所有",
         "copyrightStorage": "本站不提供和存储任何视频及图片",
         "copyrightYear": "Copyright © {year}",
-        "copyrightBilibiliRestriction": "⚠️ 不支持下载版权、付费、会员或需登录访问的受限内容。"
+        "copyrightBilibiliRestriction": "⚠️ 不支持下载版权、付费或会员受限内容。"
     },
     "form": {
         "pasteButton": "粘贴",

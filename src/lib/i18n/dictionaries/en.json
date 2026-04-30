@@ -21,7 +21,7 @@
         "copyrightVideo": "Copyright Notice: Video copyrights belong to relevant websites and authors",
         "copyrightStorage": "This site does not provide or store any videos or images",
         "copyrightYear": "Copyright © {year}",
-        "copyrightBilibiliRestriction": "⚠️ Copyrighted, paid, member-only, or login-required restricted content is not supported."
+        "copyrightBilibiliRestriction": "⚠️ Copyrighted, paid, or member-only restricted content is not supported."
     },
     "form": {
         "pasteButton": "Paste",

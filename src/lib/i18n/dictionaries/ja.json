@@ -21,7 +21,7 @@
         "copyrightVideo": "著作権に関するご注意: 動画の著作権は各サイトおよび投稿者に帰属します",
         "copyrightStorage": "本サイトは動画や画像を保存または提供していません",
         "copyrightYear": "Copyright © {year}",
-        "copyrightBilibiliRestriction": "⚠️ 著作権、有料、会員限定、またはログインが必要な制限付きコンテンツのダウンロードには対応していません。"
+        "copyrightBilibiliRestriction": "⚠️ 著作権、有料、または会員限定の制限付きコンテンツのダウンロードには対応していません。"
     },
     "form": {
         "pasteButton": "貼り付け",

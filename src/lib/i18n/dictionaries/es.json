@@ -21,7 +21,7 @@
         "copyrightVideo": "Aviso de copyright: los derechos de los videos pertenecen a sus autores y plataformas de origen.",
         "copyrightStorage": "Este sitio no aloja ni almacena videos o imágenes.",
         "copyrightYear": "Derechos de autor © {year}",
-        "copyrightBilibiliRestriction": "⚠️ No se admite contenido restringido por copyright, de pago, exclusivo para miembros o que requiera inicio de sesión."
+        "copyrightBilibiliRestriction": "⚠️ No se admite contenido restringido por copyright, de pago o exclusivo para miembros."
     },
     "form": {
         "pasteButton": "Pegar",

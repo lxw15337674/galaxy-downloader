@@ -1,6 +1,30 @@
 {
   "versions": [
     {
+      "version": "5.0.2",
+      "date": "2026-04-30",
+      "changes": {
+        "zh": [
+          "优化首页和反馈体验，界面更紧凑一致，反馈可附带浏览器和系统信息便于排查问题。"
+        ],
+        "en": [
+          "Improved the home and feedback experience with a more compact UI and browser/system details in feedback for troubleshooting."
+        ],
+        "ja": [
+          "ホームとフィードバック体験を改善し、よりコンパクトなUIと、問題調査に役立つブラウザ・システム情報の送信に対応しました。"
+        ],
+        "zh-tw": [
+          "優化首頁和反饋體驗，介面更緊湊一致，反饋可附帶瀏覽器和系統資訊便於排查問題。"
+        ],
+        "es": [
+          "Se mejoró la experiencia de inicio y feedback con una interfaz más compacta y datos del navegador y sistema para resolver problemas."
+        ],
+        "ru": [
+          "Улучшены главная страница и обратная связь: интерфейс стал компактнее, а отзывы могут включать данные браузера и системы для диагностики."
+        ]
+      }
+    },
+    {
       "version": "5.0.1",
       "date": "2026-04-29",
       "changes": {

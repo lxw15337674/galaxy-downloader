@@ -34,89 +34,93 @@ export function AppTopBar({
             className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur-sm"
             style={{ paddingTop: 'env(safe-area-inset-top)' }}
         >
-            <div className="md:hidden max-w-7xl mx-auto px-3 sm:px-4 h-12 flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1 shrink-0 min-w-0">
-                    {showHomeButton && (
-                        <Button variant="ghost" size="sm" className="h-8 gap-1.5 px-2" asChild>
-                            <Link href={homeHref}>
-                                <Home className="h-4 w-4" />
-                                <span className="text-xs">{dict.common.home}</span>
-                            </Link>
-                        </Button>
-                    )}
-                    {showHistoryShortcut && onHistoryClick && (
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="h-8 max-w-30 gap-1.5 rounded-full px-2.5 text-[11px] font-medium"
-                            onClick={onHistoryClick}
-                        >
-                            <History className="h-3.5 w-3.5" />
-                            <span className="truncate">{dict.history.title}</span>
-                        </Button>
-                    )}
-                    {showAudioTool && onAudioToolClick && (
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="h-8 max-w-30 gap-1.5 rounded-full px-2.5 text-[11px] font-medium"
-                            onClick={onAudioToolClick}
-                        >
-                            <Music className="h-3.5 w-3.5" />
-                            <span className="truncate">{dict.audioTool.triggerButton}</span>
-                        </Button>
-                    )}
-                </div>
-                <div className="flex items-center gap-1 shrink-0">
-                    <DeferredFeedbackDialog triggerIconOnly triggerClassName="h-8 w-8" />
-                    <DeferredLanguageSwitcher iconOnly />
-                    <DeferredMobileNavMenu />
+            <div className="md:hidden px-3 sm:px-4">
+                <div className="max-w-7xl mx-auto h-12 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1 shrink-0 min-w-0">
+                        {showHomeButton && (
+                            <Button variant="ghost" size="sm" className="h-8 gap-1.5 px-2" asChild>
+                                <Link href={homeHref}>
+                                    <Home className="h-4 w-4" />
+                                    <span className="text-xs">{dict.common.home}</span>
+                                </Link>
+                            </Button>
+                        )}
+                        {showHistoryShortcut && onHistoryClick && (
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-8 max-w-30 gap-1.5 rounded-full px-2.5 text-[11px] font-medium"
+                                onClick={onHistoryClick}
+                            >
+                                <History className="h-3.5 w-3.5" />
+                                <span className="truncate">{dict.history.title}</span>
+                            </Button>
+                        )}
+                        {showAudioTool && onAudioToolClick && (
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-8 max-w-30 gap-1.5 rounded-full px-2.5 text-[11px] font-medium"
+                                onClick={onAudioToolClick}
+                            >
+                                <Music className="h-3.5 w-3.5" />
+                                <span className="truncate">{dict.audioTool.triggerButton}</span>
+                            </Button>
+                        )}
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                        <DeferredFeedbackDialog triggerIconOnly triggerClassName="h-8 w-8" />
+                        <DeferredLanguageSwitcher iconOnly />
+                        <DeferredMobileNavMenu />
+                    </div>
                 </div>
             </div>
-            <div className="hidden md:flex max-w-7xl mx-auto px-3 sm:px-4 md:px-5 py-3 items-center justify-between gap-2">
-                <div className="flex items-center gap-1">
-                    {showHistoryShortcut && onHistoryClick && (
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            className="flex items-center gap-1"
-                            onClick={onHistoryClick}
-                        >
-                            <History className="h-4 w-4" />
-                            <span>{dict.history.title}</span>
+            <div className="hidden md:block px-3 sm:px-4 md:px-4">
+                <div className="max-w-7xl mx-auto py-3 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1">
+                        {showHistoryShortcut && onHistoryClick && (
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="flex items-center gap-1"
+                                onClick={onHistoryClick}
+                            >
+                                <History className="h-4 w-4" />
+                                <span>{dict.history.title}</span>
+                            </Button>
+                        )}
+                        {showAudioTool && onAudioToolClick && (
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="flex items-center gap-1"
+                                onClick={onAudioToolClick}
+                            >
+                                <Music className="h-4 w-4" />
+                                <span>{dict.audioTool.triggerButton}</span>
+                            </Button>
+                        )}
+                    </div>
+                    <div className="flex items-center gap-1">
+                        {showHomeButton && (
+                            <Button variant="ghost" size="sm" className="gap-1.5" asChild>
+                                <Link href={homeHref}>
+                                    <Home className="h-4 w-4" />
+                                    <span>{dict.common.home}</span>
+                                </Link>
+                            </Button>
+                        )}
+                        <Button variant="ghost" size="sm" asChild>
+                            <a href="https://github.com/lxw15337674/galaxy-downloader" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                                <Github className="h-4 w-4" />
+                                <span>GitHub</span>
+                            </a>
                         </Button>
-                    )}
-                    {showAudioTool && onAudioToolClick && (
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            className="flex items-center gap-1"
-                            onClick={onAudioToolClick}
-                        >
-                            <Music className="h-4 w-4" />
-                            <span>{dict.audioTool.triggerButton}</span>
-                        </Button>
-                    )}
-                </div>
-                <div className="flex items-center gap-1">
-                    {showHomeButton && (
-                        <Button variant="ghost" size="sm" className="gap-1.5" asChild>
-                            <Link href={homeHref}>
-                                <Home className="h-4 w-4" />
-                                <span>{dict.common.home}</span>
-                            </Link>
-                        </Button>
-                    )}
-                    <Button variant="ghost" size="sm" asChild>
-                        <a href="https://github.com/lxw15337674/galaxy-downloader" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                            <Github className="h-4 w-4" />
-                            <span>GitHub</span>
-                        </a>
-                    </Button>
-                    <DeferredFeedbackDialog />
-                    <DeferredChangelogDialog />
-                    <ThemeSwitcher />
-                    <DeferredLanguageSwitcher />
+                        <DeferredFeedbackDialog />
+                        <DeferredChangelogDialog />
+                        <ThemeSwitcher />
+                        <DeferredLanguageSwitcher />
+                    </div>
                 </div>
             </div>
         </div>

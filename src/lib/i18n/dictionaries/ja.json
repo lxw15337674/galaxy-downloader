@@ -10,7 +10,7 @@
         "pageDescription": "リンクを貼り付けると内容を自動判別し、動画・音声・純音楽・画像投稿をすばやくダウンロードできます。",
         "placeholder": "リンクまたは共有トークンをここに貼り付けてください...",
         "newBadge": "新機能: Douyin 画像ノート対応",
-        "exampleLabel": "例:",
+        "exampleLabel": "例を貼り付け",
         "exampleUrl": "https://www.bilibili.com/video/BV1Wv3ez2Ex8/"
     },
     "page": {

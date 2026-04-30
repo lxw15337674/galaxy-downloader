@@ -366,14 +366,12 @@ export function UnifiedDownloader({
                                     <h1 className="text-2xl text-center font-semibold tracking-tight">
                                         {dict.unified.pageTitle}
                                     </h1>
-                                    <p className="text-xs text-foreground/70 text-center flex items-center justify-center gap-1.5 flex-wrap">
+                                    <p className="text-xs text-foreground/70 text-center flex items-center justify-center gap-2 flex-wrap">
                                         {dict.unified.pageDescription}
-                                    </p>
-                                    {dict.unified.exampleUrl && (
-                                        <div className="mx-auto flex max-w-full items-center justify-center">
+                                        {dict.unified.exampleUrl && (
                                             <button
                                                 type="button"
-                                                className="inline-flex max-w-full items-center gap-1 rounded-full border border-border/70 bg-muted/40 px-3 py-1 text-xs text-foreground/65 transition-colors hover:border-primary/35 hover:bg-muted/70 hover:text-foreground"
+                                                className="inline-flex max-w-full items-center gap-1 rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-medium text-primary transition-colors hover:border-primary/50 hover:bg-primary/15"
                                                 onClick={() => {
                                                     setUrl(dict.unified.exampleUrl!);
                                                     toast.success(dict.toast.linkFilled);
@@ -387,14 +385,13 @@ export function UnifiedDownloader({
                                                     });
                                                 }}
                                             >
-                                                <Link2 className="h-3.5 w-3.5 shrink-0 text-foreground/45" />
-                                                <span className="shrink-0 text-foreground/45">{dict.unified.exampleLabel}</span>
-                                                <span className="truncate text-left">{dict.unified.exampleUrl}</span>
+                                                <Link2 className="h-3.5 w-3.5 shrink-0" />
+                                                <span>{dict.unified.exampleLabel}</span>
                                             </button>
-                                        </div>
-                                    )}
+                                        )}
+                                    </p>
                                     {heroMeta}
-                                    <div className="rounded-md border border-amber-500/35 bg-amber-500/10 px-3 py-2 text-xs text-foreground/85 break-words">
+                                    <div className="rounded-md border border-amber-500/35 bg-amber-500/10 px-3 py-2 text-center text-xs text-foreground/85 break-words">
                                         {dict.page.copyrightBilibiliRestriction}
                                     </div>
                                 </CardHeader>

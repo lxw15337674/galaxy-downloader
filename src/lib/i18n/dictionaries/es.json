@@ -10,7 +10,7 @@
         "pageDescription": "Pega un enlace para detectar automáticamente el contenido y descargar video, audio, música o imágenes.",
         "placeholder": "Pega aquí el enlace o código compartido...",
         "newBadge": "Nuevo: notas de imagen de Douyin",
-        "exampleLabel": "Ejemplo:",
+        "exampleLabel": "Pegar ejemplo",
         "exampleUrl": "https://www.bilibili.com/video/BV1Wv3ez2Ex8/"
     },
     "page": {

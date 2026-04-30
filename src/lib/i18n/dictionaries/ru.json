@@ -10,7 +10,7 @@
         "pageDescription": "Вставьте ссылку, и сервис автоматически определит контент для загрузки видео, аудио, музыки или изображений.",
         "placeholder": "Вставьте сюда ссылку или код из шеринга...",
         "newBadge": "Новое: примечания к изображениям Douyin",
-        "exampleLabel": "Пример:",
+        "exampleLabel": "Вставить пример",
         "exampleUrl": "https://www.bilibili.com/video/BV1Wv3ez2Ex8/"
     },
     "page": {

@@ -166,7 +166,7 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
 
     useEffect(() => {
         setActiveBiliList('pages');
-    }, [result?.url, result?.currentPage]);
+    }, [result?.url, result?.currentPage, result?.currentItemId]);
 
     if (!result) return null;
 
@@ -311,8 +311,9 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
                                         />
                                     ) : showSeasonList ? (
                                         <EmbeddedVideoList
-                                            key={`videos-${result.url ?? ''}-${result.videos?.length ?? 0}`}
+                                            key={`videos-${result.url ?? ''}-${result.currentItemId ?? ''}-${result.videos?.length ?? 0}`}
                                             videos={result.videos!}
+                                            currentItemId={result.currentItemId}
                                         />
                                     ) : null}
                                 </div>
@@ -588,7 +589,7 @@ function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; currentPage?
     );
 }
 
-function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
+function EmbeddedVideoList({ videos, currentItemId }: { videos: EmbeddedVideoInfo[]; currentItemId?: string }) {
     const dict = useDictionary();
     const isMobile = useIsMobileViewport();
     const [loadingKeys, setLoadingKeys] = useState<Set<string>>(new Set());
@@ -654,11 +655,16 @@ function EmbeddedVideoList({ videos }: { videos: EmbeddedVideoInfo[] }) {
                             || replaceTemplate(dict.result.articleVideoUntitled, '{index}', String(index + 1));
                         const videoKey = `${video.id || index}-video`;
                         const audioKey = `${video.id || index}-audio`;
+                        const isCurrentItem = Boolean(currentItemId) && video.id === currentItemId;
 
                         return (
                             <div
                                 key={video.id || index}
-                                className="flex w-full max-w-full flex-col gap-2 overflow-hidden p-2 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-2 md:p-3 rounded-lg border border-border hover:bg-muted/50"
+                                className={`flex w-full max-w-full flex-col gap-2 overflow-hidden p-2 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-2 md:p-3 rounded-lg border ${
+                                    isCurrentItem
+                                        ? 'border-primary bg-primary/5'
+                                        : 'border-border hover:bg-muted/50'
+                                }`}
                             >
                                 <div className="flex w-full items-start gap-2 min-w-0 overflow-hidden">
                                     <span className="text-xs font-medium text-foreground/70 shrink-0">

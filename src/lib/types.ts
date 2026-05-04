@@ -91,6 +91,7 @@ export interface UnifiedParseResult {
         // 多P视频相关字段
         isMultiPart?: boolean;
         currentPage?: number;
+        currentItemId?: string;
         pages?: PageInfo[];
         // 小红书相关字段
         noteType?: 'video' | 'image' | 'audio';

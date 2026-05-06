@@ -69,7 +69,7 @@
     "vinext": "^0.0.47",
     "vite": "^8.0.10",
     "vitest": "^3.2.4",
-    "wrangler": "4.82.2"
+    "wrangler": "4.88.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

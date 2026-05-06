@@ -1,7 +1,3 @@
-import { NextRequest } from "next/server"
+import { makeUpstreamApiProxy } from "@/lib/upstream-api-route"
 
-import { proxyUpstreamApi } from "@/lib/upstream-api-proxy"
-
-export function POST(request: NextRequest): Promise<Response> {
-    return proxyUpstreamApi(request, "/api/feedback")
-}
+export const POST = makeUpstreamApiProxy("/api/feedback")

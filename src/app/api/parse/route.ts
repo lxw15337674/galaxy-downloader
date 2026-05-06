@@ -1,10 +1,6 @@
-import { NextRequest } from "next/server"
+import { makeUpstreamApiProxy } from "@/lib/upstream-api-route"
 
-import { proxyUpstreamApi } from "@/lib/upstream-api-proxy"
-
-function proxyParse(request: NextRequest): Promise<Response> {
-    return proxyUpstreamApi(request, "/api/parse")
-}
+const proxyParse = makeUpstreamApiProxy("/api/parse")
 
 export const GET = proxyParse
 export const POST = proxyParse

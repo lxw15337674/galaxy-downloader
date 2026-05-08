@@ -73,12 +73,17 @@ export function ThemeSwitcher({ compact = false, fullWidth = false }: ThemeSwitc
     const locale = useAppLocale()
     const labels = THEME_LABELS[locale]
     const [isOpen, setIsOpen] = useState(false)
+    const [mounted, setMounted] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
     const triggerRef = useRef<HTMLButtonElement>(null)
     const dropdownRef = useRef<HTMLDivElement>(null)
     const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition | null>(null)
     const { theme, setTheme } = useTheme()
-    const currentTheme = (theme ?? 'system') as ThemeOption
+    const currentTheme = (mounted ? theme : 'system') as ThemeOption
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     const updateDropdownPosition = useCallback(() => {
         const trigger = triggerRef.current

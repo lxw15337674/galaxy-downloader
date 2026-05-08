@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { Github, History, Home, Music } from 'lucide-react'
+import Image from 'next/image'
+import { History, Home, Music } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { DeferredLanguageSwitcher } from '@/components/deferred-language-switcher'
 import { ThemeSwitcher } from '@/components/theme-switcher'
@@ -112,7 +113,14 @@ export function AppTopBar({
                         )}
                         <Button variant="ghost" size="sm" asChild>
                             <a href="https://github.com/lxw15337674/galaxy-downloader" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                                <Github className="h-4 w-4" />
+                                <Image
+                                    src="/platform-icons/github.svg"
+                                    alt=""
+                                    width={16}
+                                    height={16}
+                                    aria-hidden="true"
+                                    className="dark:invert"
+                                />
                                 <span>GitHub</span>
                             </a>
                         </Button>

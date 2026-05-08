@@ -3,6 +3,7 @@
 import type { ReactNode, RefObject } from 'react';
 import dynamic from 'next/dynamic';
 import type { AudioExtractTask } from '@/components/audio-tool/types';
+import type { MediaPreviewRequest } from '@/components/downloader/media-preview';
 import type { UnifiedParseResult } from '@/lib/types';
 import { ResultCard } from '@/components/downloader/ResultCard';
 import type { DownloadRecord } from './download-history';
@@ -16,6 +17,8 @@ interface UnifiedDownloaderLowerSectionsProps {
     parseResult: UnifiedParseResult['data'] | null;
     onCloseParseResult: () => void;
     onOpenExtractAudio: (task: AudioExtractTask) => void;
+    onRequestPreview: (request: MediaPreviewRequest) => void;
+    activePreview?: MediaPreviewRequest | null;
     mobileAd?: ReactNode;
     mobileGuides?: ReactNode;
     downloadHistory: DownloadRecord[];
@@ -29,6 +32,8 @@ export function UnifiedDownloaderLowerSections({
     parseResult,
     onCloseParseResult,
     onOpenExtractAudio,
+    onRequestPreview,
+    activePreview,
     mobileAd,
     mobileGuides,
     downloadHistory,
@@ -46,6 +51,8 @@ export function UnifiedDownloaderLowerSections({
                     result={parseResult}
                     onClose={onCloseParseResult}
                     onOpenExtractAudio={onOpenExtractAudio}
+                    onRequestPreview={onRequestPreview}
+                    activePreview={activePreview}
                 />
             )}
 

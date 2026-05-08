@@ -1,7 +1,8 @@
 'use client'
 
-import { useCallback, useState } from 'react'
-import { Github, Menu } from 'lucide-react'
+import { useState } from 'react'
+import Image from 'next/image'
+import { Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
     Dialog,
@@ -23,10 +24,6 @@ export function MobileNavMenu({
 }: MobileNavMenuProps) {
     const dict = useDictionary()
     const [open, setOpen] = useState(defaultOpen)
-    const [dialogContentEl, setDialogContentEl] = useState<HTMLDivElement | null>(null)
-    const handleDialogContentRef = useCallback((node: HTMLDivElement | null) => {
-        setDialogContentEl(node)
-    }, [])
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -36,7 +33,6 @@ export function MobileNavMenu({
                 </Button>
             </DialogTrigger>
             <DialogContent
-                ref={handleDialogContentRef}
                 showCloseButton={false}
                 className="top-auto bottom-4 left-1/2 w-[calc(100%-2rem)] max-w-sm translate-x-[-50%] translate-y-0 rounded-xl p-4"
             >
@@ -51,13 +47,20 @@ export function MobileNavMenu({
                             rel="noopener noreferrer"
                             onClick={() => setOpen(false)}
                         >
-                            <Github className="h-4 w-4" />
+                            <Image
+                                src="/platform-icons/github.svg"
+                                alt=""
+                                width={16}
+                                height={16}
+                                aria-hidden="true"
+                                className="dark:invert"
+                            />
                             <span>GitHub</span>
                         </a>
                     </Button>
                     <ChangelogDialog triggerClassName="w-full justify-start" />
                     <div className="rounded-md border border-border p-1">
-                        <ThemeSwitcher fullWidth portalContainer={dialogContentEl} />
+                        <ThemeSwitcher fullWidth />
                     </div>
                 </div>
             </DialogContent>

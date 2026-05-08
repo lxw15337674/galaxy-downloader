@@ -32,7 +32,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "jszip": "^3.10.1",
-    "lucide-react": "^0.577.0",
+    "lucide-react": "^1.14.0",
     "negotiator": "^1.0.0",
     "next": "^16.2.4",
     "next-intl": "^4.11.0",

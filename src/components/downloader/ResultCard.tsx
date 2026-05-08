@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Share2, X } from 'lucide-react';
 
 import type { AudioExtractTask } from '@/components/audio-tool/types';
+import type { MediaPreviewRequest } from '@/components/downloader/media-preview';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useDictionary } from '@/i18n/client';
@@ -11,36 +12,134 @@ import { formatDuration } from '@/lib/utils';
 
 import { EmbeddedVideoList } from './EmbeddedVideoList';
 import { ImageNoteGrid } from './ImageNoteGrid';
+import {
+    buildMediaPreviewUrl,
+    buildEmbeddedVideoPreview,
+    buildPagePreview,
+    buildPrimaryResultPreview,
+    canSharePlayResult,
+} from './media-preview';
 import { MultiPartList } from './MultiPartList';
 import { SinglePartButtons } from './SinglePartButtons';
 import {
     resolveResultDisplayImages,
-    shouldShowVideoDownloadButton,
 } from './result-card-visibility';
 import { replaceTemplate, resolveCoverSrc } from './result-card-utils';
+
+type ResultData = NonNullable<UnifiedParseResult['data']>;
+type ActiveCollectionSource = 'result' | 'pages' | 'season';
+
+function resolveSelectedPage(result: ResultData, selectedPage?: number) {
+    if (!result.pages?.length) {
+        return undefined;
+    }
+
+    return result.pages.find((page) => page.page === selectedPage)
+        ?? result.pages.find((page) => page.page === result.currentPage)
+        ?? result.pages[0];
+}
+
+function resolveSelectedVideo(result: ResultData, selectedItemId?: string) {
+    if (!result.videos?.length) {
+        return undefined;
+    }
+
+    return result.videos.find((video) => video.id === selectedItemId)
+        ?? result.videos.find((video) => video.id === result.currentItemId)
+        ?? result.videos[0];
+}
+
+function buildPageScopedResult(result: ResultData, page: NonNullable<ResultData['pages']>[number]): ResultData {
+    return {
+        ...result,
+        title: page.part || result.title,
+        duration: page.duration ?? result.duration,
+        downloadVideoUrl: page.downloadVideoUrl ?? null,
+        downloadAudioUrl: page.downloadAudioUrl ?? null,
+        originDownloadVideoUrl: page.downloadVideoUrl ?? result.originDownloadVideoUrl ?? null,
+        originDownloadAudioUrl: page.downloadAudioUrl ?? result.originDownloadAudioUrl ?? null,
+        mediaActions: undefined,
+        currentPage: page.page,
+    };
+}
+
+function buildVideoScopedResult(result: ResultData, video: NonNullable<ResultData['videos']>[number]): ResultData {
+    return {
+        ...result,
+        title: video.title || result.title,
+        cover: video.cover ?? result.cover,
+        duration: video.duration ?? result.duration,
+        downloadVideoUrl: video.downloadVideoUrl ?? video.originDownloadVideoUrl ?? null,
+        downloadAudioUrl: video.downloadAudioUrl ?? video.originDownloadAudioUrl ?? null,
+        originDownloadVideoUrl: video.originDownloadVideoUrl ?? video.downloadVideoUrl ?? null,
+        originDownloadAudioUrl: video.originDownloadAudioUrl ?? video.downloadAudioUrl ?? null,
+        mediaActions: video.mediaActions,
+        currentItemId: video.id,
+    };
+}
+
+function buildSelectedPreview(
+    sourceUrl: string,
+    result: ResultData,
+    source: ActiveCollectionSource,
+    page: NonNullable<ResultData['pages']>[number] | undefined,
+    video: NonNullable<ResultData['videos']>[number] | undefined,
+    options: {
+        autoplay?: boolean;
+        preferAudio?: boolean;
+    } = {}
+) {
+    if (source === 'pages' && page) {
+        return buildPagePreview(sourceUrl, page, options);
+    }
+
+    if (source === 'season' && video) {
+        return buildEmbeddedVideoPreview(sourceUrl, video, options);
+    }
+
+    return buildPrimaryResultPreview(result, options);
+}
 
 interface ResultCardProps {
     result: UnifiedParseResult['data'] | null | undefined;
     onClose: () => void;
     onOpenExtractAudio: (task: AudioExtractTask) => void;
+    onRequestPreview: (request: MediaPreviewRequest) => void;
+    activePreview?: MediaPreviewRequest | null;
 }
 
-export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardProps) {
+export function ResultCard({ 
+    result, 
+    onClose, 
+    onOpenExtractAudio, 
+    onRequestPreview,
+    activePreview,
+}: ResultCardProps) {
     const dict = useDictionary();
     const activeListKey = `${result?.url ?? ''}-${result?.currentPage ?? ''}-${result?.currentItemId ?? ''}`;
+    const defaultBiliList = result?.currentItemId ? 'season' : 'pages';
     const [activeBiliListState, setActiveBiliListState] = useState<{
         key: string;
         value: 'pages' | 'season';
     }>({
         key: activeListKey,
-        value: 'pages',
+        value: defaultBiliList,
+    });
+    const [selectionState, setSelectionState] = useState<{
+        key: string;
+        currentPage?: number;
+        currentItemId?: string;
+    }>({
+        key: activeListKey,
+        currentPage: result?.currentPage,
+        currentItemId: result?.currentItemId,
     });
 
     if (!result) return null;
 
     const activeBiliList = activeBiliListState.key === activeListKey
         ? activeBiliListState.value
-        : 'pages';
+        : defaultBiliList;
     const setActiveBiliList = (value: 'pages' | 'season') => {
         setActiveBiliListState({
             key: activeListKey,
@@ -66,20 +165,110 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
     const showSeasonList = hasEmbeddedVideos && (!isMultiPart || (hasBilibiliSourceSwitch && activeBiliList === 'season'));
     const hasSupplementalImages = !isImageNote && displayImages.length > 0;
     const coverUrl = typeof result.cover === 'string' ? result.cover.trim() : '';
-    const shouldShowCover = !isImageNote && coverUrl.length > 0;
-    const coverSrc = shouldShowCover ? resolveCoverSrc(coverUrl) : '';
     const shareSourceUrl = typeof result.url === 'string' ? result.url.trim() : '';
-    const hasPlayableCandidate = [
-        result.originDownloadVideoUrl,
-        result.downloadVideoUrl,
-        ...(result.pages ?? []).map((page) => page.downloadVideoUrl),
-        ...(result.videos ?? []).flatMap((video) => [video.originDownloadVideoUrl, video.downloadVideoUrl]),
-    ].some((url) => shouldShowVideoDownloadButton(url));
-    const canSharePlayLink = shareSourceUrl.length > 0 && (
-        result.mediaActions?.video === 'direct-download'
-        || result.mediaActions?.video === 'merge-then-download'
-        || hasPlayableCandidate
+    const canSharePlayLink = shareSourceUrl.length > 0 && canSharePlayResult(result);
+    const selectedPageNumber = selectionState.key === activeListKey
+        ? selectionState.currentPage
+        : result.currentPage;
+    const selectedItemId = selectionState.key === activeListKey
+        ? selectionState.currentItemId
+        : result.currentItemId;
+    const currentPage = resolveSelectedPage(result, selectedPageNumber);
+    const currentVideo = resolveSelectedVideo(result, selectedItemId);
+    const activeCollectionSource: ActiveCollectionSource = showSeasonList
+        ? 'season'
+        : showMultiPartList
+            ? 'pages'
+            : hasEmbeddedVideos
+                ? 'season'
+                : isMultiPart
+                    ? 'pages'
+                    : 'result';
+    const effectiveResult = activeCollectionSource === 'pages' && currentPage
+        ? buildPageScopedResult(result, currentPage)
+        : activeCollectionSource === 'season' && currentVideo
+            ? buildVideoScopedResult(result, currentVideo)
+            : result;
+    const previewPreference = activePreview?.mediaType === 'audio';
+    const primaryPreview = buildSelectedPreview(
+        shareSourceUrl,
+        effectiveResult,
+        activeCollectionSource,
+        currentPage,
+        currentVideo,
+        {
+            autoplay: false,
+            preferAudio: previewPreference,
+        }
     );
+    const selectedCoverUrl = activeCollectionSource === 'season' && currentVideo?.cover
+        ? currentVideo.cover.trim()
+        : coverUrl;
+    const coverSrc = selectedCoverUrl.length > 0 ? resolveCoverSrc(selectedCoverUrl) : '';
+    const playerPreview = primaryPreview ? {
+        ...primaryPreview,
+        autoplay: activePreview?.autoplay ?? primaryPreview.autoplay,
+        origin: activePreview?.origin ?? primaryPreview.origin,
+    } : null;
+    const playerUrl = playerPreview ? buildMediaPreviewUrl(playerPreview) : null;
+    const previewItem = activeCollectionSource === 'pages'
+        ? (currentPage ? String(currentPage.page) : undefined)
+        : activeCollectionSource === 'season'
+            ? currentVideo?.id
+            : undefined;
+
+    useEffect(() => {
+        if (!activePreview || !primaryPreview) {
+            return;
+        }
+
+        if (activePreview.sourceUrl !== primaryPreview.sourceUrl) {
+            return;
+        }
+
+        if (
+            activePreview.mediaType === primaryPreview.mediaType
+            && activePreview.item === primaryPreview.item
+            && activePreview.sourceUrl === primaryPreview.sourceUrl
+        ) {
+            return;
+        }
+
+        onRequestPreview({
+            ...primaryPreview,
+            autoplay: activePreview.autoplay ?? primaryPreview.autoplay,
+        });
+    }, [
+        activePreview,
+        onRequestPreview,
+        primaryPreview,
+    ]);
+
+    const handleSelectPage = (pageNumber: number) => {
+        const page = result.pages?.find((item) => item.page === pageNumber);
+        if (!page) {
+            return;
+        }
+
+        setSelectionState((previous) => ({
+            key: activeListKey,
+            currentPage: pageNumber,
+            currentItemId: previous.key === activeListKey ? previous.currentItemId : result.currentItemId,
+        }));
+    };
+
+    const handleSelectVideo = (itemId: string) => {
+        const video = result.videos?.find((item) => item.id === itemId);
+        if (!video) {
+            return;
+        }
+
+        setSelectionState((previous) => ({
+            key: activeListKey,
+            currentPage: previous.key === activeListKey ? previous.currentPage : result.currentPage,
+            currentItemId: itemId,
+        }));
+    };
 
     const handleCopySharePlayLink = async () => {
         if (!canSharePlayLink) {
@@ -107,7 +296,10 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
         }
     };
 
-    const displayTitle = result.title;
+    const displayTitle = effectiveResult.title && effectiveResult.title !== result.title
+        ? `${result.title} · ${effectiveResult.title}`
+        : effectiveResult.title || result.title;
+    const displayDuration = effectiveResult.duration ?? result.duration;
 
     return (
         <Card>
@@ -137,20 +329,45 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
                     title={displayTitle}
                 >
                     {displayTitle}
-                    {result.duration != null && (
-                        <span className="ml-2 text-xs text-foreground/70">({formatDuration(result.duration)})</span>
+                    {displayDuration != null && (
+                        <span className="ml-2 text-xs text-foreground/70">({formatDuration(displayDuration)})</span>
                     )}
                 </p>
             </CardHeader>
             <CardContent className="px-3 pb-3 pt-0">
                 <div className="space-y-2">
-                    {shouldShowCover && (
+                    {playerPreview && playerUrl ? (
+                        <div className="overflow-hidden rounded-lg bg-black">
+                            {playerPreview.mediaType === 'audio' ? (
+                                <audio
+                                    key={playerUrl}
+                                    src={playerUrl}
+                                    controls
+                                    autoPlay={playerPreview.autoplay}
+                                    preload="metadata"
+                                    className="w-full"
+                                />
+                            ) : (
+                                <video
+                                    key={playerUrl}
+                                    src={playerUrl}
+                                    controls
+                                    autoPlay={playerPreview.autoplay}
+                                    muted={playerPreview.origin === 'share' && playerPreview.autoplay}
+                                    playsInline
+                                    preload="metadata"
+                                    poster={coverSrc || undefined}
+                                    className="w-full min-h-[240px] max-h-[50vh] bg-black"
+                                />
+                            )}
+                        </div>
+                    ) : !isImageNote && coverSrc ? (
                         <ImageNoteGrid
                             images={[coverSrc]}
                             title={displayTitle}
                             singleImageMode
                         />
-                    )}
+                    ) : null}
                     {isImageNote ? (
                         <ImageNoteGrid
                             images={displayImages}
@@ -158,7 +375,12 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
                         />
                     ) : (
                         <>
-                            <SinglePartButtons result={result} onOpenExtractAudio={onOpenExtractAudio} />
+                            <SinglePartButtons
+                                result={effectiveResult}
+                                previewItem={previewItem}
+                                onOpenExtractAudio={onOpenExtractAudio}
+                                onRequestPreview={onRequestPreview}
+                            />
                             {(showMultiPartList || showSeasonList || hasBilibiliSourceSwitch) && (
                                 <div className="space-y-2">
                                     {hasBilibiliSourceSwitch && (
@@ -183,15 +405,19 @@ export function ResultCard({ result, onClose, onOpenExtractAudio }: ResultCardPr
                                     )}
                                     {showMultiPartList ? (
                                         <MultiPartList
-                                            key={`pages-${result.url ?? ''}-${result.currentPage ?? ''}-${result.pages?.length ?? 0}`}
+                                            key={`pages-${result.url ?? ''}-${selectedPageNumber ?? ''}-${result.pages?.length ?? 0}`}
                                             pages={result.pages!}
-                                            currentPage={result.currentPage}
+                                            currentPage={currentPage?.page}
+                                            onSelectPage={handleSelectPage}
                                         />
                                     ) : showSeasonList ? (
                                         <EmbeddedVideoList
                                             key={`videos-${result.url ?? ''}-${result.currentItemId ?? ''}-${result.videos?.length ?? 0}`}
                                             videos={result.videos!}
-                                            currentItemId={result.currentItemId}
+                                            currentItemId={currentVideo?.id}
+                                            autoScrollKey={activeListKey}
+                                            autoScrollItemId={result.currentItemId}
+                                            onSelectItem={handleSelectVideo}
                                         />
                                     ) : null}
                                 </div>

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Play } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,21 +7,42 @@ import { useDictionary } from '@/i18n/client';
 import type { EmbeddedVideoInfo } from '@/lib/types';
 import { formatDuration } from '@/lib/utils';
 
+import { MediaActionIconButton } from './MediaActionIconButton';
 import { shouldShowVideoDownloadButton } from './result-card-visibility';
 import { LOAD_MORE_BATCH, useChunkedMobileList } from './use-chunked-mobile-list';
 import { replaceTemplate } from './result-card-utils';
 import { useTemporaryDownloadKeys } from './use-temporary-download-keys';
+import { VideoDownloadIcon, AudioDownloadIcon } from './CustomIcons';
 
 const DEFAULT_VISIBLE_PARTS = 100;
 
-export function EmbeddedVideoList({ videos, currentItemId }: { videos: EmbeddedVideoInfo[]; currentItemId?: string }) {
+export function EmbeddedVideoList({
+    videos,
+    currentItemId,
+    autoScrollKey,
+    autoScrollItemId,
+    onSelectItem,
+}: {
+    videos: EmbeddedVideoInfo[];
+    currentItemId?: string;
+    autoScrollKey?: string;
+    autoScrollItemId?: string;
+    onSelectItem?: (itemId: string) => void;
+}) {
     const dict = useDictionary();
     const { loadingKeys, triggerDownload } = useTemporaryDownloadKeys();
     const [searchQuery, setSearchQuery] = useState('');
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const itemRefs = useRef(new Map<string, HTMLDivElement>());
+    const lastAutoScrolledKeyRef = useRef<string | null>(null);
     const normalizedQuery = searchQuery.trim().toLowerCase();
     const filteredVideos = normalizedQuery
         ? videos.filter((video) => (video.title || '').toLowerCase().includes(normalizedQuery))
         : videos;
+    const autoScrollIndex = useMemo(
+        () => filteredVideos.findIndex((video) => video.id === autoScrollItemId),
+        [autoScrollItemId, filteredVideos]
+    );
     const {
         canCollapseMobile,
         collapse,
@@ -31,7 +52,37 @@ export function EmbeddedVideoList({ videos, currentItemId }: { videos: EmbeddedV
         remainingCount,
         setMobileVisibleCount,
         visibleItems: visibleVideos,
-    } = useChunkedMobileList(filteredVideos, DEFAULT_VISIBLE_PARTS);
+    } = useChunkedMobileList(
+        filteredVideos,
+        autoScrollIndex >= 0 ? Math.max(DEFAULT_VISIBLE_PARTS, autoScrollIndex + 1) : DEFAULT_VISIBLE_PARTS
+    );
+
+    useEffect(() => {
+        if (autoScrollIndex < 0) {
+            return;
+        }
+
+        setMobileVisibleCount((previous) => Math.max(previous, autoScrollIndex + 1));
+    }, [autoScrollIndex, setMobileVisibleCount]);
+
+    useEffect(() => {
+        if (!autoScrollKey || !autoScrollItemId || lastAutoScrolledKeyRef.current === autoScrollKey) {
+            return;
+        }
+
+        const element = itemRefs.current.get(autoScrollItemId);
+        if (!element || !containerRef.current) {
+            return;
+        }
+
+        window.requestAnimationFrame(() => {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+            });
+            lastAutoScrolledKeyRef.current = autoScrollKey;
+        });
+    }, [autoScrollItemId, autoScrollKey, visibleVideos.length]);
 
     return (
         <div className="space-y-2">
@@ -55,7 +106,10 @@ export function EmbeddedVideoList({ videos, currentItemId }: { videos: EmbeddedV
                     />
                 </div>
             </div>
-            <div className="max-h-[min(56vh,26rem)] md:max-h-[min(60vh,32rem)] overflow-y-auto overscroll-contain pr-1">
+            <div
+                ref={containerRef}
+                className="max-h-[min(56vh,26rem)] md:max-h-[min(60vh,32rem)] overflow-y-auto overscroll-contain pr-1"
+            >
                 <div className="space-y-2 pr-2">
                     {filteredVideos.length === 0 && (
                         <p className="py-6 text-center text-sm text-muted-foreground">
@@ -70,11 +124,28 @@ export function EmbeddedVideoList({ videos, currentItemId }: { videos: EmbeddedV
                         const videoKey = `${video.id || index}-video`;
                         const audioKey = `${video.id || index}-audio`;
                         const isCurrentItem = Boolean(currentItemId) && video.id === currentItemId;
+                        const actionCount = 1 + Number(shouldShowVideoDownloadButton(videoDownloadUrl)) + Number(Boolean(audioDownloadUrl));
+                        const actionGridClass = actionCount >= 3
+                            ? 'grid-cols-3'
+                            : actionCount === 2
+                                ? 'grid-cols-2'
+                                : 'grid-cols-1';
 
                         return (
                             <div
                                 key={video.id || index}
-                                className={`flex w-full max-w-full flex-col gap-2 overflow-hidden p-2 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-2 md:p-3 rounded-lg border ${
+                                ref={(element) => {
+                                    if (!video.id) {
+                                        return;
+                                    }
+
+                                    if (element) {
+                                        itemRefs.current.set(video.id, element);
+                                    } else {
+                                        itemRefs.current.delete(video.id);
+                                    }
+                                }}
+                                className={`flex w-full max-w-full flex-col gap-2 overflow-hidden rounded-lg border p-2 text-left transition-colors md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-2 md:p-3 ${
                                     isCurrentItem
                                         ? 'border-primary bg-primary/5'
                                         : 'border-border hover:bg-muted/50'
@@ -95,30 +166,38 @@ export function EmbeddedVideoList({ videos, currentItemId }: { videos: EmbeddedV
                                         )}
                                     </div>
                                 </div>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:flex md:gap-1 md:shrink-0">
+                                <div
+                                    className={`grid w-full gap-2 ${actionGridClass} md:flex md:w-auto md:justify-end md:gap-1 md:shrink-0`}
+                                >
+                                    <MediaActionIconButton
+                                        label={`${dict.result.playVideo}: ${displayTitle}`}
+                                        icon={Play}
+                                        variant="secondary"
+                                        disabled={isCurrentItem}
+                                        className="w-full md:w-8"
+                                        onClick={() => onSelectItem?.(video.id)}
+                                    />
                                     {shouldShowVideoDownloadButton(videoDownloadUrl) && (
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            className="h-8 text-xs"
+                                        <MediaActionIconButton
+                                            label={dict.result.downloadVideo}
+                                            icon={VideoDownloadIcon}
+                                            variant="default"
                                             disabled={loadingKeys.has(videoKey)}
+                                            loading={loadingKeys.has(videoKey)}
+                                            className="w-full md:w-8"
                                             onClick={() => triggerDownload(videoDownloadUrl!, videoKey)}
-                                        >
-                                            {loadingKeys.has(videoKey) && <Loader2 className="h-3 w-3 animate-spin mr-1" />}
-                                            {dict.result.downloadVideo}
-                                        </Button>
+                                        />
                                     )}
                                     {audioDownloadUrl && (
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            className="h-8 text-xs"
+                                        <MediaActionIconButton
+                                            label={dict.result.downloadAudio}
+                                            icon={AudioDownloadIcon}
+                                            variant="default"
                                             disabled={loadingKeys.has(audioKey)}
+                                            loading={loadingKeys.has(audioKey)}
+                                            className="w-full md:w-8"
                                             onClick={() => triggerDownload(audioDownloadUrl, audioKey)}
-                                        >
-                                            {loadingKeys.has(audioKey) && <Loader2 className="h-3 w-3 animate-spin mr-1" />}
-                                            {dict.result.downloadAudio}
-                                        </Button>
+                                        />
                                     )}
                                 </div>
                             </div>

@@ -1,17 +1,25 @@
-import { Loader2 } from 'lucide-react';
-
 import { Button } from '@/components/ui/button';
 import { useDictionary } from '@/i18n/client';
 import type { PageInfo } from '@/lib/types';
 import { formatDuration } from '@/lib/utils';
 
+import { MediaActionIconButton } from './MediaActionIconButton';
 import { LOAD_MORE_BATCH, useChunkedMobileList } from './use-chunked-mobile-list';
 import { replaceTemplate } from './result-card-utils';
 import { useTemporaryDownloadKeys } from './use-temporary-download-keys';
+import { VideoDownloadIcon, AudioDownloadIcon } from './CustomIcons';
 
 const DEFAULT_VISIBLE_PARTS = 100;
 
-export function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; currentPage?: number }) {
+export function MultiPartList({
+    pages,
+    currentPage,
+    onSelectPage,
+}: {
+    pages: PageInfo[];
+    currentPage?: number;
+    onSelectPage?: (page: number) => void;
+}) {
     const dict = useDictionary();
     const { loadingKeys, triggerDownload } = useTemporaryDownloadKeys();
     const {
@@ -36,11 +44,20 @@ export function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; curre
                     {visiblePages.map((page) => (
                         <div
                             key={page.page}
-                            className={`flex w-full max-w-full flex-col gap-2 overflow-hidden p-2 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-2 md:p-3 rounded-lg border ${
+                            className={`flex w-full max-w-full flex-col gap-2 overflow-hidden rounded-lg border p-2 text-left transition-colors md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-2 md:p-3 ${
                                 page.page === currentPage
                                     ? 'border-primary bg-primary/5'
                                     : 'border-border hover:bg-muted/50'
                             }`}
+                            role="button"
+                            tabIndex={0}
+                            onClick={() => onSelectPage?.(page.page)}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter' || event.key === ' ') {
+                                    event.preventDefault();
+                                    onSelectPage?.(page.page);
+                                }
+                            }}
                         >
                             <div className="flex w-full items-start gap-2 min-w-0 overflow-hidden">
                                 <span className="text-xs font-medium text-foreground/70 shrink-0">
@@ -55,30 +72,29 @@ export function MultiPartList({ pages, currentPage }: { pages: PageInfo[]; curre
                                     </span>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:flex md:gap-1 md:shrink-0">
+                            <div
+                                className="flex flex-wrap gap-2 md:justify-end md:gap-1 md:shrink-0"
+                                onClick={(event) => event.stopPropagation()}
+                            >
                                 {page.downloadVideoUrl && (
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        className="h-8 text-xs"
+                                    <MediaActionIconButton
+                                        label={dict.result.downloadVideo}
+                                        icon={VideoDownloadIcon}
+                                        variant="default"
                                         disabled={loadingKeys.has(`${page.page}-video`)}
+                                        loading={loadingKeys.has(`${page.page}-video`)}
                                         onClick={() => triggerDownload(page.downloadVideoUrl!, `${page.page}-video`)}
-                                    >
-                                        {loadingKeys.has(`${page.page}-video`) && <Loader2 className="h-3 w-3 animate-spin mr-1" />}
-                                        {dict.result.downloadVideo}
-                                    </Button>
+                                    />
                                 )}
                                 {page.downloadAudioUrl && (
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        className="h-8 text-xs"
+                                    <MediaActionIconButton
+                                        label={dict.result.downloadAudio}
+                                        icon={AudioDownloadIcon}
+                                        variant="default"
                                         disabled={loadingKeys.has(`${page.page}-audio`)}
+                                        loading={loadingKeys.has(`${page.page}-audio`)}
                                         onClick={() => triggerDownload(page.downloadAudioUrl!, `${page.page}-audio`)}
-                                    >
-                                        {loadingKeys.has(`${page.page}-audio`) && <Loader2 className="h-3 w-3 animate-spin mr-1" />}
-                                        {dict.result.downloadAudio}
-                                    </Button>
+                                    />
                                 )}
                             </div>
                         </div>

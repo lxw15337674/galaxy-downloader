@@ -3,7 +3,6 @@ import "../globals.css";
 import { DeferredRuntimeServices } from "@/components/deferred-runtime-services"
 import { ThemeProvider } from "@/components/theme-provider";
 import { DeferredToaster } from "@/components/deferred-toaster"
-import { NextIntlClientProvider } from "next-intl";
 import { hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { AppI18nProvider } from "@/i18n/client";
@@ -142,20 +141,18 @@ export default async function RootLayout({
     return (
         <html lang={htmlLang} suppressHydrationWarning>
             <body className="antialiased">
-                <NextIntlClientProvider locale={locale} messages={dict}>
-                    <AppI18nProvider locale={locale} dictionary={dict}>
-                        <DeferredRuntimeServices />
-                        <ThemeProvider
-                            attribute="class"
-                            defaultTheme="dark"
-                            enableSystem={true}
-                            disableTransitionOnChange
-                        >
-                            {children}
-                            <DeferredToaster />
-                        </ThemeProvider>
-                    </AppI18nProvider>
-                </NextIntlClientProvider>
+                <AppI18nProvider locale={locale} dictionary={dict}>
+                    <DeferredRuntimeServices />
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="dark"
+                        enableSystem={true}
+                        disableTransitionOnChange
+                    >
+                        {children}
+                        <DeferredToaster />
+                    </ThemeProvider>
+                </AppI18nProvider>
             </body>
         </html>
     )

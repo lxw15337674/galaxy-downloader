@@ -1,24 +1,33 @@
 import { useState } from 'react';
-import { ExternalLink, Loader2 } from 'lucide-react';
+import { ExternalLink, MonitorPlay, Headphones } from 'lucide-react';
 
 import type { AudioExtractTask } from '@/components/audio-tool/types';
+import type { MediaPreviewRequest } from '@/components/downloader/media-preview';
 import { Button } from '@/components/ui/button';
 import { useDictionary } from '@/i18n/client';
 import type { UnifiedParseResult } from '@/lib/types';
 import { downloadFile } from '@/lib/utils';
 
+import { MediaActionIconButton } from './MediaActionIconButton';
+import { canPreviewResultAudio, canPreviewResultVideo } from './media-preview';
 import { getResultMediaActions } from './result-card-visibility';
+import { VideoDownloadIcon, AudioDownloadIcon } from './CustomIcons';
 
 export function SinglePartButtons({
     result,
+    previewItem,
     onOpenExtractAudio,
+    onRequestPreview,
 }: {
     result: NonNullable<UnifiedParseResult['data']>;
+    previewItem?: string;
     onOpenExtractAudio: (task: AudioExtractTask) => void;
+    onRequestPreview: (request: MediaPreviewRequest) => void;
 }) {
     const dict = useDictionary();
     const [videoLoading, setVideoLoading] = useState(false);
     const [audioLoading, setAudioLoading] = useState(false);
+    const previewSourceUrl = typeof result.url === 'string' ? result.url.trim() : '';
     const videoDownloadUrl = result.downloadVideoUrl || result.originDownloadVideoUrl;
     const audioDownloadUrl = result.downloadAudioUrl || result.originDownloadAudioUrl || null;
     const { videoAction, audioAction } = getResultMediaActions({
@@ -28,6 +37,8 @@ export function SinglePartButtons({
     });
     const showVideoDownload = videoAction !== 'hide';
     const showAudioDownload = audioAction !== 'hide';
+    const showVideoPreview = previewSourceUrl.length > 0 && canPreviewResultVideo(result);
+    const showAudioPreview = previewSourceUrl.length > 0 && canPreviewResultAudio(result);
     const showOriginVideoLink =
         typeof result.originDownloadVideoUrl === 'string'
         && result.originDownloadVideoUrl.length > 0
@@ -53,16 +64,61 @@ export function SinglePartButtons({
             mediaActions: result.mediaActions,
         });
     };
-    const actionCount = Number(showVideoDownload) + Number(showAudioDownload);
+    const previewTitle = result.title || result.desc || dict.result.title;
+    const actionCount = Number(showVideoPreview)
+        + Number(showVideoDownload)
+        + Number(showAudioPreview)
+        + Number(showAudioDownload);
+    const actionGridClass = actionCount >= 4
+        ? 'grid-cols-4'
+        : actionCount === 3
+            ? 'grid-cols-3'
+            : actionCount === 2
+                ? 'grid-cols-2'
+                : 'grid-cols-1';
+    const actionButtonClass = 'w-full min-w-0';
 
     return (
         <>
-            <div className={`grid gap-2 ${actionCount > 1 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'}`}>
+            <div className={`grid ${actionGridClass} gap-2`}>
+                {showVideoPreview && (
+                    <MediaActionIconButton
+                        label={dict.result.playVideo}
+                        icon={MonitorPlay}
+                        variant="secondary"
+                        className={actionButtonClass}
+                        onClick={() => onRequestPreview({
+                            mediaType: 'video',
+                            sourceUrl: previewSourceUrl,
+                            title: previewTitle,
+                            item: previewItem,
+                        })}
+                    />
+                )}
+                {showAudioPreview && (
+                    <MediaActionIconButton
+                        label={dict.result.playAudio}
+                        icon={Headphones}
+                        variant="secondary"
+                        className={actionButtonClass}
+                        onClick={() => onRequestPreview({
+                            mediaType: 'audio',
+                            sourceUrl: previewSourceUrl,
+                            title: previewTitle,
+                            item: previewItem,
+                        })}
+                    />
+                )}
                 {showVideoDownload && (
-                    <Button
-                        variant="outline"
-                        className="h-8 flex items-center justify-center gap-2 text-xs"
+                    <MediaActionIconButton
+                        label={videoAction === 'merge-then-download'
+                            ? dict.result.mergeDownloadVideo
+                            : dict.result.downloadVideo}
+                        icon={VideoDownloadIcon}
+                        variant="default"
+                        className={actionButtonClass}
                         disabled={videoLoading}
+                        loading={videoLoading}
                         onClick={() => {
                             if (videoAction === 'merge-then-download') {
                                 openResultTask('merge-video');
@@ -71,18 +127,18 @@ export function SinglePartButtons({
 
                             handleDownload(videoDownloadUrl!, setVideoLoading);
                         }}
-                    >
-                        {videoLoading && <Loader2 className="h-4 w-4 animate-spin" />}
-                        {videoAction === 'merge-then-download'
-                            ? dict.result.mergeDownloadVideo
-                            : dict.result.downloadVideo}
-                    </Button>
+                    />
                 )}
                 {showAudioDownload && (
-                    <Button
-                        variant="outline"
-                        className="h-8 flex items-center justify-center gap-2 text-xs"
+                    <MediaActionIconButton
+                        label={audioAction === 'direct-download'
+                            ? dict.result.downloadAudio
+                            : dict.extractAudio.button}
+                        icon={AudioDownloadIcon}
+                        variant="default"
+                        className={actionButtonClass}
                         disabled={audioLoading}
+                        loading={audioLoading && audioAction === 'direct-download'}
                         onClick={() => {
                             if (audioAction === 'extract-audio') {
                                 openResultTask('extract-audio');
@@ -91,14 +147,7 @@ export function SinglePartButtons({
 
                             handleDownload(audioDownloadUrl!, setAudioLoading);
                         }}
-                    >
-                        {audioLoading && audioAction === 'direct-download' && (
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                        )}
-                        {audioAction === 'direct-download'
-                            ? dict.result.downloadAudio
-                            : dict.extractAudio.button}
-                    </Button>
+                    />
                 )}
             </div>
             {videoAction === 'merge-then-download' && (

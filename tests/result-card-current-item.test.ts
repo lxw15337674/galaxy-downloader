@@ -16,6 +16,8 @@ vi.mock('@/i18n/client', () => ({
       collectionSearchPlaceholder: '搜索合集',
       collectionNoSearchResults: '无结果',
       articleVideoUntitled: '视频 {index}',
+      playVideo: '播放视频',
+      playAudio: '播放音频',
       downloadVideo: '下载视频',
       downloadAudio: '下载音频',
       mergeDownloadVideo: '合并下载视频',
@@ -35,6 +37,7 @@ vi.mock('@/i18n/client', () => ({
       downloadImage: '下载图片',
       imageAlt: '图片 {index}',
       imageIndexLabel: '图片 {index}',
+      previewPlayerTitle: '预览',
       loadFailed: '失败',
       loadMoreItems: '更多 {count}',
       collapseParts: '收起 {count}',
@@ -129,10 +132,15 @@ describe('ResultCard current collection item highlighting', () => {
         result,
         onClose: () => {},
         onOpenExtractAudio: () => {},
+        onRequestPreview: () => {},
       })
     )
 
     expect(html).toContain('合集第2集当前页')
     expect(html).toContain('border-primary bg-primary/5')
+    expect(html).toContain('<video')
+    expect(html).toContain('/api/play?url=')
+    expect(html.match(/aria-label="播放视频"/g) ?? []).toHaveLength(1)
+    expect(html.match(/aria-label="播放音频"/g) ?? []).toHaveLength(1)
   })
 })

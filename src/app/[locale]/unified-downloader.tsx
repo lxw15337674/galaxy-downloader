@@ -10,7 +10,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from '@/lib/deferred-toast';
 import { DeferredAudioExtractDialog } from '@/components/deferred-audio-extract-dialog';
 import type { AudioExtractTask } from '@/components/audio-tool/types';
-import { ArrowUp, Loader2, Link2 } from 'lucide-react';
+import type { MediaPreviewRequest } from '@/components/downloader/media-preview';
+import { buildPrimaryResultPreview } from '@/components/downloader/media-preview';
+import { ArrowUp, Loader2, Link2, X } from 'lucide-react';
 import { AppTopBar } from '@/components/layout/app-top-bar';
 
 import type { DownloadRecord } from './download-history';
@@ -38,13 +40,8 @@ interface UnifiedDownloaderProps {
     footer?: ReactNode;
 }
 
-function resolveSharePlaybackUrl(result: UnifiedParseResult['data'] | null): string | null {
-    const sourceUrl = typeof result?.url === 'string' ? result.url.trim() : '';
-    if (!sourceUrl) {
-        return null;
-    }
-
-    return `/api/play?url=${encodeURIComponent(sourceUrl)}`;
+interface ActivePreview extends MediaPreviewRequest {
+    origin: 'share' | 'result';
 }
 
 export function UnifiedDownloader({
@@ -65,7 +62,7 @@ export function UnifiedDownloader({
     const [audioToolEntry, setAudioToolEntry] = useState<'toolbar' | 'result'>('toolbar');
     const [audioToolTask, setAudioToolTask] = useState<AudioExtractTask | null>(null);
     const [parseResult, setParseResult] = useState<UnifiedParseResult['data'] | null>(null);
-    const [sharePlaybackEnabled, setSharePlaybackEnabled] = useState(false);
+    const [activePreview, setActivePreview] = useState<ActivePreview | null>(null);
     const [showBackToTop, setShowBackToTop] = useState(false);
     const historyRef = useRef<HTMLDivElement>(null);
     const urlInputRef = useRef<HTMLTextAreaElement>(null);
@@ -150,19 +147,28 @@ export function UnifiedDownloader({
                 onDismiss: dismiss,
             });
         }
+        return normalizedData;
     }, [addToHistory, canPrompt, dict, dismiss, promptInstall]);
 
     const closeParseResult = () => {
         setParseResult(null);
-        setSharePlaybackEnabled(false);
+        setActivePreview(null);
     };
+
+    const openResultPreview = useCallback((request: MediaPreviewRequest) => {
+        setActivePreview({
+            ...request,
+            autoplay: request.autoplay ?? false,
+            origin: 'result',
+        });
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError('');
         setParseResult(null);
-        setSharePlaybackEnabled(false);
+        setActivePreview(null);
 
         if (!url.trim()) {
             setError(dict.errors.emptyUrl);
@@ -198,7 +204,7 @@ export function UnifiedDownloader({
     const handleRedownload = (url: string) => {
         setUrl(url);
         setParseResult(null);
-        setSharePlaybackEnabled(false);
+        setActivePreview(null);
         toast(dict.toast.linkFilledForRedownload, {
             description: dict.toast.clickToRedownloadDesc,
         });
@@ -207,7 +213,6 @@ export function UnifiedDownloader({
 
     const sharedPlaySourceUrl = searchParams.get('play')?.trim() ?? '';
     const sharedAutoplayRequested = searchParams.get('autoplay') === '1';
-    const sharePlaybackUrl = sharePlaybackEnabled ? resolveSharePlaybackUrl(parseResult) : null;
     const hasDownloadHistory = downloadHistory.length > 0;
     const showHistoryShortcut = historyHydrated && hasDownloadHistory;
 
@@ -229,10 +234,22 @@ export function UnifiedDownloader({
             setError('');
             setParseResult(null);
             setUrl(sharedPlaySourceUrl);
-            setSharePlaybackEnabled(sharedAutoplayRequested);
+            setActivePreview(null);
 
             try {
-                await handleUnifiedParse(sharedPlaySourceUrl);
+                const parsed = await handleUnifiedParse(sharedPlaySourceUrl);
+                if (cancelled) {
+                    return;
+                }
+
+                const sharePreview = buildPrimaryResultPreview(parsed, {
+                    autoplay: sharedAutoplayRequested,
+                });
+
+                setActivePreview(sharePreview ? {
+                    ...sharePreview,
+                    origin: 'share',
+                } : null);
             } catch (err) {
                 if (cancelled) {
                     return;
@@ -249,7 +266,6 @@ export function UnifiedDownloader({
 
                 const errorMessage = resolveApiErrorMessage(err, dict);
                 setError(errorMessage);
-                setSharePlaybackEnabled(false);
                 toast.error(dict.errors.downloadFailed, {
                     description: errorMessage,
                 });
@@ -447,38 +463,12 @@ export function UnifiedDownloader({
                                 </CardContent>
                             </Card>
 
-                            {sharePlaybackEnabled && parseResult && (
-                                <Card className="shrink-0">
-                                    <CardHeader className="p-4 pb-2">
-                                        <h2 className="text-base font-semibold">{dict.result.sharePlayPlayerTitle}</h2>
-                                        <p className="text-xs text-muted-foreground line-clamp-1" title={parseResult.title}>
-                                            {parseResult.title}
-                                        </p>
-                                    </CardHeader>
-                                    <CardContent className="px-4 pb-4 pt-0">
-                                        {sharePlaybackUrl ? (
-                                            <video
-                                                src={sharePlaybackUrl}
-                                                controls
-                                                autoPlay
-                                                muted
-                                                playsInline
-                                                preload="metadata"
-                                                className="w-full max-h-[60vh] rounded-lg bg-black"
-                                            />
-                                        ) : (
-                                            <p className="text-sm text-muted-foreground">
-                                                {dict.result.sharePlayUnavailable}
-                                            </p>
-                                        )}
-                                    </CardContent>
-                                </Card>
-                            )}
-
                             <UnifiedDownloaderLowerSections
                                 parseResult={parseResult}
                                 onCloseParseResult={closeParseResult}
                                 onOpenExtractAudio={openResultAudioExtract}
+                                onRequestPreview={openResultPreview}
+                                activePreview={activePreview}
                                 mobileAd={mobileAd}
                                 mobileGuides={mobileGuides}
                                 downloadHistory={downloadHistory}

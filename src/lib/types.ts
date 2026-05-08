@@ -22,6 +22,7 @@ export const API_ERROR_CODES = [
 
 export type ApiErrorCode = (typeof API_ERROR_CODES)[number]
 export type ApiErrorDetails = Record<string, unknown>
+export type VideoAudioMode = 'muxed' | 'separate' | 'pure_music' | 'not_applicable'
 export type VideoMediaAction = 'direct-download' | 'merge-then-download' | 'hide'
 export type AudioMediaAction = 'direct-download' | 'extract-audio' | 'hide'
 
@@ -40,6 +41,7 @@ export interface PageInfo {
     duration: number;
     downloadAudioUrl: string | null;
     downloadVideoUrl: string | null;
+    videoAudioMode?: VideoAudioMode;
 }
 
 export interface VideoQualityOption {

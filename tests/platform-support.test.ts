@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { getPlatformSupportItems } from '../src/components/downloader/platform-support';
+import type { Dictionary } from '../src/lib/i18n/types';
 
 const dict = {
     guide: {
@@ -36,7 +37,7 @@ const dict = {
 
 describe('getPlatformSupportItems', () => {
     it('hides platforms that should not be promoted in the support list', () => {
-        const items = getPlatformSupportItems(dict);
+        const items = getPlatformSupportItems(dict as unknown as Pick<Dictionary, 'guide'>);
 
         const keys = items.map((item) => item.key);
         expect(keys).not.toContain('youtube');

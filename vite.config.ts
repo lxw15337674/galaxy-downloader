@@ -46,6 +46,14 @@ export default defineConfig(({ command, mode }) => {
   const enableSerwist = command === "build" && mode === "production";
 
   return {
+    optimizeDeps: {
+      exclude: ["lucide-react", "next-intl"],
+    },
+    ssr: {
+      optimizeDeps: {
+        exclude: ["lucide-react", "next-intl"],
+      },
+    },
     resolve: {
       alias: {
         "next-intl/config": fileURLToPath(new URL("./src/i18n/request.ts", import.meta.url)),

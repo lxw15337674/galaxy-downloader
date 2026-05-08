@@ -782,6 +782,7 @@
         "articleVideoCount": "Всего {count} видео",
         "articleVideoUntitled": "Видео {index}",
         "downloadImage": "Загрузить изображение",
+        "downloadCover": "Скачать обложку",
         "coverLabel": "Крышка",
         "imageIndexLabel": "Изображение №{index}",
         "imageAlt": "Изображение {index}",

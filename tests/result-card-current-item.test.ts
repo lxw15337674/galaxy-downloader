@@ -35,6 +35,7 @@ vi.mock('@/i18n/client', () => ({
       packageDownload: '打包下载',
       loading: '加载中',
       downloadImage: '下载图片',
+      downloadCover: '下载封面',
       imageAlt: '图片 {index}',
       imageIndexLabel: '图片 {index}',
       previewPlayerTitle: '预览',
@@ -98,7 +99,7 @@ describe('ResultCard current collection item highlighting', () => {
     const result = {
       title: '测试合集',
       desc: 'desc',
-      cover: null,
+      cover: 'https://img.example.com/cover.jpg',
       platform: 'bili',
       url: 'https://www.bilibili.com/video/BV1ab411c7nA/',
       downloadAudioUrl: '/api/download?type=audio&item=BV2',
@@ -140,6 +141,7 @@ describe('ResultCard current collection item highlighting', () => {
     expect(html).toContain('border-primary bg-primary/5')
     expect(html).toContain('<video')
     expect(html).toContain('/api/play?url=')
+    expect(html).toContain('aria-label="下载封面"')
     expect(html.match(/aria-label="播放视频"/g) ?? []).toHaveLength(1)
     expect(html.match(/aria-label="播放音频"/g) ?? []).toHaveLength(1)
   })

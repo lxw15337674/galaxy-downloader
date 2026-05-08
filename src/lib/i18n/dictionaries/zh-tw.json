@@ -780,6 +780,7 @@
         "articleVideoCount": "共 {count} 個影片",
         "articleVideoUntitled": "影片 {index}",
         "downloadImage": "下載圖片",
+        "downloadCover": "下載封面",
         "coverLabel": "封面",
         "imageIndexLabel": "圖片 #{index}",
         "imageAlt": "圖片 {index}",

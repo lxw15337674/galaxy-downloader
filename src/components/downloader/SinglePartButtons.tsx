@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExternalLink, MonitorPlay, Headphones } from 'lucide-react';
+import { ExternalLink, ImageDown, MonitorPlay, Headphones } from 'lucide-react';
 
 import type { AudioExtractTask } from '@/components/audio-tool/types';
 import type { MediaPreviewRequest } from '@/components/downloader/media-preview';
@@ -16,17 +16,20 @@ import { VideoDownloadIcon, AudioDownloadIcon } from './CustomIcons';
 export function SinglePartButtons({
     result,
     previewItem,
+    onDownloadCover,
     onOpenExtractAudio,
     onRequestPreview,
 }: {
     result: NonNullable<UnifiedParseResult['data']>;
     previewItem?: string;
+    onDownloadCover?: () => Promise<void> | void;
     onOpenExtractAudio: (task: AudioExtractTask) => void;
     onRequestPreview: (request: MediaPreviewRequest) => void;
 }) {
     const dict = useDictionary();
     const [videoLoading, setVideoLoading] = useState(false);
     const [audioLoading, setAudioLoading] = useState(false);
+    const [coverLoading, setCoverLoading] = useState(false);
     const previewSourceUrl = typeof result.url === 'string' ? result.url.trim() : '';
     const videoDownloadUrl = result.downloadVideoUrl || result.originDownloadVideoUrl;
     const audioDownloadUrl = result.downloadAudioUrl || result.originDownloadAudioUrl || null;
@@ -37,6 +40,7 @@ export function SinglePartButtons({
     });
     const showVideoDownload = videoAction !== 'hide';
     const showAudioDownload = audioAction !== 'hide';
+    const showCoverDownload = Boolean(onDownloadCover);
     const showVideoPreview = previewSourceUrl.length > 0 && canPreviewResultVideo(result);
     const showAudioPreview = previewSourceUrl.length > 0 && canPreviewResultAudio(result);
     const showOriginVideoLink =
@@ -68,8 +72,11 @@ export function SinglePartButtons({
     const actionCount = Number(showVideoPreview)
         + Number(showVideoDownload)
         + Number(showAudioPreview)
-        + Number(showAudioDownload);
-    const actionGridClass = actionCount >= 4
+        + Number(showAudioDownload)
+        + Number(showCoverDownload);
+    const actionGridClass = actionCount >= 5
+        ? 'grid-cols-2 sm:grid-cols-5'
+        : actionCount === 4
         ? 'grid-cols-4'
         : actionCount === 3
             ? 'grid-cols-3'
@@ -146,6 +153,24 @@ export function SinglePartButtons({
                             }
 
                             handleDownload(audioDownloadUrl!, setAudioLoading);
+                        }}
+                    />
+                )}
+                {showCoverDownload && (
+                    <MediaActionIconButton
+                        label={dict.result.downloadCover}
+                        icon={ImageDown}
+                        variant="default"
+                        className={actionButtonClass}
+                        disabled={coverLoading}
+                        loading={coverLoading}
+                        onClick={async () => {
+                            setCoverLoading(true);
+                            try {
+                                await onDownloadCover?.();
+                            } finally {
+                                setCoverLoading(false);
+                            }
                         }}
                     />
                 )}

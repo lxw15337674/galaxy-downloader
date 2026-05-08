@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useDictionary } from '@/i18n/client';
 import { toast } from '@/lib/deferred-toast';
 import type { UnifiedParseResult } from '@/lib/types';
-import { formatDuration } from '@/lib/utils';
+import { formatDuration, sanitizeFilename } from '@/lib/utils';
 
 import { EmbeddedVideoList } from './EmbeddedVideoList';
 import { ImageNoteGrid } from './ImageNoteGrid';
@@ -24,7 +24,13 @@ import { SinglePartButtons } from './SinglePartButtons';
 import {
     resolveResultDisplayImages,
 } from './result-card-visibility';
-import { replaceTemplate, resolveCoverSrc } from './result-card-utils';
+import {
+    fetchImageBlobCandidates,
+    replaceTemplate,
+    resolveCoverSrc,
+    resolveImageDownloadExtension,
+    triggerBlobDownload,
+} from './result-card-utils';
 
 type ResultData = NonNullable<UnifiedParseResult['data']>;
 type ActiveCollectionSource = 'result' | 'pages' | 'season';
@@ -115,6 +121,26 @@ export function ResultCard({
     onRequestPreview,
     activePreview,
 }: ResultCardProps) {
+    if (!result) return null;
+
+    return (
+        <ResultCardContent
+            result={result}
+            onClose={onClose}
+            onOpenExtractAudio={onOpenExtractAudio}
+            onRequestPreview={onRequestPreview}
+            activePreview={activePreview}
+        />
+    );
+}
+
+function ResultCardContent({
+    result,
+    onClose,
+    onOpenExtractAudio,
+    onRequestPreview,
+    activePreview,
+}: Omit<ResultCardProps, 'result'> & { result: ResultData }) {
     const dict = useDictionary();
     const activeListKey = `${result?.url ?? ''}-${result?.currentPage ?? ''}-${result?.currentItemId ?? ''}`;
     const defaultBiliList = result?.currentItemId ? 'season' : 'pages';
@@ -134,8 +160,6 @@ export function ResultCard({
         currentPage: result?.currentPage,
         currentItemId: result?.currentItemId,
     });
-
-    if (!result) return null;
 
     const activeBiliList = activeBiliListState.key === activeListKey
         ? activeBiliListState.value
@@ -300,6 +324,23 @@ export function ResultCard({
         ? `${result.title} · ${effectiveResult.title}`
         : effectiveResult.title || result.title;
     const displayDuration = effectiveResult.duration ?? result.duration;
+    const handleDownloadCover = async () => {
+        if (!selectedCoverUrl) {
+            return;
+        }
+
+        try {
+            const { blob, sourceUrl } = await fetchImageBlobCandidates([
+                coverSrc,
+                selectedCoverUrl,
+            ]);
+            const extension = resolveImageDownloadExtension(sourceUrl, blob.type);
+            triggerBlobDownload(blob, `${sanitizeFilename(displayTitle || dict.result.coverLabel)}-cover.${extension}`);
+        } catch (error) {
+            console.error('Failed to download cover:', error);
+            toast.error(dict.errors.downloadError);
+        }
+    };
 
     return (
         <Card>
@@ -378,6 +419,7 @@ export function ResultCard({
                             <SinglePartButtons
                                 result={effectiveResult}
                                 previewItem={previewItem}
+                                onDownloadCover={selectedCoverUrl ? handleDownloadCover : undefined}
                                 onOpenExtractAudio={onOpenExtractAudio}
                                 onRequestPreview={onRequestPreview}
                             />

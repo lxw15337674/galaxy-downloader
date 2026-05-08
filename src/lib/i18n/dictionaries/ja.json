@@ -776,6 +776,7 @@
         "articleVideoCount": "全 {count} 本の動画",
         "articleVideoUntitled": "動画 {index}",
         "downloadImage": "画像をダウンロード",
+        "downloadCover": "カバーをダウンロード",
         "coverLabel": "カバー",
         "imageIndexLabel": "画像 #{index}",
         "imageAlt": "画像 {index}",

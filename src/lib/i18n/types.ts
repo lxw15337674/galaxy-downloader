@@ -30,6 +30,7 @@ export interface ResultDict {
     articleVideoCount: string;
     articleVideoUntitled: string;
     downloadImage: string;
+    downloadCover: string;
     coverLabel: string;
     imageIndexLabel: string;
     imageAlt: string;

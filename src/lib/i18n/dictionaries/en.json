@@ -782,6 +782,7 @@
         "articleVideoCount": "Total {count} videos",
         "articleVideoUntitled": "Video {index}",
         "downloadImage": "Download Image",
+        "downloadCover": "Download Cover",
         "coverLabel": "Cover",
         "imageIndexLabel": "Image #{index}",
         "imageAlt": "Image {index}",

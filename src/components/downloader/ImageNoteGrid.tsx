@@ -95,7 +95,8 @@ function ImageNoteGridContent({
                 originalUrl,
             ]);
             const extension = resolveImageDownloadExtension(sourceUrl, blob.type);
-            triggerBlobDownload(blob, `${sanitizeFilename(title)}-${index + 1}.${extension}`);
+            const filenameSuffix = singleImageMode ? 'cover' : String(index + 1);
+            triggerBlobDownload(blob, `${sanitizeFilename(title)}-${filenameSuffix}.${extension}`);
         } catch (error) {
             console.error(`Failed to download image ${index}:`, error);
             toast.error(dict.errors.downloadError);
@@ -251,7 +252,8 @@ function ImageNoteGridContent({
                                         variant="secondary"
                                         className="h-8 w-8 p-0 shadow-md"
                                         onClick={() => void handleDownload(index, imageUrl)}
-                                        title={dict.result.downloadImage}
+                                        title={singleImageMode ? dict.result.downloadCover : dict.result.downloadImage}
+                                        aria-label={singleImageMode ? dict.result.downloadCover : dict.result.downloadImage}
                                     >
                                         <Download className="h-4 w-4" />
                                     </Button>

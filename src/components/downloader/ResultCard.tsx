@@ -283,7 +283,7 @@ export function ResultCard({
             const pathnameSegments = window.location.pathname.split('/').filter((segment) => segment.length > 0);
             const localePrefix = pathnameSegments[0] ? `/${pathnameSegments[0]}` : '';
             const shareUrl = new URL(`${window.location.origin}${localePrefix}/play`);
-            shareUrl.searchParams.set('url', shareSourceUrl);
+            shareUrl.searchParams.set('play', shareSourceUrl);
             shareUrl.searchParams.set('autoplay', '1');
 
             await navigator.clipboard.writeText(shareUrl.toString());

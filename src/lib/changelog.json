@@ -7,32 +7,38 @@
         "zh": [
           "解析结果卡支持直接在线播放预览，可先播放视频和音频",
           "优化 Bilibili 合集切换体验，支持更快定位当前视频",
-          "优化移动端结果列表与按钮布局，深色模式下显示更一致"
+          "优化移动端结果列表与按钮布局，深色模式下显示更一致",
+          "新增独立反馈页"
         ],
         "en": [
           "Result cards now support inline playback previews so you can try videos and audio before downloading",
           "Improved the Bilibili collection switching experience for faster navigation to the current video",
-          "Refined result list and button layouts on mobile with more consistent display in dark mode"
+          "Refined result list and button layouts on mobile with more consistent display in dark mode",
+          "Added a dedicated feedback page"
         ],
         "ja": [
           "解析結果カードでインライン再生プレビューに対応し、動画と音声を先に試せるようになりました",
           "Bilibili 合集の切り替え体験を改善し、現在の動画へより素早く移動できるようになりました",
-          "モバイルでの結果リストとボタン配置を見直し、ダークモードでも表示の一貫性を高めました"
+          "モバイルでの結果リストとボタン配置を見直し、ダークモードでも表示の一貫性を高めました",
+          "専用のフィードバックページを追加しました"
         ],
         "zh-tw": [
           "解析結果卡支援直接線上播放預覽，可先試播影片和音訊",
           "最佳化 Bilibili 合集切換體驗，支援更快定位目前影片",
-          "最佳化行動端結果列表與按鈕布局，深色模式下顯示更一致"
+          "最佳化行動端結果列表與按鈕布局，深色模式下顯示更一致",
+          "新增獨立反饋頁"
         ],
         "es": [
           "Las tarjetas de resultados ahora permiten vista previa de reproducción integrada para probar video y audio antes de descargar",
           "Se mejoró la experiencia de cambio en colecciones de Bilibili para ubicar más rápido el video actual",
-          "Se ajustaron las listas de resultados y la disposición de botones en móviles con una visualización más consistente en modo oscuro"
+          "Se ajustaron las listas de resultados y la disposición de botones en móviles con una visualización más consistente en modo oscuro",
+          "Se añadió una página de feedback dedicada"
         ],
         "ru": [
           "Карточки результатов теперь поддерживают встроенный предпросмотр воспроизведения, чтобы можно было заранее проверить видео и аудио",
           "Улучшено переключение в коллекциях Bilibili для более быстрого перехода к текущему видео",
-          "Доработаны списки результатов и расположение кнопок на мобильных устройствах, а также улучшена согласованность отображения в темной теме"
+          "Доработаны списки результатов и расположение кнопок на мобильных устройствах, а также улучшена согласованность отображения в темной теме",
+          "Добавлена отдельная страница обратной связи"
         ]
       }
     },

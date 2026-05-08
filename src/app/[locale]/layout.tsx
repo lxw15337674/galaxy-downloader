@@ -6,6 +6,8 @@ import { DeferredToaster } from "@/components/deferred-toaster"
 import { hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { AppI18nProvider } from "@/i18n/client";
+import { AppTopBar } from "@/components/layout/app-top-bar";
+import { TopBarActionsProvider } from "@/components/layout/top-bar-actions";
 import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/types"
 import { i18n } from "@/lib/i18n/config"
@@ -149,7 +151,10 @@ export default async function RootLayout({
                         enableSystem={true}
                         disableTransitionOnChange
                     >
-                        {children}
+                        <TopBarActionsProvider>
+                            <AppTopBar />
+                            {children}
+                        </TopBarActionsProvider>
                         <DeferredToaster />
                     </ThemeProvider>
                 </AppI18nProvider>

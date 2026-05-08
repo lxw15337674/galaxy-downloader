@@ -15,21 +15,24 @@ const FeedbackDialog = dynamic(
 interface DeferredFeedbackDialogProps {
     triggerClassName?: string
     triggerIconOnly?: boolean
+    triggerLabel?: string
 }
 
 export function DeferredFeedbackDialog({
     triggerClassName,
     triggerIconOnly = false,
+    triggerLabel: triggerLabelOverride,
 }: DeferredFeedbackDialogProps) {
     const dict = useDictionary()
     const [mounted, setMounted] = useState(false)
-    const triggerLabel = dict.feedback.triggerButton
+    const triggerLabel = triggerLabelOverride ?? dict.feedback.triggerButton
 
     if (mounted) {
         return (
             <FeedbackDialog
                 triggerClassName={triggerClassName}
                 triggerIconOnly={triggerIconOnly}
+                triggerLabel={triggerLabelOverride}
                 defaultOpen
             />
         )

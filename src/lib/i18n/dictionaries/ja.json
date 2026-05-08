@@ -139,8 +139,18 @@
         "metaDescription": "sparkdownloaderへのサポート依頼、不具合報告、機能要望、SEO に関するご連絡はこちら。",
         "title": "お問い合わせ",
         "intro": "不具合報告や新機能のご要望は、以下の方法からご連絡ください。",
+        "feedback": "フィードバック掲示板を開く",
+        "feedbackHint": "公開の機能提案、対応プラットフォームの要望、一般的な質問に適しています。",
         "github": "GitHub Issue を開く",
         "githubHint": "不具合報告や機能要望に最適です。"
+    },
+    "feedbackPage": {
+        "metaTitle": "フィードバック | sparkdownloader",
+        "metaDescription": "sparkdownloader への公開フィードバックや機能提案を送信できます。",
+        "title": "フィードバック",
+        "intro": "ここは機能提案、対応プラットフォームの要望、一般的な質問のための公開フィードバック欄です。",
+        "publicNotice": "公開ディスカッションには GitHub へのログインが必要です。非公開リンク、アカウント、Cookie、連絡先、その他の機密情報は投稿しないでください。",
+        "openDiscussion": "GitHub Discussions で開く"
     },
     "privacyPage": {
         "metaTitle": "プライバシーポリシー | sparkdownloader",

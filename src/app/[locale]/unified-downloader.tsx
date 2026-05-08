@@ -9,11 +9,11 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { toast } from '@/lib/deferred-toast';
 import { DeferredAudioExtractDialog } from '@/components/deferred-audio-extract-dialog';
+import { useTopBarActions } from '@/components/layout/top-bar-actions';
 import type { AudioExtractTask } from '@/components/audio-tool/types';
 import type { MediaPreviewRequest } from '@/components/downloader/media-preview';
 import { buildPrimaryResultPreview } from '@/components/downloader/media-preview';
 import { ArrowUp, Loader2, Link2, X } from 'lucide-react';
-import { AppTopBar } from '@/components/layout/app-top-bar';
 
 import type { DownloadRecord } from './download-history';
 import { useLocalStorageState } from '@/hooks/use-local-storage-state';
@@ -53,6 +53,7 @@ export function UnifiedDownloader({
     footer,
 }: UnifiedDownloaderProps) {
     const dict = useDictionary()
+    const { setActions: setTopBarActions } = useTopBarActions()
     const searchParams = useSearchParams();
     const [url, setUrl] = useState('');
     const [loading, setLoading] = useState(false);
@@ -85,12 +86,12 @@ export function UnifiedDownloader({
         setDownloadHistory([]);
     };
 
-    const openToolbarAudioTool = () => {
+    const openToolbarAudioTool = useCallback(() => {
         setAudioToolMounted(true);
         setAudioToolEntry('toolbar');
         setAudioToolTask(null);
         setAudioToolOpen(true);
-    };
+    }, []);
 
     const openResultAudioExtract = (task: AudioExtractTask) => {
         setAudioToolMounted(true);
@@ -215,6 +216,30 @@ export function UnifiedDownloader({
     const sharedAutoplayRequested = searchParams.get('autoplay') === '1';
     const hasDownloadHistory = downloadHistory.length > 0;
     const showHistoryShortcut = historyHydrated && hasDownloadHistory;
+    const scrollToHistory = useCallback(() => {
+        if (historyRef.current) {
+            const top = historyRef.current.getBoundingClientRect().top + window.scrollY - 64;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+    }, []);
+
+    useEffect(() => {
+        setTopBarActions({
+            showHistoryShortcut,
+            onHistoryClick: scrollToHistory,
+            showAudioTool: true,
+            onAudioToolClick: openToolbarAudioTool,
+        });
+
+        return () => {
+            setTopBarActions({});
+        };
+    }, [
+        openToolbarAudioTool,
+        scrollToHistory,
+        setTopBarActions,
+        showHistoryShortcut,
+    ]);
 
     useEffect(() => {
         if (!sharedPlaySourceUrl) {
@@ -338,18 +363,6 @@ export function UnifiedDownloader({
 
     return (
         <div className="min-h-screen flex flex-col bg-background">
-            <AppTopBar
-                showHistoryShortcut={showHistoryShortcut}
-                onHistoryClick={() => {
-                    if (historyRef.current) {
-                        const top = historyRef.current.getBoundingClientRect().top + window.scrollY - 64;
-                        window.scrollTo({ top, behavior: 'smooth' });
-                    }
-                }}
-                showAudioTool
-                onAudioToolClick={openToolbarAudioTool}
-            />
-
             <DeferredAudioExtractDialog
                 mounted={audioToolMounted}
                 open={audioToolOpen}

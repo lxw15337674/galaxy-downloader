@@ -139,8 +139,18 @@
         "metaDescription": "Contacta con sparkdownloader para soporte, reportes de errores, sugerencias y comentarios de SEO.",
         "title": "Contacto",
         "intro": "Puedes usar los siguientes canales para reportar problemas o proponer funciones.",
+        "feedback": "Abrir debates de feedback",
+        "feedbackHint": "Ideal para ideas públicas, solicitudes de plataformas y preguntas generales.",
         "github": "Abrir issue en GitHub",
         "githubHint": "Ideal para reportes de bugs y solicitudes de funciones."
+    },
+    "feedbackPage": {
+        "metaTitle": "Feedback | sparkdownloader",
+        "metaDescription": "Comparte feedback público e ideas de funciones para sparkdownloader.",
+        "title": "Feedback",
+        "intro": "Esta es el área pública de feedback para ideas de funciones, solicitudes de plataformas y preguntas generales.",
+        "publicNotice": "La discusión pública requiere iniciar sesión con GitHub. No publiques enlaces privados, cuentas, cookies, datos de contacto u otra información sensible.",
+        "openDiscussion": "Abrir en GitHub Discussions"
     },
     "privacyPage": {
         "metaTitle": "Política de privacidad | sparkdownloader",

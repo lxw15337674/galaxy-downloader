@@ -6,6 +6,7 @@ import { FreeSupportCard } from "@/components/downloader/FreeSupportCard"
 import { PlatformGuideCard } from "@/components/downloader/PlatformGuideCard"
 import { QuickStartCard } from "@/components/downloader/QuickStartCard"
 import { StructuredData } from "@/components/structured-data"
+import { Footer } from "@/components/layout/footer"
 import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/types"
 
@@ -18,7 +19,6 @@ export default async function HomePage({
 }) {
     const { locale } = await params
     const dict = await getMessages({ locale }) as Dictionary
-    const currentYear = new Date().getFullYear()
 
     return (
         <>
@@ -52,32 +52,7 @@ export default async function HomePage({
                         {dict.page.feedback}
                     </p>
                 }
-                footer={
-                    <footer className="border-t bg-muted/30 py-6">
-                        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                            <div className="space-y-1 text-center text-xs text-muted-foreground">
-                                <p>
-                                    {dict.common.trustAndPolicies}
-                                    {": "}
-                                    <Link className="underline" href={`/${locale}/privacy`} prefetch={false}>
-                                        {dict.common.privacy}
-                                    </Link>
-                                    {" · "}
-                                    <Link className="underline" href={`/${locale}/terms`} prefetch={false}>
-                                        {dict.common.terms}
-                                    </Link>
-                                    {" · "}
-                                    <Link className="underline" href={`/${locale}/contact`} prefetch={false}>
-                                        {dict.common.contact}
-                                    </Link>
-                                </p>
-                                <p>{dict.page.copyrightVideo}</p>
-                                <p>{dict.page.copyrightStorage}</p>
-                                <p>{dict.page.copyrightYear.replace("{year}", String(currentYear))}</p>
-                            </div>
-                        </div>
-                    </footer>
-                }
+                footer={<Footer locale={locale} dict={dict} />}
             />
         </>
     )

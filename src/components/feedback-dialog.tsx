@@ -31,6 +31,7 @@ import { isApiRequestError, resolveApiErrorMessageWithFallback } from '@/lib/api
 interface FeedbackDialogProps {
     triggerClassName?: string
     triggerIconOnly?: boolean
+    triggerLabel?: string
     defaultOpen?: boolean
     onTriggerClick?: () => void
 }
@@ -38,11 +39,13 @@ interface FeedbackDialogProps {
 export function FeedbackDialog({
     triggerClassName,
     triggerIconOnly = false,
+    triggerLabel: triggerLabelOverride,
     defaultOpen = false,
     onTriggerClick,
 }: FeedbackDialogProps) {
     const dict = useDictionary()
     const feedback = dict.feedback
+    const triggerLabel = triggerLabelOverride ?? feedback.triggerButton
     const [open, setOpen] = useState(defaultOpen)
     const [feedbackType, setFeedbackType] = useState<FeedbackType>('bug')
     const [content, setContent] = useState('')
@@ -267,13 +270,13 @@ export function FeedbackDialog({
                     size={triggerIconOnly ? 'icon' : 'sm'}
                     className={cn('text-sm', triggerClassName)}
                     onClick={onTriggerClick}
-                    aria-label={feedback.triggerButton}
+                    aria-label={triggerLabel}
                 >
                     <MessageSquare className={cn('h-4 w-4', !triggerIconOnly && 'mr-1')} />
                     {triggerIconOnly ? (
-                        <span className="sr-only">{feedback.triggerButton}</span>
+                        <span className="sr-only">{triggerLabel}</span>
                     ) : (
-                        feedback.triggerButton
+                        triggerLabel
                     )}
                 </Button>
             </DialogTrigger>

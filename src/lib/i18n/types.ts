@@ -501,6 +501,12 @@ export interface Dictionary {
     contactPage: StaticPageMetaDict & {
         github: string;
         githubHint: string;
+        feedback: string;
+        feedbackHint: string;
+    };
+    feedbackPage: StaticPageMetaDict & {
+        publicNotice: string;
+        openDiscussion: string;
     };
     privacyPage: StaticPageMetaDict & {
         points: string[];

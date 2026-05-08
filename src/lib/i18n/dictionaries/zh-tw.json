@@ -139,8 +139,18 @@
         "metaDescription": "聯絡下載工具團隊，提交問題回報、功能建議或 SEO 反饋。",
         "title": "聯絡我們",
         "intro": "你可以透過以下方式提交問題回報或功能建議。",
+        "feedback": "前往回饋討論區",
+        "feedbackHint": "適合公開討論功能建議、平台支援請求和一般問題。",
         "github": "前往 GitHub 提交 Issue",
         "githubHint": "適合回報錯誤與提出功能需求。"
+    },
+    "feedbackPage": {
+        "metaTitle": "回饋｜sparkdownloader",
+        "metaDescription": "在 sparkdownloader 回饋頁提交公開討論和功能建議。",
+        "title": "回饋",
+        "intro": "這裡是公開回饋區，適合功能建議、平台支援請求和一般問題討論。",
+        "publicNotice": "公開討論需要使用 GitHub 登入。請不要提交私人連結、帳號、Cookie、聯絡方式或其他敏感資訊。",
+        "openDiscussion": "在 GitHub Discussions 開啟"
     },
     "privacyPage": {
         "metaTitle": "隱私政策｜sparkdownloader",

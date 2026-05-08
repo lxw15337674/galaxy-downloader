@@ -63,8 +63,17 @@ export default async function ContactPage({
                 <h1 className="text-3xl font-semibold tracking-tight">{copy.title}</h1>
                 <p className="text-sm text-muted-foreground leading-6">{copy.intro}</p>
                 <div className="rounded-md border bg-card p-5 space-y-2">
+                    <Link
+                        href={`/${locale}/feedback`}
+                        className="text-sm underline"
+                    >
+                        {copy.feedback}
+                    </Link>
+                    <p className="text-sm text-muted-foreground">{copy.feedbackHint}</p>
+                </div>
+                <div className="rounded-md border bg-card p-5 space-y-2">
                     <a
-                        href="https://github.com/lxw15337674/bilibili-audio-downloader/issues/new"
+                        href="https://github.com/lxw15337674/galaxy-downloader/issues/new"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm underline"
@@ -77,6 +86,8 @@ export default async function ContactPage({
                     {dict.common.relatedPages}
                     {": "}
                     <Link className="underline" href={`/${locale}`}>{dict.common.home}</Link>
+                    {' · '}
+                    <Link className="underline" href={`/${locale}/feedback`}>{dict.feedbackPage.title}</Link>
                     {' · '}
                     <Link className="underline" href={`/${locale}/privacy`}>{dict.common.privacy}</Link>
                     {' · '}

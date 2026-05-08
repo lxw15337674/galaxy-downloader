@@ -6,7 +6,6 @@ import { useSearchParams } from 'next/navigation'
 import { Loader2, ExternalLink } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { AppTopBar } from '@/components/layout/app-top-bar'
 import { PlatformBadge } from '@/components/platform-badge'
 import { ViewportSideRailAd } from '@/components/ads/viewport-side-rail-ad'
 import { buildMediaPreviewUrl, canSharePlayResult } from '@/components/downloader/media-preview'
@@ -100,8 +99,6 @@ export function PlayPageClient() {
 
     return (
         <div className="min-h-screen flex flex-col bg-background">
-            <AppTopBar showHomeButton homeHref={`/${locale}`} />
-
             <div className=" flex-1 sm:p-4 md:p-4 pt-2 ">
                 <section className="w-full max-w-7xl mx-auto  bg-black">
                     {loading ? (

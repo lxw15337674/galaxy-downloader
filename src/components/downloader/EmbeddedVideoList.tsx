@@ -71,17 +71,21 @@ export function EmbeddedVideoList({
         }
 
         const element = itemRefs.current.get(autoScrollItemId);
-        if (!element || !containerRef.current) {
+        const container = containerRef.current;
+        if (!element || !container) {
             return;
         }
 
-        window.requestAnimationFrame(() => {
-            element.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-            });
-            lastAutoScrolledKeyRef.current = autoScrollKey;
-        });
+        const containerRect = container.getBoundingClientRect();
+        const elementRect = element.getBoundingClientRect();
+
+        if (elementRect.top < containerRect.top) {
+            container.scrollTop += elementRect.top - containerRect.top;
+        } else if (elementRect.bottom > containerRect.bottom) {
+            container.scrollTop += elementRect.bottom - containerRect.bottom;
+        }
+
+        lastAutoScrolledKeyRef.current = autoScrollKey;
     }, [autoScrollItemId, autoScrollKey, visibleVideos.length]);
 
     return (

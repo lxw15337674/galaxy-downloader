@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import {
     buildRangeHeader,
+    inferHlsOutputExtension,
     parseHlsMediaPlaylist,
     pickBestVariant,
 } from '../src/lib/hls-browser-download.ts'
@@ -54,5 +55,15 @@ describe('hls browser download helpers', () => {
 
     it('builds a valid HTTP Range header', () => {
         expect(buildRangeHeader({ start: 100, end: 299 })).toBe('bytes=100-299')
+    })
+
+    it('always exports browser hls downloads with an mp4 extension', () => {
+        expect(inferHlsOutputExtension(null, [
+            { url: 'https://example.com/video/seg-000.ts' },
+        ])).toBe('mp4')
+
+        expect(inferHlsOutputExtension('https://example.com/video/init.mp4', [
+            { url: 'https://example.com/video/seg-000.m4s' },
+        ])).toBe('mp4')
     })
 })

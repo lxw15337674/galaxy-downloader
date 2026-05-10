@@ -158,15 +158,10 @@ export function parseHlsMediaPlaylist(
 }
 
 export function inferHlsOutputExtension(
-    mapUrl: string | null,
-    segments: Array<Pick<HlsSegment, 'url'>>
-): 'mp4' | 'ts' {
-    const firstSegment = segments[0]?.url || ''
-    if (mapUrl || /\.m4s(?:[?#]|$)/i.test(firstSegment)) {
-        return 'mp4'
-    }
-
-    return 'ts'
+    _mapUrl: string | null,
+    _segments: Array<Pick<HlsSegment, 'url'>>
+): 'mp4' {
+    return 'mp4'
 }
 
 export function sliceHlsSegments(segments: HlsSegment[], limit?: number): HlsSegment[] {

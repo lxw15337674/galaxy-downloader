@@ -114,16 +114,15 @@ pnpm dev
 
 ## SEO 配置
 
-部署时建议配置以下环境变量，确保上游解析服务、canonical 和索引策略都正确：
+部署时建议配置以下环境变量，确保公开 API、canonical 和索引策略都正确：
 
-- `API_BASE_URL`: 上游解析服务地址，例如 `https://api.example.com`。生产和预发部署必须配置；本地开发未配置时默认使用 `http://localhost:8080`
-- `INTERNAL_SOURCE_TOKEN`: 站内服务端代理发给上游解析服务的内部信任令牌；需要与上游解析服务配置保持一致
+- `NEXT_PUBLIC_API_BASE_URL`: 公开下载 API 地址，例如 `https://downloader-api.bhwa233.com`。前端会直接请求这个地址；本地开发未配置时默认使用 `http://localhost:8788`
 - `NEXT_PUBLIC_SITE_URL`: 当前环境站点地址（例如 `https://downloader.bhwa233.com`）
 - `SEO_INDEXABLE`: 是否允许索引，`true` / `false`
 
 如果本地开发未配置 `NEXT_PUBLIC_SITE_URL`，应用会默认使用 `http://localhost:3010` 作为站点基址，避免 manifest、canonical 和 Open Graph 链接错误地指向生产域名。
 
-如果生产或预发环境未配置 `API_BASE_URL`，应用的代理接口会返回 `503 SERVICE_UNAVAILABLE` JSON 错误，而不是未处理的 500。
+如果生产或预发环境需要接入非默认公开 API，请显式配置 `NEXT_PUBLIC_API_BASE_URL`，避免客户端请求落到错误的域名。
 
 默认策略：
 

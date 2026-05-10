@@ -1,7 +1,9 @@
+import { API_ENDPOINTS } from './config'
+
 // 反馈API配置
 export const FEEDBACK_CONFIG = {
   // API端点
-  apiUrl: '/api/feedback',
+  apiUrl: API_ENDPOINTS.feedback,
 
   // 验证规则
   validation: {

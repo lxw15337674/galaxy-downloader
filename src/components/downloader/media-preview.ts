@@ -1,3 +1,4 @@
+import { API_ENDPOINTS } from '@/lib/config'
 import type { EmbeddedVideoInfo, PageInfo, UnifiedParseResult } from '@/lib/types'
 
 import { getResultMediaActions, shouldShowVideoDownloadButton } from './result-card-visibility'
@@ -29,7 +30,7 @@ export function buildMediaPreviewUrl(request: MediaPreviewRequest): string {
         params.set('item', request.item)
     }
 
-    return `/api/play?${params.toString()}`
+    return `${API_ENDPOINTS.unified.play}?${params.toString()}`
 }
 
 export function canPreviewResultVideo(result: ParsedResultData): boolean {

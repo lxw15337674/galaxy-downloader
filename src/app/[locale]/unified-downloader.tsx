@@ -57,7 +57,9 @@ export function UnifiedDownloader({
     const searchParams = useSearchParams();
     const [url, setUrl] = useState('');
     const [loading, setLoading] = useState(false);
+    const [isCoolingDown, setIsCoolingDown] = useState(false);
     const [error, setError] = useState('');
+    const lastParseTimeRef = useRef<number>(0);
     const [audioToolMounted, setAudioToolMounted] = useState(false);
     const [audioToolOpen, setAudioToolOpen] = useState(false);
     const [audioToolEntry, setAudioToolEntry] = useState<'toolbar' | 'result'>('toolbar');
@@ -166,16 +168,24 @@ export function UnifiedDownloader({
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!url.trim()) {
+            setError(dict.errors.emptyUrl);
+            return;
+        }
+
+        const now = Date.now();
+        if (now - lastParseTimeRef.current < 3000) {
+            return; // 冷却中禁止再次提交
+        }
+        lastParseTimeRef.current = now;
+        setIsCoolingDown(true);
+        setTimeout(() => setIsCoolingDown(false), 3000);
+
         setLoading(true);
         setError('');
         setParseResult(null);
         setActivePreview(null);
-
-        if (!url.trim()) {
-            setError(dict.errors.emptyUrl);
-            setLoading(false);
-            return;
-        }
 
         try {
             // 使用统一接口处理所有平台，后端负责所有检测和处理
@@ -468,7 +478,7 @@ export function UnifiedDownloader({
                                                 <Button
                                                     type="submit"
                                                     className="flex-1 flex items-center justify-center gap-2"
-                                                    disabled={loading || !url.trim()}
+                                                    disabled={loading || isCoolingDown || !url.trim()}
                                                 >
                                                     {loading && <Loader2 className="h-4 w-4 animate-spin" />}
                                                     {loading ? dict.form.downloading : dict.form.downloadButton}

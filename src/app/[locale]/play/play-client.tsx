@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Loader2, ExternalLink } from 'lucide-react'
+import { HlsVideoPlayer } from '@/components/hls-video-player'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { PlatformBadge } from '@/components/platform-badge'
@@ -11,6 +12,7 @@ import { ViewportSideRailAd } from '@/components/ads/viewport-side-rail-ad'
 import { buildMediaPreviewUrl, canSharePlayResult } from '@/components/downloader/media-preview'
 import { useAppLocale, useDictionary } from '@/i18n/client'
 import { isApiRequestError, resolveApiErrorMessage } from '@/lib/api-errors'
+import { buildHlsPlayProxyUrl, HLS_PLAYLIST_ACCEPT, isHlsPlaylistUrl } from '@/lib/hls-playback'
 import { UnifiedParseReloadError, requestUnifiedParse } from '@/lib/unified-parse'
 import type { UnifiedParseResult } from '@/lib/types'
 import { normalizePlatform } from '@/lib/platforms'
@@ -87,7 +89,23 @@ export function PlayPageClient() {
     const visibleParseResult = sourceUrl ? parseResult : null
     const displayError = sourceUrl ? error : dict.errors.emptyUrl
     const canonicalSourceUrl = (visibleParseResult?.url || sourceUrl).trim()
+    const hlsPlaybackUrl = useMemo(() => {
+        const playlistUrl = visibleParseResult?.originDownloadVideoUrl?.trim()
+        if (!playlistUrl || !isHlsPlaylistUrl(playlistUrl)) {
+            return null
+        }
+
+        return buildHlsPlayProxyUrl(
+            playlistUrl,
+            canonicalSourceUrl || playlistUrl,
+            HLS_PLAYLIST_ACCEPT
+        )
+    }, [canonicalSourceUrl, visibleParseResult])
     const playbackUrl = useMemo(() => {
+        if (hlsPlaybackUrl) {
+            return hlsPlaybackUrl
+        }
+
         if (!canonicalSourceUrl || !visibleParseResult) {
             return null
         }
@@ -97,7 +115,7 @@ export function PlayPageClient() {
             sourceUrl: canonicalSourceUrl,
             title: visibleParseResult.title,
         })
-    }, [canonicalSourceUrl, visibleParseResult])
+    }, [canonicalSourceUrl, hlsPlaybackUrl, visibleParseResult])
 
     const canPlay = visibleParseResult ? canSharePlayResult(visibleParseResult) : false
 
@@ -113,14 +131,25 @@ export function PlayPageClient() {
                             </div>
                         </div>
                     ) : (canPlay && playbackUrl) ? (
-                        <video
-                            src={playbackUrl}
-                            controls
-                            autoPlay={autoplay}
-                            playsInline
-                            preload="metadata"
-                            className="block w-full min-h-[320px] max-h-[74dvh] md:max-h-[72vh] lg:max-h-[68vh] bg-black"
-                        />
+                        hlsPlaybackUrl ? (
+                            <HlsVideoPlayer
+                                src={playbackUrl}
+                                controls
+                                autoPlay={autoplay}
+                                playsInline
+                                preload="metadata"
+                                className="block w-full min-h-[320px] max-h-[74dvh] md:max-h-[72vh] lg:max-h-[68vh] bg-black"
+                            />
+                        ) : (
+                            <video
+                                src={playbackUrl}
+                                controls
+                                autoPlay={autoplay}
+                                playsInline
+                                preload="metadata"
+                                className="block w-full min-h-[320px] max-h-[74dvh] md:max-h-[72vh] lg:max-h-[68vh] bg-black"
+                            />
+                        )
                     ) : visibleParseResult ? (
                         <div className="aspect-video max-h-[74dvh] md:max-h-[72vh] lg:max-h-[68vh] flex items-center justify-center px-4 text-sm text-muted-foreground bg-black">
                             {dict.result.sharePlayUnavailable}

@@ -17,6 +17,10 @@ it('normalizes youtube platform', () => {
     expect(normalizePlatform('youtube')).toBe('youtube')
 })
 
+it('normalizes generic platform', () => {
+    expect(normalizePlatform('generic')).toBe('generic')
+})
+
 it('normalizes newly added foreign platforms', () => {
     expect(normalizePlatform('vimeo')).toBe('vimeo')
     expect(normalizePlatform('dailymotion')).toBe('dailymotion')

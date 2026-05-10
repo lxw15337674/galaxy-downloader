@@ -1,4 +1,5 @@
 import type { MediaActions, UnifiedParseResultImage } from '@/lib/types'
+import { isHlsPlaylistUrl } from '@/lib/hls-playback'
 
 type LegacyVideoAudioMode = 'muxed' | 'separate' | 'pure_music' | 'not_applicable'
 

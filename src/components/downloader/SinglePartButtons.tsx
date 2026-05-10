@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { ExternalLink, ImageDown, MonitorPlay, Headphones } from 'lucide-react';
+import { Download, ExternalLink, ImageDown, MonitorPlay, Headphones } from 'lucide-react';
 
 import type { AudioExtractTask } from '@/components/audio-tool/types';
+import type { HlsDownloadDialogRequest } from '@/components/hls-download-dialog';
 import type { MediaPreviewRequest } from '@/components/downloader/media-preview';
 import { Button } from '@/components/ui/button';
 import { useDictionary } from '@/i18n/client';
+import { isHlsPlaylistUrl } from '@/lib/hls-playback';
 import type { UnifiedParseResult } from '@/lib/types';
 import { downloadFile } from '@/lib/utils';
 
@@ -18,12 +20,14 @@ export function SinglePartButtons({
     previewItem,
     onDownloadCover,
     onOpenExtractAudio,
+    onOpenHlsDownload,
     onRequestPreview,
 }: {
     result: NonNullable<UnifiedParseResult['data']>;
     previewItem?: string;
     onDownloadCover?: () => Promise<void> | void;
     onOpenExtractAudio: (task: AudioExtractTask) => void;
+    onOpenHlsDownload: (request: HlsDownloadDialogRequest) => void;
     onRequestPreview: (request: MediaPreviewRequest) => void;
 }) {
     const dict = useDictionary();
@@ -51,11 +55,24 @@ export function SinglePartButtons({
         typeof result.originDownloadAudioUrl === 'string'
         && result.originDownloadAudioUrl.length > 0
         && result.originDownloadAudioUrl !== audioDownloadUrl;
+    const showBrowserHlsDownload = isHlsPlaylistUrl(result.originDownloadVideoUrl);
 
     const handleDownload = (url: string, setLoading: (value: boolean) => void) => {
         setLoading(true);
         downloadFile(url);
         setTimeout(() => setLoading(false), 1500);
+    };
+
+    const openBrowserHlsDownload = () => {
+        if (!result.originDownloadVideoUrl) {
+            return;
+        }
+
+        onOpenHlsDownload({
+            sourceUrl: result.originDownloadVideoUrl,
+            refererUrl: result.url || result.originDownloadVideoUrl,
+            title: result.title || result.desc || dict.history.unknownTitle,
+        });
     };
 
     const openResultTask = (action: AudioExtractTask['action']) => {
@@ -71,6 +88,7 @@ export function SinglePartButtons({
     const previewTitle = result.title || result.desc || dict.result.title;
     const actionCount = Number(showVideoPreview)
         + Number(showVideoDownload)
+        + Number(showBrowserHlsDownload)
         + Number(showAudioPreview)
         + Number(showAudioDownload)
         + Number(showCoverDownload);
@@ -136,6 +154,15 @@ export function SinglePartButtons({
                         }}
                     />
                 )}
+                {showBrowserHlsDownload && (
+                    <MediaActionIconButton
+                        label={dict.result.browserDownloadVideo}
+                        icon={Download}
+                        variant="outline"
+                        className={actionButtonClass}
+                        onClick={openBrowserHlsDownload}
+                    />
+                )}
                 {showAudioDownload && (
                     <MediaActionIconButton
                         label={audioAction === 'direct-download'
@@ -178,6 +205,11 @@ export function SinglePartButtons({
             {videoAction === 'merge-then-download' && (
                 <p className="text-xs text-muted-foreground">
                     {dict.result.mergeDownloadVideoHint}
+                </p>
+            )}
+            {showBrowserHlsDownload && (
+                <p className="text-xs text-muted-foreground">
+                    {dict.result.browserDownloadVideoHint}
                 </p>
             )}
             {result.noteType === 'audio' && (

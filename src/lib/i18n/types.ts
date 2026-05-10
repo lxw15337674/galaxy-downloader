@@ -5,6 +5,8 @@ export interface ResultDict {
     videoList: string;
     videoCount: string;
     downloadVideo: string;
+    browserDownloadVideo: string;
+    browserDownloadVideoHint: string;
     mergeDownloadVideo: string;
     mergeDownloadVideoHint: string;
     downloadAudio: string;
@@ -153,6 +155,7 @@ export interface Dictionary {
             tiktok: string;
             instagram: string;
             x: string;
+            generic: string;
             unknown: string;
         };
     };
@@ -243,6 +246,44 @@ export interface Dictionary {
         statusReadingVideo: string;
         statusReadingAudio: string;
         statusMerging: string;
+    };
+    hlsDownload: {
+        description: string;
+        outputTitle: string;
+        outputPlaceholder: string;
+        sourceUrl: string;
+        sourcePlaceholder: string;
+        refererUrl: string;
+        refererPlaceholder: string;
+        segmentCount: string;
+        segmentCountPlaceholder: string;
+        resolveButton: string;
+        resolvingButton: string;
+        downloadButton: string;
+        downloadingButton: string;
+        statusLabel: string;
+        idleStatus: string;
+        resolvingStatus: string;
+        resolvedStatus: string;
+        resolveFailedStatus: string;
+        downloadingStatus: string;
+        downloadCompletedStatus: string;
+        downloadFailedStatus: string;
+        progressLabel: string;
+        speedLabel: string;
+        etaLabel: string;
+        calculatingLabel: string;
+        confirmCloseTitle: string;
+        confirmCloseDescription: string;
+        confirmCloseAction: string;
+        resolvedPlaylist: string;
+        totalSegments: string;
+        selectedSegments: string;
+        encryptedLabel: string;
+        encryptedYes: string;
+        encryptedNo: string;
+        encryptedHint: string;
+        previewSegmentUrls: string;
     };
     guide: {
         quickStart: {

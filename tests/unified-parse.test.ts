@@ -14,6 +14,7 @@ const responsePayload = {
         platform: 'youtube',
         downloadAudioUrl: null,
         downloadVideoUrl: null,
+        originDownloadVideoUrl: null,
         url: 'https://example.com/watch?v=1',
     },
 } satisfies UnifiedParseResult

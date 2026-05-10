@@ -25,6 +25,7 @@ export type CanonicalPlatform =
     | 'tiktok'
     | 'instagram'
     | 'x'
+    | 'generic'
     | 'unknown'
 
 const PLATFORM_ALIASES: Record<string, CanonicalPlatform> = {
@@ -56,6 +57,7 @@ const PLATFORM_ALIASES: Record<string, CanonicalPlatform> = {
     ins: 'instagram',
     x: 'x',
     twitter: 'x',
+    generic: 'generic',
     unknown: 'unknown',
 }
 
@@ -130,6 +132,8 @@ export function getPlatformLabel(
             return dict.history.platforms.instagram
         case 'x':
             return dict.history.platforms.x
+        case 'generic':
+            return dict.history.platforms.generic
         default:
             return dict.history.platforms.unknown
     }

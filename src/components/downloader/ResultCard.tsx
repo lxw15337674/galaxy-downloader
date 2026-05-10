@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react';
 import { Share2, X } from 'lucide-react';
 
 import type { AudioExtractTask } from '@/components/audio-tool/types';
+import { DeferredHlsDownloadDialog } from '@/components/deferred-hls-download-dialog';
+import type { HlsDownloadDialogRequest } from '@/components/hls-download-dialog';
 import type { MediaPreviewRequest } from '@/components/downloader/media-preview';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { HlsVideoPlayer } from '@/components/hls-video-player';
 import { useDictionary } from '@/i18n/client';
 import { toast } from '@/lib/deferred-toast';
+import { buildHlsPlayProxyUrl, HLS_PLAYLIST_ACCEPT, isHlsPlaylistUrl } from '@/lib/hls-playback';
 import type { UnifiedParseResult } from '@/lib/types';
 import { formatDuration, sanitizeFilename } from '@/lib/utils';
 
@@ -160,6 +164,7 @@ function ResultCardContent({
         currentPage: result?.currentPage,
         currentItemId: result?.currentItemId,
     });
+    const [hlsDownloadRequest, setHlsDownloadRequest] = useState<HlsDownloadDialogRequest | null>(null);
 
     const activeBiliList = activeBiliListState.key === activeListKey
         ? activeBiliListState.value
@@ -234,7 +239,15 @@ function ResultCardContent({
         autoplay: activePreview?.autoplay ?? primaryPreview.autoplay,
         origin: activePreview?.origin ?? primaryPreview.origin,
     } : null;
-    const playerUrl = playerPreview ? buildMediaPreviewUrl(playerPreview) : null;
+    const hlsPlaybackUrl = playerPreview?.mediaType === 'video'
+        && isHlsPlaylistUrl(effectiveResult.originDownloadVideoUrl)
+        ? buildHlsPlayProxyUrl(
+            effectiveResult.originDownloadVideoUrl,
+            effectiveResult.url || effectiveResult.originDownloadVideoUrl,
+            HLS_PLAYLIST_ACCEPT
+        )
+        : null;
+    const playerUrl = hlsPlaybackUrl || (playerPreview ? buildMediaPreviewUrl(playerPreview) : null);
     const previewItem = activeCollectionSource === 'pages'
         ? (currentPage ? String(currentPage.page) : undefined)
         : activeCollectionSource === 'season'
@@ -389,17 +402,30 @@ function ResultCardContent({
                                     className="w-full"
                                 />
                             ) : (
-                                <video
-                                    key={playerUrl}
-                                    src={playerUrl}
-                                    controls
-                                    autoPlay={playerPreview.autoplay}
-                                    muted={playerPreview.origin === 'share' && playerPreview.autoplay}
-                                    playsInline
-                                    preload="metadata"
-                                    poster={coverSrc || undefined}
-                                    className="w-full min-h-[240px] max-h-[50vh] bg-black"
-                                />
+                                hlsPlaybackUrl ? (
+                                    <HlsVideoPlayer
+                                        key={playerUrl}
+                                        src={playerUrl}
+                                        autoPlay={playerPreview.autoplay}
+                                        muted={playerPreview.origin === 'share' && playerPreview.autoplay}
+                                        playsInline
+                                        preload="metadata"
+                                        poster={coverSrc || undefined}
+                                        className="w-full min-h-[240px] max-h-[50vh] bg-black"
+                                    />
+                                ) : (
+                                    <video
+                                        key={playerUrl}
+                                        src={playerUrl}
+                                        controls
+                                        autoPlay={playerPreview.autoplay}
+                                        muted={playerPreview.origin === 'share' && playerPreview.autoplay}
+                                        playsInline
+                                        preload="metadata"
+                                        poster={coverSrc || undefined}
+                                        className="w-full min-h-[240px] max-h-[50vh] bg-black"
+                                    />
+                                )
                             )}
                         </div>
                     ) : !isImageNote && coverSrc ? (
@@ -421,6 +447,7 @@ function ResultCardContent({
                                 previewItem={previewItem}
                                 onDownloadCover={selectedCoverUrl ? handleDownloadCover : undefined}
                                 onOpenExtractAudio={onOpenExtractAudio}
+                                onOpenHlsDownload={setHlsDownloadRequest}
                                 onRequestPreview={onRequestPreview}
                             />
                             {(showMultiPartList || showSeasonList || hasBilibiliSourceSwitch) && (
@@ -473,6 +500,15 @@ function ResultCardContent({
                         </>
                     )}
                 </div>
+                <DeferredHlsDownloadDialog
+                    open={Boolean(hlsDownloadRequest)}
+                    onOpenChange={(open) => {
+                        if (!open) {
+                            setHlsDownloadRequest(null);
+                        }
+                    }}
+                    request={hlsDownloadRequest}
+                />
             </CardContent>
         </Card>
     );

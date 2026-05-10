@@ -11,7 +11,7 @@ import { ViewportSideRailAd } from '@/components/ads/viewport-side-rail-ad'
 import { buildMediaPreviewUrl, canSharePlayResult } from '@/components/downloader/media-preview'
 import { useAppLocale, useDictionary } from '@/i18n/client'
 import { isApiRequestError, resolveApiErrorMessage } from '@/lib/api-errors'
-import { requestUnifiedParse } from '@/lib/unified-parse'
+import { UnifiedParseReloadError, requestUnifiedParse } from '@/lib/unified-parse'
 import type { UnifiedParseResult } from '@/lib/types'
 import { normalizePlatform } from '@/lib/platforms'
 
@@ -53,6 +53,10 @@ export function PlayPageClient() {
                 })
             } catch (err) {
                 if (cancelled) {
+                    return
+                }
+
+                if (err instanceof UnifiedParseReloadError) {
                     return
                 }
 

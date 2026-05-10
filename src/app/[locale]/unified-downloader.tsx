@@ -24,7 +24,7 @@ import { DOWNLOAD_HISTORY_MAX_COUNT, DOWNLOAD_HISTORY_STORAGE_KEY } from '@/lib/
 import { useDictionary } from '@/i18n/client';
 import { isApiRequestError, resolveApiErrorMessage } from '@/lib/api-errors';
 import { getPlatformLabel, normalizePlatform } from '@/lib/platforms';
-import { requestUnifiedParse } from '@/lib/unified-parse';
+import { UnifiedParseReloadError, requestUnifiedParse } from '@/lib/unified-parse';
 
 const UnifiedDownloaderLowerSections = dynamic(
     () => import('./unified-downloader-lower-sections').then((m) => m.UnifiedDownloaderLowerSections),
@@ -183,6 +183,11 @@ export function UnifiedDownloader({
 
             setUrl('');
         } catch (err) {
+            if (err instanceof UnifiedParseReloadError) {
+                setLoading(false);
+                return;
+            }
+
             if (isApiRequestError(err)) {
                 console.error('Unified parse request failed', {
                     code: err.code,
@@ -277,6 +282,10 @@ export function UnifiedDownloader({
                 } : null);
             } catch (err) {
                 if (cancelled) {
+                    return;
+                }
+
+                if (err instanceof UnifiedParseReloadError) {
                     return;
                 }
 

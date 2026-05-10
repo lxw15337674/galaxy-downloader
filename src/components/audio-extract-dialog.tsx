@@ -23,7 +23,7 @@ import { useFFmpeg, type FFmpegStatus } from '@/hooks/use-ffmpeg'
 import { useDictionary } from '@/i18n/client'
 import { isApiRequestError, resolveApiErrorMessage } from '@/lib/api-errors'
 import { toast } from '@/lib/deferred-toast'
-import { requestUnifiedParse } from '@/lib/unified-parse'
+import { UnifiedParseReloadError, requestUnifiedParse } from '@/lib/unified-parse'
 import { cn, downloadFile, formatBytes, sanitizeFilename } from '@/lib/utils'
 
 interface AudioExtractDialogProps {
@@ -540,6 +540,11 @@ export function AudioExtractDialog({
 
             throw new Error(dict.audioTool.noAudioSource)
         } catch (err) {
+            if (err instanceof UnifiedParseReloadError) {
+                setStage('idle')
+                return
+            }
+
             if (isApiRequestError(err)) {
                 console.error('Audio tool auto parse failed', {
                     code: err.code,

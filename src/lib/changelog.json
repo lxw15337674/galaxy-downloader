@@ -1,26 +1,26 @@
 {
   "versions": [
     {
-      "version": "5.2.0",
+      "version": "6.0.0",
       "date": "2026-05-10",
       "changes": {
         "zh": [
-          "新增 M3U8 (HLS) 流媒体视频的解析、在线播放与浏览器端直接下载支持"
+          "新增通用视频网站的解析"
         ],
         "en": [
-          "Added support for parsing, online playback, and browser-side downloading of M3U8 (HLS) streaming videos"
+          "Added support for parsing generic video sites"
         ],
         "ja": [
-          "M3U8 (HLS) ストリーミング動画の解析、オンライン再生、ブラウザからの直接ダウンロードに対応しました"
+          "一般的な動画サイトの解析に対応しました"
         ],
         "zh-tw": [
-          "新增 M3U8 (HLS) 串流媒體影片的解析、線上播放與瀏覽器端直接下載支援"
+          "新增通用影片網站的解析"
         ],
         "es": [
-          "Se agregó soporte para analizar, reproducir en línea y descargar videos en streaming M3U8 (HLS) directamente desde el navegador"
+          "Se agregó soporte para analizar sitios de video generales"
         ],
         "ru": [
-          "Добавлена поддержка разбора, онлайн-воспроизведения и скачивания потокового видео M3U8 (HLS) прямо в браузере"
+          "Добавлена поддержка разбора общих видеосайтов"
         ]
       }
     },

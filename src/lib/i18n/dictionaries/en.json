@@ -6,8 +6,8 @@
         "douyinButton": "Douyin Downloader"
     },
     "unified": {
-        "pageTitle": "Social Media Downloader",
-        "pageDescription": "Paste a link to auto-detect the content and quickly download video, audio, pure music, or image posts.",
+        "pageTitle": "Universal Media Downloader",
+        "pageDescription": "Paste a link to auto-detect the content and quickly download video, audio, pure music, image posts, and M3U8/HLS streams.",
         "placeholder": "Paste link or share token here...",
         "newBadge": "New: Douyin image notes",
         "exampleLabel": "Paste example",
@@ -891,6 +891,10 @@
         "errorFallback": "You can also reach us through:",
         "retryButton": "Retry",
         "toastSuccess": "Feedback submitted successfully!",
+        "toastError": "Failed to submit, please try again"
+    }
+}
+ted successfully!",
         "toastError": "Failed to submit, please try again"
     }
 }

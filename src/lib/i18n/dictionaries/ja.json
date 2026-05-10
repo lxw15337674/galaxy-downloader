@@ -120,10 +120,10 @@
     },
     "metadata": {
         "title": "sparkdownloader | Bilibili・Douyin・Instagram・TikTok・X",
-        "description": "無料のオンラインメディアダウンローダー。Bilibili、Douyin、Telegram、Threads、WeChat、Weibo、Niconico、Instagram、Xiaohongshu、TikTok、X のリンクを自動判別し、動画・音声・画像投稿をダウンロードできます。",
-        "keywords": "オンラインメディアダウンローダー,Bilibili動画ダウンロード,Bilibili音声ダウンロード,Douyin動画ダウンロード,Douyin音楽ダウンロード,Telegram動画ダウンロード,Threads動画ダウンロード,Threads画像投稿ダウンロード,WeChat動画ダウンロード,Weibo動画ダウンロード,Weibo混合メディアダウンロード,Niconico動画ダウンロード,Niconico音声ダウンロード,Instagram Reelsダウンロード,Instagram投稿ダウンロード,Instagram画像投稿ダウンロード,Xiaohongshu動画ダウンロード,Xiaohongshu画像ノートダウンロード,TikTok動画ダウンロード,X動画ダウンロード",
+        "description": "無料のオンラインメディアダウンローダー。Bilibili、Douyin、Telegram、Threads、WeChat、Weibo、Niconico、Instagram、Xiaohongshu、TikTok、X のリンクを自動判別し、動画・音声・画像投稿、および M3U8/HLS ストリーミングをダウンロードできます。",
+        "keywords": "オンラインメディアダウンローダー,Bilibili動画ダウンロード,Bilibili音声ダウンロード,Douyin動画ダウンロード,Douyin音楽ダウンロード,Telegram動画ダウンロード,Threads動画ダウンロード,Threads画像投稿ダウンロード,WeChat動画ダウンロード,Weibo動画ダウンロード,Weibo混合メディアダウンロード,Niconico動画ダウンロード,Niconico音声ダウンロード,Instagram Reelsダウンロード,Instagram投稿ダウンロード,Instagram画像投稿ダウンロード,Xiaohongshu動画ダウンロード,Xiaohongshu画像ノートダウンロード,TikTok動画ダウンロード,X動画ダウンロード,M3U8ダウンローダー,HLSストリーミングダウンロード,Web動画ダウンロード,TSマージ",
         "ogTitle": "sparkdownloader | 無料オンラインツール",
-        "ogDescription": "Bilibili、Douyin、Telegram、Threads、WeChat、Weibo、Niconico、Instagram、Xiaohongshu、TikTok、X のリンクを自動判別し、動画・音声・画像投稿をオンラインでダウンロードできます。",
+        "ogDescription": "Bilibili、Douyin、Telegram、Threads、WeChat、Weibo、Niconico、Instagram、Xiaohongshu、TikTok、X のリンクを自動判別し、動画・音声・画像投稿、および M3U8/HLS ストリーミングをオンラインでダウンロードできます。",
         "siteName": "sparkdownloader"
     },
     "common": {

@@ -6,8 +6,8 @@
         "douyinButton": "抖音下载器"
     },
     "unified": {
-        "pageTitle": "社交媒体下载器",
-        "pageDescription": "粘贴链接后自动识别内容，快速下载视频、音频、纯音乐或图文。",
+        "pageTitle": "全能媒体下载器",
+        "pageDescription": "粘贴链接后自动识别内容，快速下载视频、音频、纯音乐、图文以及 M3U8/HLS 流媒体。",
         "placeholder": "请在此处粘贴链接或口令...",
         "newBadge": "新增抖音图文支持",
         "exampleLabel": "粘贴示例",
@@ -889,6 +889,10 @@
         "errorFallback": "你也可以通过以下方式联系我们：",
         "retryButton": "重试",
         "toastSuccess": "反馈提交成功！",
+        "toastError": "提交失败，请重试"
+    }
+}
+s": "反馈提交成功！",
         "toastError": "提交失败，请重试"
     }
 }

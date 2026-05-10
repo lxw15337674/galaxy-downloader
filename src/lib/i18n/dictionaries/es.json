@@ -120,10 +120,10 @@
     },
     "metadata": {
         "title": "sparkdownloader | Bilibili, Douyin, Instagram, TikTok, X",
-        "description": "Herramienta online gratuita para descargar contenido desde Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok y X.",
-        "keywords": "descargador de medios en línea, descargador de videos Bilibili, descargador de audio Bilibili, descargador de videos Douyin, descargador de música Douyin, descargador de videos Telegram, descargador de videos Threads, descargador de publicaciones de imágenes Threads, descargador de videos WeChat, descargador de videos Weibo, descargador de medios mixtos Weibo, descargador de videos Niconico, descargador de audio Niconico, descargador de carretes de Instagram, descargador de publicaciones de Instagram, publicación de imágenes de Instagram descargador, descargador de videos Xiaohongshu, descargador de notas de imágenes Xiaohongshu, descargador de videos TikTok, descargador de videos X",
+        "description": "Herramienta online gratuita para descargar contenido desde Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok y X, y admite la descarga de transmisiones M3U8/HLS.",
+        "keywords": "descargador de medios en línea, descargador de videos Bilibili, descargador de audio Bilibili, descargador de videos Douyin, descargador de música Douyin, descargador de videos Telegram, descargador de videos Threads, descargador de publicaciones de imágenes Threads, descargador de videos WeChat, descargador de videos Weibo, descargador de medios mixtos Weibo, descargador de videos Niconico, descargador de audio Niconico, descargador de carretes de Instagram, descargador de publicaciones de Instagram, publicación de imágenes de Instagram descargador, descargador de videos Xiaohongshu, descargador de notas de imágenes Xiaohongshu, descargador de videos TikTok, descargador de videos X, descargador m3u8, descargador de transmisiones hls, video web descargar, m3u8 a mp4",
         "ogTitle": "sparkdownloader | Herramienta online gratuita",
-        "ogDescription": "Detecta enlaces automáticamente y descarga video, audio o imágenes en línea.",
+        "ogDescription": "Detecta enlaces automáticamente y descarga video, audio, imágenes y transmisiones M3U8/HLS en línea.",
         "siteName": "sparkdownloader"
     },
     "common": {

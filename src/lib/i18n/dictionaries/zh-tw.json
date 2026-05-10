@@ -120,10 +120,10 @@
     },
     "metadata": {
         "title": "sparkdownloader｜Bilibili、抖音、Instagram、TikTok、X 下載工具",
-        "description": "免費線上媒體下載工具，支援 Bilibili、抖音、Telegram、Threads、微信公眾號、微博、Niconico、Instagram、小紅書、TikTok 與 X。自動識別連結並下載影片、音訊或圖文內容。",
-        "keywords": "線上媒體下載器,嗶哩嗶哩影片下載,嗶哩嗶哩音訊下載,抖音影片下載,抖音純音樂下載,Telegram影片下載,Threads影片下載,Threads圖文下載,微信公眾號影片下載,微博影片下載,微博圖文下載,微博混合媒體下載,Niconico影片下載,Niconico音訊下載,Instagram Reels下載,Instagram貼文下載,Instagram圖文貼文下載,小紅書影片下載,小紅書圖文下載,TikTok影片下載,X影片下載",
+        "description": "免費線上媒體下載工具，支援 Bilibili、抖音、Telegram、Threads、微信公眾號、微博、Niconico、Instagram、小紅書、TikTok 與 X。自動識別連結並下載影片、音訊、圖文及 M3U8/HLS 串流媒體內容。",
+        "keywords": "線上媒體下載器,嗶哩嗶哩影片下載,嗶哩嗶哩音訊下載,抖音影片下載,抖音純音樂下載,Telegram影片下載,Threads影片下載,Threads圖文下載,微信公眾號影片下載,微博影片下載,微博圖文下載,微博混合媒體下載,Niconico影片下載,Niconico音訊下載,Instagram Reels下載,Instagram貼文下載,Instagram圖文貼文下載,小紅書影片下載,小紅書圖文下載,TikTok影片下載,X影片下載,M3U8下載器,HLS串流媒體下載,網頁影片下載,TS切片合併",
         "ogTitle": "sparkdownloader｜免費線上下載工具",
-        "ogDescription": "自動識別 Bilibili、抖音、Telegram、Threads、微信公眾號、微博、Niconico、Instagram、小紅書、TikTok 與 X 連結，線上下載影片、音訊或圖文內容。",
+        "ogDescription": "自動識別 Bilibili、抖音、Telegram、Threads、微信公眾號、微博、Niconico、Instagram、小紅書、TikTok 與 X 連結，線上下載影片、音訊、圖文及 M3U8/HLS 串流媒體內容。",
         "siteName": "sparkdownloader"
     },
     "common": {

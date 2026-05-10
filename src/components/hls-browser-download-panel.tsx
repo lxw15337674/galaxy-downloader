@@ -52,6 +52,8 @@ type DownloadSample = {
     timestamp: number
 }
 
+type DirectFetchMode = 'probe' | 'proxy-only'
+
 export interface HlsBrowserDownloadPanelProps {
     initialSourceUrl: string
     initialRefererUrl: string
@@ -101,6 +103,14 @@ function shouldRetryDownload(error: unknown): boolean {
     }
 
     return true
+}
+
+function resolveHost(url: string): string | null {
+    try {
+        return new URL(url).host
+    } catch {
+        return null
+    }
 }
 
 async function fetchProxyText(
@@ -197,13 +207,25 @@ async function fetchBytesWithFallback(
     target: string,
     referer: string,
     signal: AbortSignal,
+    directFetchModes: Map<string, DirectFetchMode>,
     byterange?: ByteRange
 ): Promise<Uint8Array> {
+    const host = resolveHost(target)
+    const directFetchMode = host ? directFetchModes.get(host) ?? 'probe' : 'probe'
+
+    if (directFetchMode === 'proxy-only') {
+        return fetchProxyBytes(target, referer, signal, byterange)
+    }
+
     try {
         return await fetchDirectBytes(target, signal, byterange)
     } catch (error) {
         if (isAbortError(error)) {
             throw error
+        }
+
+        if (host) {
+            directFetchModes.set(host, 'proxy-only')
         }
 
         return fetchProxyBytes(target, referer, signal, byterange)
@@ -214,10 +236,11 @@ async function fetchBytesWithRetry(
     target: string,
     referer: string,
     signal: AbortSignal,
+    directFetchModes: Map<string, DirectFetchMode>,
     byterange?: ByteRange
 ): Promise<Uint8Array> {
     return pRetry(
-        () => fetchBytesWithFallback(target, referer, signal, byterange),
+        () => fetchBytesWithFallback(target, referer, signal, directFetchModes, byterange),
         {
             retries: SEGMENT_DOWNLOAD_RETRIES,
             factor: 2,
@@ -311,6 +334,7 @@ function createStreamingDownloadResponse({
     onChunkDownloaded: (bytes: number) => void
 }): Response {
     const keyCache = new Map<string, Promise<CryptoKey>>()
+    const directFetchModes = new Map<string, DirectFetchMode>()
     let started = false
 
     const stream = new ReadableStream<Uint8Array>({
@@ -345,6 +369,7 @@ function createStreamingDownloadResponse({
                             target.url,
                             resolution.pageUrl,
                             signal,
+                            directFetchModes,
                             target.byterange
                         )
 
@@ -359,7 +384,8 @@ function createStreamingDownloadResponse({
                                     const rawKey = await fetchBytesWithRetry(
                                         target.keyUrl!,
                                         resolution.pageUrl,
-                                        signal
+                                        signal,
+                                        directFetchModes
                                     )
                                     return importAes128Key(rawKey)
                                 })())

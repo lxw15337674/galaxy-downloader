@@ -117,6 +117,7 @@ pnpm dev
 部署时建议配置以下环境变量，确保上游解析服务、canonical 和索引策略都正确：
 
 - `API_BASE_URL`: 上游解析服务地址，例如 `https://api.example.com`。生产和预发部署必须配置；本地开发未配置时默认使用 `http://localhost:8080`
+- `INTERNAL_SOURCE_TOKEN`: 站内服务端代理发给上游解析服务的内部信任令牌；需要与上游解析服务配置保持一致
 - `NEXT_PUBLIC_SITE_URL`: 当前环境站点地址（例如 `https://downloader.bhwa233.com`）
 - `SEO_INDEXABLE`: 是否允许索引，`true` / `false`
 

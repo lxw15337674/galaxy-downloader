@@ -5,6 +5,8 @@ import type { ApiErrorDetails, UnifiedApiResponse } from "@/lib/types"
 
 const DEFAULT_DEV_API_BASE_URL = "http://localhost:8080"
 const UPSTREAM_UNAVAILABLE_STATUS = 503
+const INTERNAL_SOURCE_HEADER = "x-internal-source-token"
+const INTERNAL_SOURCE_VALUE = process.env.INTERNAL_SOURCE_TOKEN?.trim() ?? ""
 
 const FORWARDED_REQUEST_HEADERS = [
     "accept",
@@ -76,6 +78,10 @@ function buildUpstreamHeaders(request: NextRequest): Headers {
         if (value) {
             headers.set(headerName, value)
         }
+    }
+
+    if (INTERNAL_SOURCE_VALUE) {
+        headers.set(INTERNAL_SOURCE_HEADER, INTERNAL_SOURCE_VALUE)
     }
 
     return headers

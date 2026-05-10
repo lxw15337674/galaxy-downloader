@@ -269,7 +269,7 @@
         "resolvedStatus": "Lista resuelta. Lista para descargar.",
         "resolveFailedStatus": "No se pudo resolver la lista.",
         "downloadingStatus": "Descargando {count} recursos HLS en el navegador...",
-        "downloadCompletedStatus": "Descarga completada. Guardando {filename}.",
+        "downloadCompletedStatus": "Descarga completada. Ya puedes cerrar este diálogo.",
         "downloadFailedStatus": "La descarga en el navegador falló.",
         "largeVideoBrowserLimitedStatus": "Este navegador no es adecuado para descargar este video más grande. Prueba con Chrome o Edge.",
         "progressLabel": "Progreso",

@@ -269,7 +269,7 @@
         "resolvedStatus": "プレイリストの解析が完了しました。ダウンロードできます。",
         "resolveFailedStatus": "プレイリストの解析に失敗しました。",
         "downloadingStatus": "ブラウザで {count} 個の HLS リソースをダウンロード中...",
-        "downloadCompletedStatus": "{filename} の保存を開始しました。",
+        "downloadCompletedStatus": "ダウンロードが完了しました。このダイアログを閉じることができます。",
         "downloadFailedStatus": "ブラウザでのダウンロードに失敗しました。",
         "largeVideoBrowserLimitedStatus": "この大きな動画は現在のブラウザではダウンロードに向いていません。Chrome または Edge でお試しください。",
         "progressLabel": "進捗",

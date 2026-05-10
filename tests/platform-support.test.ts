@@ -9,6 +9,7 @@ const dict = {
             bilibili: { name: 'Bilibili', summary: 'video' },
             bilibiliTv: { name: 'Bilibili TV', summary: 'tv' },
             douyin: { name: 'Douyin', summary: 'video' },
+            hls: { name: 'HLS', summary: 'streaming' },
             youtube: { name: 'YouTube', summary: 'video' },
             telegram: { name: 'Telegram', summary: 'channel' },
             threads: { name: 'Threads', summary: 'post' },

@@ -269,7 +269,7 @@
         "resolvedStatus": "播放清單已解析，可以開始下載。",
         "resolveFailedStatus": "播放清單解析失敗。",
         "downloadingStatus": "正在下載，請稍候...",
-        "downloadCompletedStatus": "下載完成，已開始儲存。",
+        "downloadCompletedStatus": "下載完成，您可以關閉該彈窗。",
         "downloadFailedStatus": "下載失敗，請重試。",
         "largeVideoBrowserLimitedStatus": "目前瀏覽器不適合下載這個較大的影片，請改用 Chrome 或 Edge 再試一次。",
         "progressLabel": "已完成",

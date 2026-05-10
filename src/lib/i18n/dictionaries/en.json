@@ -269,7 +269,7 @@
         "resolvedStatus": "Playlist resolved. Ready to download.",
         "resolveFailedStatus": "Playlist resolution failed.",
         "downloadingStatus": "Downloading {count} HLS resources in the browser...",
-        "downloadCompletedStatus": "Download finished. Saving {filename}.",
+        "downloadCompletedStatus": "Download finished. You can now close this dialog.",
         "downloadFailedStatus": "Browser-side download failed.",
         "largeVideoBrowserLimitedStatus": "This browser is not suitable for downloading this larger video. Please try Chrome or Edge.",
         "progressLabel": "Progress",

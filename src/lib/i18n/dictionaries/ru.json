@@ -269,7 +269,7 @@
         "resolvedStatus": "Плейлист разобран. Можно скачивать.",
         "resolveFailedStatus": "Не удалось разобрать плейлист.",
         "downloadingStatus": "Скачиваем {count} HLS-ресурсов в браузере...",
-        "downloadCompletedStatus": "Загрузка завершена. Сохраняем {filename}.",
+        "downloadCompletedStatus": "Загрузка завершена. Вы можете закрыть это окно.",
         "downloadFailedStatus": "Загрузка в браузере не удалась.",
         "largeVideoBrowserLimitedStatus": "Этот браузер не подходит для загрузки такого большого видео. Попробуйте Chrome или Edge.",
         "progressLabel": "Прогресс",

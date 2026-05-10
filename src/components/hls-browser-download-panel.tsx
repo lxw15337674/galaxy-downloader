@@ -24,7 +24,7 @@ import { HLS_PLAYLIST_ACCEPT } from '@/lib/hls-playback'
 import { requestUnifiedParse } from '@/lib/unified-parse'
 import { sanitizeFilename } from '@/lib/utils'
 
-const DOWNLOAD_CONCURRENCY = 4
+const DOWNLOAD_CONCURRENCY = 8
 const SEGMENT_DOWNLOAD_RETRIES = 3
 const HOST_PROBE_CONCURRENCY = 2
 const HOST_PROBE_TIMEOUT_MS = 2500

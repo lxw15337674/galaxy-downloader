@@ -210,11 +210,6 @@ export function SinglePartButtons({
                     {dict.result.mergeDownloadVideoHint}
                 </p>
             )}
-            {showBrowserHlsDownload && (
-                <p className="text-xs text-muted-foreground">
-                    {dict.result.browserDownloadVideoHint}
-                </p>
-            )}
             {result.noteType === 'audio' && (
                 <p className="text-xs text-muted-foreground">
                     {dict.result.pureMusicHint}

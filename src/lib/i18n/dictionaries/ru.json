@@ -817,7 +817,6 @@
         "title": "Результат анализа",
         "downloadVideo": "Скачать видео",
         "browserDownloadVideo": "HLS в браузере",
-        "browserDownloadVideoHint": "Сначала браузер пытается загрузить HLS-сегменты напрямую. Только неудачные запросы переходят на прокси.",
         "mergeDownloadVideo": "Скачать полное видео",
         "mergeDownloadVideoHint": "Аудио и видео будут объединены перед началом загрузки.",
         "downloadAudio": "Скачать аудио",

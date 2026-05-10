@@ -817,7 +817,6 @@
         "title": "Resultado del análisis",
         "downloadVideo": "Descargar vídeo",
         "browserDownloadVideo": "HLS en navegador",
-        "browserDownloadVideoHint": "Primero intenta descargar los segmentos HLS directamente en el navegador. Solo las solicitudes fallidas vuelven al proxy.",
         "mergeDownloadVideo": "Descargar Vídeo Completo",
         "mergeDownloadVideoHint": "El audio y el vídeo se fusionarán antes de que comience la descarga.",
         "downloadAudio": "Descargar audio",

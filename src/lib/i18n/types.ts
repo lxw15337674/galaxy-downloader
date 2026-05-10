@@ -6,7 +6,7 @@ export interface ResultDict {
     videoCount: string;
     downloadVideo: string;
     browserDownloadVideo: string;
-    browserDownloadVideoHint: string;
+
     mergeDownloadVideo: string;
     mergeDownloadVideoHint: string;
     downloadAudio: string;

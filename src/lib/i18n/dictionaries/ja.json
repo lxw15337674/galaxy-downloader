@@ -811,7 +811,6 @@
         "title": "解析結果",
         "downloadVideo": "動画をダウンロード",
         "browserDownloadVideo": "ブラウザ HLS ダウンロード",
-        "browserDownloadVideoHint": "まずブラウザで HLS セグメントを直接取得し、失敗したリクエストだけをプロキシにフォールバックします。",
         "mergeDownloadVideo": "完全な動画をダウンロード",
         "mergeDownloadVideoHint": "ダウンロード前に音声と動画を結合します。",
         "downloadAudio": "音声をダウンロード",

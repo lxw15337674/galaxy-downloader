@@ -815,7 +815,6 @@
         "title": "解析結果",
         "downloadVideo": "下載影片",
         "browserDownloadVideo": "瀏覽器下載",
-        "browserDownloadVideoHint": "下載會在目前瀏覽器中進行，完成後自動儲存。",
         "mergeDownloadVideo": "下載完整影片",
         "mergeDownloadVideoHint": "將先合併音訊與影片，再開始下載",
         "downloadAudio": "下載音訊",

@@ -817,7 +817,6 @@
         "title": "Parse Result",
         "downloadVideo": "Download Video",
         "browserDownloadVideo": "Browser HLS",
-        "browserDownloadVideoHint": "Try direct HLS segment download in the browser first. Only failed requests fall back to the proxy.",
         "mergeDownloadVideo": "Download Complete Video",
         "mergeDownloadVideoHint": "Audio and video will be merged before the download starts.",
         "downloadAudio": "Download Audio",

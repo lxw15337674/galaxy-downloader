@@ -271,6 +271,7 @@
         "downloadingStatus": "ブラウザで {count} 個の HLS リソースをダウンロード中...",
         "downloadCompletedStatus": "{filename} の保存を開始しました。",
         "downloadFailedStatus": "ブラウザでのダウンロードに失敗しました。",
+        "largeVideoBrowserLimitedStatus": "この大きな動画は現在のブラウザではダウンロードに向いていません。Chrome または Edge でお試しください。",
         "progressLabel": "進捗",
         "speedLabel": "速度",
         "etaLabel": "予定",
@@ -381,7 +382,7 @@
                     "音声"
                 ]
             },
-            "comingSoon": "さらに多くのプラットフォームに対応",
+            "comingSoon": "対応プラットフォーム追加予定",
             "instagram": {
                 "name": "Instagram",
                 "summary": "動画 / 画像投稿 / カルーセル",

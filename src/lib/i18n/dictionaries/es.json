@@ -271,6 +271,7 @@
         "downloadingStatus": "Descargando {count} recursos HLS en el navegador...",
         "downloadCompletedStatus": "Descarga completada. Guardando {filename}.",
         "downloadFailedStatus": "La descarga en el navegador falló.",
+        "largeVideoBrowserLimitedStatus": "Este navegador no es adecuado para descargar este video más grande. Prueba con Chrome o Edge.",
         "progressLabel": "Progreso",
         "speedLabel": "Velocidad",
         "etaLabel": "ETA",
@@ -381,7 +382,7 @@
                     "Audio"
                 ]
             },
-            "comingSoon": "Ahora se admiten más plataformas",
+            "comingSoon": "Más plataformas próximamente",
             "instagram": {
                 "name": "Instagram",
                 "summary": "Video / Publicación de imagen / Carrusel",

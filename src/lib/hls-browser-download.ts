@@ -24,6 +24,8 @@ export interface ParsedHlsMediaPlaylist {
     encrypted: boolean
 }
 
+export const NON_STREAMING_BROWSER_MAX_SEGMENTS = 800
+
 interface HlsPlaylistBase {
     isMasterPlaylist: boolean
 }
@@ -162,6 +164,13 @@ export function inferHlsOutputExtension(
     _segments: Array<Pick<HlsSegment, 'url'>>
 ): 'mp4' {
     return 'mp4'
+}
+
+export function shouldBlockLargeHlsDownloadWithoutStreamingSave(
+    segmentCount: number,
+    supportsStreamingSave: boolean
+): boolean {
+    return !supportsStreamingSave && segmentCount > NON_STREAMING_BROWSER_MAX_SEGMENTS
 }
 
 export function sliceHlsSegments(segments: HlsSegment[], limit?: number): HlsSegment[] {

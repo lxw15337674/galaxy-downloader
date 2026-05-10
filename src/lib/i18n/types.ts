@@ -269,6 +269,7 @@ export interface Dictionary {
         downloadingStatus: string;
         downloadCompletedStatus: string;
         downloadFailedStatus: string;
+        largeVideoBrowserLimitedStatus: string;
         progressLabel: string;
         speedLabel: string;
         etaLabel: string;

@@ -3,8 +3,10 @@ import { describe, expect, it } from 'vitest'
 import {
     buildRangeHeader,
     inferHlsOutputExtension,
+    NON_STREAMING_BROWSER_MAX_SEGMENTS,
     parseHlsMediaPlaylist,
     pickBestVariant,
+    shouldBlockLargeHlsDownloadWithoutStreamingSave,
 } from '../src/lib/hls-browser-download.ts'
 
 describe('hls browser download helpers', () => {
@@ -65,5 +67,28 @@ describe('hls browser download helpers', () => {
         expect(inferHlsOutputExtension('https://example.com/video/init.mp4', [
             { url: 'https://example.com/video/seg-000.m4s' },
         ])).toBe('mp4')
+    })
+
+    it('blocks oversized downloads when the browser cannot stream directly to disk', () => {
+        expect(
+            shouldBlockLargeHlsDownloadWithoutStreamingSave(
+                NON_STREAMING_BROWSER_MAX_SEGMENTS,
+                false
+            )
+        ).toBe(false)
+
+        expect(
+            shouldBlockLargeHlsDownloadWithoutStreamingSave(
+                NON_STREAMING_BROWSER_MAX_SEGMENTS + 1,
+                false
+            )
+        ).toBe(true)
+
+        expect(
+            shouldBlockLargeHlsDownloadWithoutStreamingSave(
+                NON_STREAMING_BROWSER_MAX_SEGMENTS + 500,
+                true
+            )
+        ).toBe(false)
     })
 })

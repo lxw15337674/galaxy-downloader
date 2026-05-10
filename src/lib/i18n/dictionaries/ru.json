@@ -271,6 +271,7 @@
         "downloadingStatus": "Скачиваем {count} HLS-ресурсов в браузере...",
         "downloadCompletedStatus": "Загрузка завершена. Сохраняем {filename}.",
         "downloadFailedStatus": "Загрузка в браузере не удалась.",
+        "largeVideoBrowserLimitedStatus": "Этот браузер не подходит для загрузки такого большого видео. Попробуйте Chrome или Edge.",
         "progressLabel": "Прогресс",
         "speedLabel": "Скорость",
         "etaLabel": "ETA",
@@ -381,7 +382,7 @@
                     "Аудио"
                 ]
             },
-            "comingSoon": "Теперь поддерживается больше платформ",
+            "comingSoon": "Скоро появятся новые платформы",
             "instagram": {
                 "name": "Инстаграм",
                 "summary": "Видео / Публикация с изображением / Карусель",

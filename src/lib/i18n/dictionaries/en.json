@@ -271,6 +271,7 @@
         "downloadingStatus": "Downloading {count} HLS resources in the browser...",
         "downloadCompletedStatus": "Download finished. Saving {filename}.",
         "downloadFailedStatus": "Browser-side download failed.",
+        "largeVideoBrowserLimitedStatus": "This browser is not suitable for downloading this larger video. Please try Chrome or Edge.",
         "progressLabel": "Progress",
         "speedLabel": "Speed",
         "etaLabel": "ETA",
@@ -381,7 +382,7 @@
                     "Audio"
                 ]
             },
-            "comingSoon": "More platforms now supported",
+            "comingSoon": "More platforms coming soon",
             "instagram": {
                 "name": "Instagram",
                 "summary": "Video / Image Post / Carousel",

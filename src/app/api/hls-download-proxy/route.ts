@@ -62,6 +62,7 @@ export async function GET(request: NextRequest): Promise<Response> {
             headers: upstreamHeaders,
             redirect: 'follow',
             cache: 'no-store',
+            signal: request.signal,
         })
     } catch (error) {
         return createJsonError(

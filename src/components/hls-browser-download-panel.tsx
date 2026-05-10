@@ -1,6 +1,6 @@
 'use client'
 
-import { fileSave } from 'browser-fs-access'
+import { fileSave, supported as supportsStreamingFileSave } from 'browser-fs-access'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AlertCircle, CheckCircle2, Loader2, ListVideo } from 'lucide-react'
 import pRetry from 'p-retry'
@@ -16,6 +16,7 @@ import {
     inferHlsOutputExtension,
     parseHlsMediaPlaylist,
     pickBestVariant,
+    shouldBlockLargeHlsDownloadWithoutStreamingSave,
     sliceHlsSegments,
 } from '@/lib/hls-browser-download'
 import { HLS_PLAYLIST_ACCEPT } from '@/lib/hls-playback'
@@ -517,6 +518,15 @@ export function HlsBrowserDownloadPanel({
             )
 
             if (!mountedRef.current) {
+                return
+            }
+
+            if (shouldBlockLargeHlsDownloadWithoutStreamingSave(
+                resolution.selectedSegments.length,
+                supportsStreamingFileSave
+            )) {
+                setStatus(dict.hlsDownload.largeVideoBrowserLimitedStatus)
+                setFailed(true)
                 return
             }
 

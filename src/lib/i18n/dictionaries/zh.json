@@ -271,6 +271,7 @@
         "downloadingStatus": "正在下载，请稍候...",
         "downloadCompletedStatus": "下载完成，已开始保存。",
         "downloadFailedStatus": "下载失败，请重试。",
+        "largeVideoBrowserLimitedStatus": "当前浏览器不适合下载这个较大的视频，请使用 Chrome 或 Edge 重试。",
         "progressLabel": "已完成",
         "speedLabel": "速度",
         "etaLabel": "预计",
@@ -381,7 +382,7 @@
                     "音频"
                 ]
             },
-            "comingSoon": "已支持更多平台",
+            "comingSoon": "更多平台敬请期待",
             "instagram": {
                 "name": "Instagram",
                 "summary": "视频 / 图文 / 轮播图",

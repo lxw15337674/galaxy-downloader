@@ -60,6 +60,7 @@ export interface HlsBrowserDownloadPanelProps {
     initialTitle?: string
     autorun?: boolean
     onBusyChange?: (busy: boolean) => void
+    onCancelReady?: (cancel: (() => void) | null) => void
 }
 
 function buildProxyUrl(target: string, referer: string, accept?: string): string {
@@ -443,6 +444,7 @@ export function HlsBrowserDownloadPanel({
     initialTitle = '',
     autorun = false,
     onBusyChange,
+    onCancelReady,
 }: HlsBrowserDownloadPanelProps) {
     const dict = useDictionary()
     const [status, setStatus] = useState(dict.hlsDownload.idleStatus)
@@ -481,6 +483,18 @@ export function HlsBrowserDownloadPanel({
             activeAbortControllerRef.current = null
         }
     }, [])
+
+    const cancelActiveTask = useCallback(() => {
+        activeAbortControllerRef.current?.abort()
+    }, [])
+
+    useEffect(() => {
+        onCancelReady?.(cancelActiveTask)
+
+        return () => {
+            onCancelReady?.(null)
+        }
+    }, [cancelActiveTask, onCancelReady])
 
     const handleStart = useCallback(async (): Promise<void> => {
         const controller = startTask()

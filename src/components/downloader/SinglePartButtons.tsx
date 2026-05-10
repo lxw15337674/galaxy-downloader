@@ -38,11 +38,15 @@ export function SinglePartButtons({
     const videoDownloadUrl = result.downloadVideoUrl || result.originDownloadVideoUrl;
     const audioDownloadUrl = result.downloadAudioUrl || result.originDownloadAudioUrl || null;
     const { videoAction, audioAction } = getResultMediaActions({
+        videoAudioMode: result.videoAudioMode,
         mediaActions: result.mediaActions,
         videoDownloadUrl,
         audioDownloadUrl,
+        originDownloadVideoUrl: result.originDownloadVideoUrl,
+        originDownloadAudioUrl: result.originDownloadAudioUrl,
     });
-    const showVideoDownload = videoAction !== 'hide';
+    const showVideoDownload = videoAction === 'direct-download' || videoAction === 'merge-then-download';
+    const showBrowserHlsDownload = videoAction === 'browser-hls-download' || (videoAction === 'hide' && isHlsPlaylistUrl(result.originDownloadVideoUrl));
     const showAudioDownload = audioAction !== 'hide';
     const showCoverDownload = Boolean(onDownloadCover);
     const showVideoPreview = previewSourceUrl.length > 0 && canPreviewResultVideo(result);
@@ -55,7 +59,6 @@ export function SinglePartButtons({
         typeof result.originDownloadAudioUrl === 'string'
         && result.originDownloadAudioUrl.length > 0
         && result.originDownloadAudioUrl !== audioDownloadUrl;
-    const showBrowserHlsDownload = isHlsPlaylistUrl(result.originDownloadVideoUrl);
 
     const handleDownload = (url: string, setLoading: (value: boolean) => void) => {
         setLoading(true);

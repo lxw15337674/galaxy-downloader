@@ -23,7 +23,7 @@ export const API_ERROR_CODES = [
 export type ApiErrorCode = (typeof API_ERROR_CODES)[number]
 export type ApiErrorDetails = Record<string, unknown>
 export type VideoAudioMode = 'muxed' | 'separate' | 'pure_music' | 'not_applicable'
-export type VideoMediaAction = 'direct-download' | 'merge-then-download' | 'hide'
+export type VideoMediaAction = 'direct-download' | 'merge-then-download' | 'browser-hls-download' | 'hide'
 export type AudioMediaAction = 'direct-download' | 'extract-audio' | 'hide'
 
 export interface MediaActions {
@@ -62,6 +62,7 @@ export interface EmbeddedVideoInfo {
     downloadAudioUrl?: string | null;
     originDownloadVideoUrl?: string | null;
     originDownloadAudioUrl?: string | null;
+    videoAudioMode?: VideoAudioMode;
     mediaActions?: MediaActions;
 }
 
@@ -86,6 +87,7 @@ export interface UnifiedParseResult {
         downloadVideoUrl: string | null;
         originDownloadAudioUrl?: string | null;
         originDownloadVideoUrl: string | null;
+        videoAudioMode?: VideoAudioMode;
         mediaActions?: MediaActions;
         url: string;
         // 时长（秒）

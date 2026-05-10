@@ -15,13 +15,15 @@ export function shouldHideSingleImagePreview(
     return singleImageMode && !!state && !state.loading && state.error
 }
 
-export type ResultVideoAction = 'direct-download' | 'merge-then-download' | 'hide'
+export type ResultVideoAction = 'direct-download' | 'merge-then-download' | 'browser-hls-download' | 'hide'
 export type ResultAudioAction = 'direct-download' | 'extract-audio' | 'hide'
 
 interface ResultMediaActionInput {
     videoAudioMode?: LegacyVideoAudioMode
     videoDownloadUrl?: string | null
     audioDownloadUrl?: string | null
+    originDownloadVideoUrl?: string | null
+    originDownloadAudioUrl?: string | null
     mediaActions?: MediaActions
 }
 
@@ -39,13 +41,21 @@ function sanitizeProvidedMediaActions(
     hasVideo: boolean,
     hasAudio: boolean
 ): ResultMediaActions {
-    const videoAction = mediaActions.video === 'merge-then-download'
-        ? (hasVideo && hasAudio ? 'merge-then-download' : 'hide')
-        : (mediaActions.video === 'direct-download' && hasVideo ? 'direct-download' : 'hide')
+    let videoAction: ResultVideoAction = 'hide'
+    if (mediaActions.video === 'merge-then-download') {
+        videoAction = hasVideo && hasAudio ? 'merge-then-download' : 'hide'
+    } else if (mediaActions.video === 'direct-download') {
+        videoAction = hasVideo ? 'direct-download' : 'hide'
+    } else if (mediaActions.video === 'browser-hls-download') {
+        videoAction = hasVideo ? 'browser-hls-download' : 'hide'
+    }
 
-    const audioAction = mediaActions.audio === 'direct-download'
-        ? (hasAudio ? 'direct-download' : 'hide')
-        : (mediaActions.audio === 'extract-audio' && hasVideo ? 'extract-audio' : 'hide')
+    let audioAction: ResultAudioAction = 'hide'
+    if (mediaActions.audio === 'direct-download') {
+        audioAction = hasAudio ? 'direct-download' : 'hide'
+    } else if (mediaActions.audio === 'extract-audio') {
+        audioAction = hasVideo ? 'extract-audio' : 'hide'
+    }
 
     return {
         videoAction,
@@ -57,6 +67,8 @@ export function getResultMediaActions({
     videoAudioMode,
     videoDownloadUrl,
     audioDownloadUrl,
+    originDownloadVideoUrl,
+    originDownloadAudioUrl,
     mediaActions,
 }: ResultMediaActionInput): ResultMediaActions {
     const hasVideo = hasSourceUrl(videoDownloadUrl)
@@ -66,18 +78,21 @@ export function getResultMediaActions({
         return sanitizeProvidedMediaActions(mediaActions, hasVideo, hasAudio)
     }
 
+    const isVideoHls = isHlsPlaylistUrl(originDownloadVideoUrl) || isHlsPlaylistUrl(videoDownloadUrl)
+    const isAudioHls = isHlsPlaylistUrl(originDownloadAudioUrl) || isHlsPlaylistUrl(audioDownloadUrl)
+
     // Prefer native audio download whenever backend provides a direct audio url.
     if (hasAudio) {
         if (videoAudioMode === 'separate') {
             return {
                 videoAction: hasVideo ? 'merge-then-download' : 'hide',
-                audioAction: 'direct-download',
+                audioAction: isAudioHls ? 'hide' : 'direct-download',
             }
         }
 
         return {
-            videoAction: hasVideo ? 'direct-download' : 'hide',
-            audioAction: 'direct-download',
+            videoAction: hasVideo ? (isVideoHls ? 'browser-hls-download' : 'direct-download') : 'hide',
+            audioAction: isAudioHls ? 'hide' : 'direct-download',
         }
     }
 
@@ -91,27 +106,27 @@ export function getResultMediaActions({
     if (videoAudioMode === 'pure_music') {
         return {
             videoAction: 'hide',
-            audioAction: hasAudio ? 'direct-download' : 'hide',
+            audioAction: hasAudio ? (isAudioHls ? 'hide' : 'direct-download') : 'hide',
         }
     }
 
     if (videoAudioMode === 'muxed') {
         return {
-            videoAction: hasVideo ? 'direct-download' : 'hide',
-            audioAction: hasVideo ? 'extract-audio' : 'hide',
+            videoAction: hasVideo ? (isVideoHls ? 'browser-hls-download' : 'direct-download') : 'hide',
+            audioAction: isVideoHls ? 'hide' : (hasVideo ? 'extract-audio' : 'hide'),
         }
     }
 
     if (videoAudioMode === 'not_applicable') {
         return {
-            videoAction: hasVideo ? 'direct-download' : 'hide',
+            videoAction: hasVideo ? (isVideoHls ? 'browser-hls-download' : 'direct-download') : 'hide',
             audioAction: 'hide',
         }
     }
 
     return {
-        videoAction: hasVideo ? 'direct-download' : 'hide',
-        audioAction: hasVideo ? 'extract-audio' : 'hide',
+        videoAction: hasVideo ? (isVideoHls ? 'browser-hls-download' : 'direct-download') : 'hide',
+        audioAction: isVideoHls ? 'hide' : (hasVideo ? 'extract-audio' : 'hide'),
     }
 }
 

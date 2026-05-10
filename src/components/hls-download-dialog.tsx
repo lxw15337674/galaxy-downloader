@@ -42,6 +42,7 @@ export function HlsDownloadDialog({
     const dict = useDictionary()
     const [isBusy, setIsBusy] = useState(false)
     const [confirmCloseOpen, setConfirmCloseOpen] = useState(false)
+    const [cancelDownload, setCancelDownload] = useState<(() => void) | null>(null)
 
     const handleOpenChange = useCallback((nextOpen: boolean) => {
         if (!nextOpen && isBusy) {
@@ -54,8 +55,9 @@ export function HlsDownloadDialog({
 
     const handleConfirmClose = useCallback(() => {
         setConfirmCloseOpen(false)
+        cancelDownload?.()
         onOpenChange(false)
-    }, [onOpenChange])
+    }, [cancelDownload, onOpenChange])
 
     if (!request) {
         return null
@@ -85,6 +87,7 @@ export function HlsDownloadDialog({
                             initialTitle={request.title}
                             autorun
                             onBusyChange={setIsBusy}
+                            onCancelReady={setCancelDownload}
                         />
                     </div>
                 </DialogContent>

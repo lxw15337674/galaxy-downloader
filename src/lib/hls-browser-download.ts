@@ -24,6 +24,12 @@ export interface ParsedHlsMediaPlaylist {
     encrypted: boolean
 }
 
+export interface HlsHostProbeTarget {
+    host: string
+    url: string
+    byterange?: ByteRange
+}
+
 export const NON_STREAMING_BROWSER_MAX_SEGMENTS = 800
 
 interface HlsPlaylistBase {
@@ -171,6 +177,52 @@ export function shouldBlockLargeHlsDownloadWithoutStreamingSave(
     supportsStreamingSave: boolean
 ): boolean {
     return !supportsStreamingSave && segmentCount > NON_STREAMING_BROWSER_MAX_SEGMENTS
+}
+
+export function buildHlsHostProbeTargets(
+    mapUrl: string | null,
+    mapByterange: ByteRange | undefined,
+    segments: HlsSegment[]
+): HlsHostProbeTarget[] {
+    const seenHosts = new Set<string>()
+    const targets: HlsHostProbeTarget[] = []
+    const candidates = [
+        ...(mapUrl
+            ? [{ url: mapUrl, byterange: mapByterange }]
+            : []),
+        ...segments.map((segment) => ({
+            url: segment.url,
+            byterange: segment.byterange,
+        })),
+        ...segments
+            .filter((segment) => Boolean(segment.keyUrl))
+            .map((segment) => ({
+                url: segment.keyUrl!,
+                byterange: undefined,
+            })),
+    ]
+
+    for (const candidate of candidates) {
+        let host: string
+        try {
+            host = new URL(candidate.url).host
+        } catch {
+            continue
+        }
+
+        if (seenHosts.has(host)) {
+            continue
+        }
+
+        seenHosts.add(host)
+        targets.push({
+            host,
+            url: candidate.url,
+            byterange: candidate.byterange,
+        })
+    }
+
+    return targets
 }
 
 export function sliceHlsSegments(segments: HlsSegment[], limit?: number): HlsSegment[] {

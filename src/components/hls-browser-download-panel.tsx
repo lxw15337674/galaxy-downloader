@@ -10,6 +10,7 @@ import { Progress } from '@/components/ui/progress'
 import { useDictionary } from '@/i18n/client'
 import type { ByteRange, HlsSegment } from '@/lib/hls-browser-download'
 import {
+    buildHlsHostProbeTargets,
     buildRangeHeader,
     decryptAes128Cbc,
     importAes128Key,
@@ -25,6 +26,8 @@ import { sanitizeFilename } from '@/lib/utils'
 
 const DOWNLOAD_CONCURRENCY = 4
 const SEGMENT_DOWNLOAD_RETRIES = 3
+const HOST_PROBE_CONCURRENCY = 2
+const HOST_PROBE_TIMEOUT_MS = 2500
 
 class HttpStatusError extends Error {
     status: number
@@ -53,7 +56,7 @@ type DownloadSample = {
     timestamp: number
 }
 
-type DirectFetchMode = 'probe' | 'proxy-only'
+type DirectFetchMode = 'probe' | 'direct-ok' | 'proxy-only'
 
 export interface HlsBrowserDownloadPanelProps {
     initialSourceUrl: string
@@ -192,13 +195,30 @@ async function fetchTextWithFallback(
     target: string,
     referer: string,
     signal: AbortSignal,
+    directFetchModes: Map<string, DirectFetchMode>,
     accept?: string
 ): Promise<string> {
+    const host = resolveHost(target)
+    const directFetchMode = host ? directFetchModes.get(host) ?? 'probe' : 'probe'
+
+    if (directFetchMode === 'proxy-only') {
+        return fetchProxyText(target, referer, signal, accept)
+    }
+
     try {
-        return await fetchDirectText(target, signal, accept)
+        const text = await fetchDirectText(target, signal, accept)
+        if (host) {
+            directFetchModes.set(host, 'direct-ok')
+        }
+
+        return text
     } catch (error) {
         if (isAbortError(error)) {
             throw error
+        }
+
+        if (host) {
+            directFetchModes.set(host, 'proxy-only')
         }
 
         return fetchProxyText(target, referer, signal, accept)
@@ -220,7 +240,12 @@ async function fetchBytesWithFallback(
     }
 
     try {
-        return await fetchDirectBytes(target, signal, byterange)
+        const bytes = await fetchDirectBytes(target, signal, byterange)
+        if (host) {
+            directFetchModes.set(host, 'direct-ok')
+        }
+
+        return bytes
     } catch (error) {
         if (isAbortError(error)) {
             throw error
@@ -258,6 +283,7 @@ async function fetchBytesWithRetry(
 async function resolvePlaylist(
     sourceUrl: string,
     signal: AbortSignal,
+    directFetchModes: Map<string, DirectFetchMode>,
     refererOverride?: string,
     titleOverride?: string
 ): Promise<PlaylistResolution> {
@@ -280,12 +306,24 @@ async function resolvePlaylist(
     }
 
     let activePlaylistUrl = playlistUrl
-    let playlistText = await fetchTextWithFallback(activePlaylistUrl, pageUrl, signal, HLS_PLAYLIST_ACCEPT)
+    let playlistText = await fetchTextWithFallback(
+        activePlaylistUrl,
+        pageUrl,
+        signal,
+        directFetchModes,
+        HLS_PLAYLIST_ACCEPT
+    )
     const bestVariant = pickBestVariant(playlistText, activePlaylistUrl)
 
     if (bestVariant) {
         activePlaylistUrl = bestVariant.url
-        playlistText = await fetchTextWithFallback(activePlaylistUrl, pageUrl, signal, HLS_PLAYLIST_ACCEPT)
+        playlistText = await fetchTextWithFallback(
+            activePlaylistUrl,
+            pageUrl,
+            signal,
+            directFetchModes,
+            HLS_PLAYLIST_ACCEPT
+        )
     }
 
     const mediaPlaylist = parseHlsMediaPlaylist(playlistText, activePlaylistUrl)
@@ -324,19 +362,106 @@ async function runWithConcurrency<T>(
     )
 }
 
+function createProbeSignal(signal: AbortSignal, timeoutMs: number): {
+    signal: AbortSignal
+    cleanup: () => void
+} {
+    const controller = new AbortController()
+    const forwardAbort = () => {
+        controller.abort(signal.reason)
+    }
+
+    if (signal.aborted) {
+        controller.abort(signal.reason)
+    } else {
+        signal.addEventListener('abort', forwardAbort, { once: true })
+    }
+
+    const timeoutId = setTimeout(() => {
+        controller.abort(new DOMException('Timed out', 'AbortError'))
+    }, timeoutMs)
+
+    return {
+        signal: controller.signal,
+        cleanup: () => {
+            clearTimeout(timeoutId)
+            signal.removeEventListener('abort', forwardAbort)
+        },
+    }
+}
+
+async function probeHostDirectAccess(
+    target: string,
+    signal: AbortSignal,
+    byterange?: ByteRange
+): Promise<boolean> {
+    const { signal: probeSignal, cleanup } = createProbeSignal(signal, HOST_PROBE_TIMEOUT_MS)
+
+    try {
+        const response = await fetch(target, {
+            cache: 'no-store',
+            headers: buildFetchHeaders(undefined, byterange),
+            signal: probeSignal,
+        })
+
+        if (!response.ok) {
+            throw new HttpStatusError(response.status, `Direct probe failed with HTTP ${response.status}`)
+        }
+
+        await response.body?.cancel()
+        return true
+    } catch (error) {
+        if (signal.aborted && isAbortError(error)) {
+            throw error
+        }
+
+        return false
+    } finally {
+        cleanup()
+    }
+}
+
+async function probePlaylistHosts(
+    resolution: PlaylistResolution,
+    signal: AbortSignal,
+    directFetchModes: Map<string, DirectFetchMode>
+): Promise<void> {
+    const probeTargets = buildHlsHostProbeTargets(
+        resolution.mapUrl,
+        resolution.mapByterange,
+        resolution.selectedSegments
+    )
+
+    await runWithConcurrency(probeTargets, HOST_PROBE_CONCURRENCY, async (probeTarget) => {
+        const currentMode = directFetchModes.get(probeTarget.host)
+        if (currentMode === 'direct-ok' || currentMode === 'proxy-only') {
+            return
+        }
+
+        const directAccessible = await probeHostDirectAccess(
+            probeTarget.url,
+            signal,
+            probeTarget.byterange
+        )
+
+        directFetchModes.set(probeTarget.host, directAccessible ? 'direct-ok' : 'proxy-only')
+    })
+}
+
 function createStreamingDownloadResponse({
     targets,
     resolution,
     signal,
+    directFetchModes,
     onChunkDownloaded,
 }: {
     targets: Array<{ url: string; byterange?: ByteRange; keyUrl?: string; iv?: Uint8Array }>
     resolution: PlaylistResolution
     signal: AbortSignal
+    directFetchModes: Map<string, DirectFetchMode>
     onChunkDownloaded: (bytes: number) => void
 }): Response {
     const keyCache = new Map<string, Promise<CryptoKey>>()
-    const directFetchModes = new Map<string, DirectFetchMode>()
     let started = false
 
     const stream = new ReadableStream<Uint8Array>({
@@ -499,6 +624,7 @@ export function HlsBrowserDownloadPanel({
 
     const handleStart = useCallback(async (): Promise<void> => {
         const controller = startTask()
+        const directFetchModes = new Map<string, DirectFetchMode>()
 
         setResolveLoading(true)
         setDownloadLoading(false)
@@ -513,6 +639,7 @@ export function HlsBrowserDownloadPanel({
             const resolution = await resolvePlaylist(
                 initialSourceUrl.trim(),
                 controller.signal,
+                directFetchModes,
                 initialRefererUrl.trim(),
                 initialTitle.trim()
             )
@@ -529,6 +656,8 @@ export function HlsBrowserDownloadPanel({
                 setFailed(true)
                 return
             }
+
+            await probePlaylistHosts(resolution, controller.signal, directFetchModes)
 
             setResolveLoading(false)
             setDownloadLoading(true)
@@ -554,6 +683,7 @@ export function HlsBrowserDownloadPanel({
                 targets,
                 resolution,
                 signal: controller.signal,
+                directFetchModes,
                 onChunkDownloaded: (bytes) => {
                     completed += 1
                     downloadedBytes += bytes

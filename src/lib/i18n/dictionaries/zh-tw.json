@@ -334,6 +334,14 @@
                     "音訊"
                 ]
             },
+            "hls": {
+                "name": "影片網站",
+                "summary": "網頁串流媒體影片",
+                "features": [
+                    "線上播放",
+                    "分片下載"
+                ]
+            },
             "youtube": {
                 "name": "YouTube",
                 "summary": "影片 / 音訊",

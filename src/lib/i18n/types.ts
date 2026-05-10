@@ -321,6 +321,12 @@ export interface Dictionary {
                     };
                 };
             };
+            hls: {
+                name: string;
+                summary: string;
+                features?: string[];
+                limitations?: string[];
+            };
             youtube: {
                 name: string;
                 summary: string;

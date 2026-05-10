@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+    buildHlsHostProbeTargets,
     buildRangeHeader,
     inferHlsOutputExtension,
     NON_STREAMING_BROWSER_MAX_SEGMENTS,
@@ -57,6 +58,38 @@ describe('hls browser download helpers', () => {
 
     it('builds a valid HTTP Range header', () => {
         expect(buildRangeHeader({ start: 100, end: 299 })).toBe('bytes=100-299')
+    })
+
+    it('builds one host probe target per host with map-first priority', () => {
+        expect(buildHlsHostProbeTargets(
+            'https://cdn-a.example.com/init.mp4',
+            { start: 0, end: 999 },
+            [
+                {
+                    url: 'https://cdn-a.example.com/seg-000.ts',
+                    keyUrl: 'https://keys.example.com/enc.key',
+                },
+                {
+                    url: 'https://cdn-b.example.com/seg-001.ts',
+                },
+            ]
+        )).toEqual([
+            {
+                host: 'cdn-a.example.com',
+                url: 'https://cdn-a.example.com/init.mp4',
+                byterange: { start: 0, end: 999 },
+            },
+            {
+                host: 'cdn-b.example.com',
+                url: 'https://cdn-b.example.com/seg-001.ts',
+                byterange: undefined,
+            },
+            {
+                host: 'keys.example.com',
+                url: 'https://keys.example.com/enc.key',
+                byterange: undefined,
+            },
+        ])
     })
 
     it('always exports browser hls downloads with an mp4 extension', () => {

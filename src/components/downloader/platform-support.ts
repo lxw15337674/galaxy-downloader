@@ -30,7 +30,8 @@ export type PlatformSupportKey =
     | 'vk'
     | 'okru'
     | 'twitch'
-    | 'soundcloud';
+    | 'soundcloud'
+    | 'hls';
 
 type PlatformSupportVisual = {
     src?: string;
@@ -164,6 +165,13 @@ const PLATFORM_SUPPORT_VISUALS: Record<PlatformSupportKey, PlatformSupportVisual
         src: '/platform-icons/soundcloud.svg',
         frameClassName: UNIFIED_FRAME_CLASS_NAME,
     },
+    hls: {
+        src: '/platform-icons/hls.svg',
+        darkSrc: '/platform-icons/hls-dark.svg',
+        frameClassName: UNIFIED_FRAME_CLASS_NAME,
+        badgeLabel: 'New',
+        badgeClassName: 'bg-primary text-primary-foreground',
+    },
 };
 
 function buildPlatformSupportItem(
@@ -196,6 +204,7 @@ export function getPlatformSupportItems(dict: PlatformSupportDictionary): Platfo
         buildPlatformSupportItem('bilibili', support.bilibili),
         buildPlatformSupportItem('bilibiliTv', support.bilibiliTv),
         buildPlatformSupportItem('douyin', support.douyin),
+        buildPlatformSupportItem('hls', support.hls),
         buildPlatformSupportItem('youtube', support.youtube),
         buildPlatformSupportItem('telegram', support.telegram),
         buildPlatformSupportItem('threads', support.threads),

@@ -334,6 +334,14 @@
                     "音声"
                 ]
             },
+            "hls": {
+                "name": "動画サイト",
+                "summary": "ストリーミング配信",
+                "features": [
+                    "オンライン再生",
+                    "ダウンロード"
+                ]
+            },
             "youtube": {
                 "name": "YouTube",
                 "summary": "動画 / 音声",

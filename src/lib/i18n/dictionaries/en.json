@@ -334,6 +334,14 @@
                     "Audio"
                 ]
             },
+            "hls": {
+                "name": "Video Sites",
+                "summary": "Streaming / Replays",
+                "features": [
+                    "Online Play",
+                    "Download"
+                ]
+            },
             "youtube": {
                 "name": "YouTube",
                 "summary": "Video / Audio",

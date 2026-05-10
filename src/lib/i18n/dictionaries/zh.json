@@ -334,6 +334,14 @@
                     "音频"
                 ]
             },
+            "hls": {
+                "name": "视频网站",
+                "summary": "网页流媒体视频",
+                "features": [
+                    "在线播放",
+                    "分片下载"
+                ]
+            },
             "youtube": {
                 "name": "YouTube",
                 "summary": "视频 / 音频",

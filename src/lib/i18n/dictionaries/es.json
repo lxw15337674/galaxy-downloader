@@ -327,11 +327,19 @@
             },
             "douyin": {
                 "name": "Douyin",
-                "summary": "Vídeo / Publicación de imagen / Audio",
+                "summary": "Video / Publicación de imagen / Audio",
                 "features": [
                     "Video",
                     "Publicación de imagen",
                     "Audio"
+                ]
+            },
+            "hls": {
+                "name": "Sitios de Video",
+                "summary": "Streaming / Replays",
+                "features": [
+                    "Reproducir",
+                    "Descargar"
                 ]
             },
             "youtube": {

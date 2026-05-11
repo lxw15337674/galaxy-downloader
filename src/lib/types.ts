@@ -131,6 +131,7 @@ export type Platform =
     | 'bilibili_tv'
     | 'dailymotion'
     | 'douyin'
+    | 'kuaishou'
     | 'newgrounds'
     | 'okru'
     | 'pinterest'

@@ -135,6 +135,7 @@ export interface Dictionary {
             bilibiliTv: string;
             dailymotion: string;
             douyin: string;
+            kuaishou: string;
             newgrounds: string;
             okru: string;
             pinterest: string;

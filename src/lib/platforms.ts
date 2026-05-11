@@ -5,6 +5,7 @@ export type CanonicalPlatform =
     | 'bilibili_tv'
     | 'dailymotion'
     | 'douyin'
+    | 'kuaishou'
     | 'newgrounds'
     | 'okru'
     | 'pinterest'
@@ -34,6 +35,7 @@ const PLATFORM_ALIASES: Record<string, CanonicalPlatform> = {
     bilibili_tv: 'bilibili_tv',
     dailymotion: 'dailymotion',
     douyin: 'douyin',
+    kuaishou: 'kuaishou',
     newgrounds: 'newgrounds',
     okru: 'okru',
     pinterest: 'pinterest',
@@ -92,6 +94,8 @@ export function getPlatformLabel(
             return dict.history.platforms.dailymotion
         case 'douyin':
             return dict.history.platforms.douyin
+        case 'kuaishou':
+            return dict.history.platforms.kuaishou
         case 'newgrounds':
             return dict.history.platforms.newgrounds
         case 'okru':

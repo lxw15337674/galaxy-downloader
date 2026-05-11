@@ -21,6 +21,10 @@ it('normalizes generic platform', () => {
     expect(normalizePlatform('generic')).toBe('generic')
 })
 
+it('normalizes kuaishou platform', () => {
+    expect(normalizePlatform('kuaishou')).toBe('kuaishou')
+})
+
 it('normalizes newly added foreign platforms', () => {
     expect(normalizePlatform('vimeo')).toBe('vimeo')
     expect(normalizePlatform('dailymotion')).toBe('dailymotion')

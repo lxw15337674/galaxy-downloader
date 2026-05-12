@@ -120,11 +120,11 @@
         "installAction": "立即安装"
     },
     "metadata": {
-        "title": "sparkdownloader｜Bilibili、抖音、Instagram、TikTok、X 下载工具",
-        "description": "免费在线媒体下载工具，支持 Bilibili、抖音、Telegram、Threads、微信公众号、微博、Niconico、Instagram、小红书、TikTok 和 X。自动识别链接并下载视频、音频或图文内容。",
-        "keywords": "在线媒体下载器,哔哩哔哩视频下载,哔哩哔哩音频下载,抖音视频下载,抖音纯音乐下载,Telegram视频下载,Threads视频下载,Threads图文下载,微信公众号视频下载,微博视频下载,微博图文下载,微博混合媒体下载,Niconico视频下载,Niconico音频下载,Instagram Reels下载,Instagram帖子下载,Instagram图文帖子下载,小红书视频下载,小红书图文下载,TikTok视频下载,X视频下载",
-        "ogTitle": "sparkdownloader｜免费在线下载工具",
-        "ogDescription": "自动识别 Bilibili、抖音、Telegram、Threads、微信公众号、微博、Niconico、Instagram、小红书、TikTok 和 X 链接，在线下载视频、音频或图文内容。",
+        "title": "sparkdownloader｜在线视频、音频、图文、HLS 下载工具",
+        "description": "免费在线媒体下载工具，支持 Bilibili、抖音、Telegram、Threads、微信公众号、微博、Niconico、Instagram、小红书、TikTok、X、Reddit、Streamable、SoundCloud、Twitch、VK、OK.ru、Pinterest、Tumblr、Newgrounds 以及 HLS/M3U8 串流。",
+        "keywords": "在线媒体下载器,在线视频下载器,HLS下载器,M3U8下载器,网页视频下载,哔哩哔哩视频下载,哔哩哔哩音频下载,抖音视频下载,抖音纯音乐下载,Telegram视频下载,Threads视频下载,Threads图文下载,微信公众号视频下载,微博视频下载,微博图文下载,微博混合媒体下载,Niconico视频下载,Niconico音频下载,Instagram Reels下载,Instagram帖子下载,Instagram图文帖子下载,小红书视频下载,小红书图文下载,TikTok视频下载,X视频下载,Reddit视频下载,Streamable下载,SoundCloud下载,Twitch下载,VK视频下载,OK.ru视频下载,Pinterest视频下载,Tumblr视频下载,Newgrounds下载",
+        "ogTitle": "sparkdownloader｜免费在线媒体下载工具",
+        "ogDescription": "自动识别视频、音频、图文和 HLS/M3U8 链接，在线下载媒体内容，无需注册。",
         "siteName": "sparkdownloader"
     },
     "common": {

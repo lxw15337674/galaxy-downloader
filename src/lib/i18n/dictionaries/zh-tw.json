@@ -120,11 +120,11 @@
         "installAction": "立即安裝"
     },
     "metadata": {
-        "title": "sparkdownloader｜Bilibili、抖音、Instagram、TikTok、X 下載工具",
-        "description": "免費線上媒體下載工具，支援 Bilibili、抖音、Telegram、Threads、微信公眾號、微博、Niconico、Instagram、小紅書、TikTok 與 X。自動識別連結並下載影片、音訊、圖文及 M3U8/HLS 串流媒體內容。",
-        "keywords": "線上媒體下載器,嗶哩嗶哩影片下載,嗶哩嗶哩音訊下載,抖音影片下載,抖音純音樂下載,Telegram影片下載,Threads影片下載,Threads圖文下載,微信公眾號影片下載,微博影片下載,微博圖文下載,微博混合媒體下載,Niconico影片下載,Niconico音訊下載,Instagram Reels下載,Instagram貼文下載,Instagram圖文貼文下載,小紅書影片下載,小紅書圖文下載,TikTok影片下載,X影片下載,M3U8下載器,HLS串流媒體下載,網頁影片下載,TS切片合併",
-        "ogTitle": "sparkdownloader｜免費線上下載工具",
-        "ogDescription": "自動識別 Bilibili、抖音、Telegram、Threads、微信公眾號、微博、Niconico、Instagram、小紅書、TikTok 與 X 連結，線上下載影片、音訊、圖文及 M3U8/HLS 串流媒體內容。",
+        "title": "sparkdownloader｜線上影片、音訊、圖文、HLS 下載工具",
+        "description": "免費線上媒體下載工具，支援 Bilibili、抖音、Telegram、Threads、微信公眾號、微博、Niconico、Instagram、小紅書、TikTok、X、Reddit、Streamable、SoundCloud、Twitch、VK、OK.ru、Pinterest、Tumblr、Newgrounds 與 HLS/M3U8 串流媒體內容。",
+        "keywords": "線上媒體下載器,線上影片下載器,HLS下載器,M3U8下載器,網頁影片下載,嗶哩嗶哩影片下載,嗶哩嗶哩音訊下載,抖音影片下載,抖音純音樂下載,Telegram影片下載,Threads影片下載,Threads圖文下載,微信公眾號影片下載,微博影片下載,微博圖文下載,微博混合媒體下載,Niconico影片下載,Niconico音訊下載,Instagram Reels下載,Instagram貼文下載,Instagram圖文貼文下載,小紅書影片下載,小紅書圖文下載,TikTok影片下載,X影片下載,Reddit影片下載,Streamable下載,SoundCloud下載,Twitch下載,VK影片下載,OK.ru影片下載,Pinterest影片下載,Tumblr影片下載,Newgrounds下載,TS切片合併",
+        "ogTitle": "sparkdownloader｜免費線上媒體下載工具",
+        "ogDescription": "自動識別影片、音訊、圖文和 HLS/M3U8 連結，線上下載媒體內容，無需註冊。",
         "siteName": "sparkdownloader"
     },
     "common": {

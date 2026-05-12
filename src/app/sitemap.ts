@@ -50,15 +50,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
                     languages: buildLanguageAlternates('/contact'),
                 },
             },
-            {
-                url: `${localeBase}/feedback`,
-                ...lastModifiedField,
-                changeFrequency: 'weekly' as const,
-                priority: locale === i18n.defaultLocale ? 0.65 : 0.55,
-                alternates: {
-                    languages: buildLanguageAlternates('/feedback'),
-                },
-            },
         ]
     })
 }

@@ -86,7 +86,7 @@ export function proxy(request: NextRequest) {
     })
     request.nextUrl.pathname = `/${locale}${pathname}`
 
-    const response = NextResponse.redirect(request.nextUrl)
+    const response = NextResponse.redirect(request.nextUrl, 308)
     appendVaryHeader(response.headers, [...LOCALE_REDIRECT_VARY_HEADERS])
 
     // 设置 Cookie 记住用户语言偏好（仅在真实用户请求且非已有 cookie 时设置）

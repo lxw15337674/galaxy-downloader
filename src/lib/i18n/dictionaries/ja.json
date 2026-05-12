@@ -120,11 +120,11 @@
         "installAction": "インストール"
     },
     "metadata": {
-        "title": "sparkdownloader | Bilibili・Douyin・Instagram・TikTok・X",
-        "description": "無料のオンラインメディアダウンローダー。Bilibili、Douyin、Telegram、Threads、WeChat、Weibo、Niconico、Instagram、Xiaohongshu、TikTok、X のリンクを自動判別し、動画・音声・画像投稿、および M3U8/HLS ストリーミングをダウンロードできます。",
-        "keywords": "オンラインメディアダウンローダー,Bilibili動画ダウンロード,Bilibili音声ダウンロード,Douyin動画ダウンロード,Douyin音楽ダウンロード,Telegram動画ダウンロード,Threads動画ダウンロード,Threads画像投稿ダウンロード,WeChat動画ダウンロード,Weibo動画ダウンロード,Weibo混合メディアダウンロード,Niconico動画ダウンロード,Niconico音声ダウンロード,Instagram Reelsダウンロード,Instagram投稿ダウンロード,Instagram画像投稿ダウンロード,Xiaohongshu動画ダウンロード,Xiaohongshu画像ノートダウンロード,TikTok動画ダウンロード,X動画ダウンロード,M3U8ダウンローダー,HLSストリーミングダウンロード,Web動画ダウンロード,TSマージ",
-        "ogTitle": "sparkdownloader | 無料オンラインツール",
-        "ogDescription": "Bilibili、Douyin、Telegram、Threads、WeChat、Weibo、Niconico、Instagram、Xiaohongshu、TikTok、X のリンクを自動判別し、動画・音声・画像投稿、および M3U8/HLS ストリーミングをオンラインでダウンロードできます。",
+        "title": "sparkdownloader | 動画・音声・画像・HLS ダウンローダー",
+        "description": "Bilibili、Douyin、Telegram、Threads、WeChat、Weibo、Niconico、Instagram、Xiaohongshu、TikTok、X、Reddit、Streamable、SoundCloud、Twitch、VK、OK.ru、Pinterest、Tumblr、Newgrounds、HLS/M3U8 に対応した無料オンラインメディアダウンローダー。",
+        "keywords": "オンラインメディアダウンローダー,オンライン動画ダウンローダー,HLSダウンローダー,M3U8ダウンローダー,Web動画ダウンロード,Bilibili動画ダウンロード,Bilibili音声ダウンロード,Douyin動画ダウンロード,Douyin音楽ダウンロード,Telegram動画ダウンロード,Threads動画ダウンロード,Threads画像投稿ダウンロード,WeChat動画ダウンロード,Weibo動画ダウンロード,Weibo混合メディアダウンロード,Niconico動画ダウンロード,Niconico音声ダウンロード,Instagram Reelsダウンロード,Instagram投稿ダウンロード,Instagram画像投稿ダウンロード,Xiaohongshu動画ダウンロード,Xiaohongshu画像ノートダウンロード,TikTok動画ダウンロード,X動画ダウンロード,Reddit動画ダウンロード,Streamableダウンロード,SoundCloudダウンロード,Twitchダウンロード,VK動画ダウンロード,OK.ru動画ダウンロード,Pinterest動画ダウンロード,Tumblr動画ダウンロード,Newgroundsダウンロード,TSマージ",
+        "ogTitle": "sparkdownloader | 無料オンラインメディアダウンローダー",
+        "ogDescription": "動画、音声、画像投稿、HLS/M3U8 リンクを自動判別し、登録不要でオンラインダウンロードできます。",
         "siteName": "sparkdownloader"
     },
     "common": {

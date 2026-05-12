@@ -15,7 +15,7 @@ export function useLocalStorageState<T>(
   const defaultValueRef = useRef(options.defaultValue);
   const [isHydrated, setIsHydrated] = useState(false);
 
-  const [value, setValue] = useState<T>(defaultValueRef.current);
+  const [value, setValue] = useState<T>(() => options.defaultValue);
 
   useEffect(() => {
     try {

@@ -120,11 +120,11 @@
         "installAction": "Установить"
     },
     "metadata": {
-        "title": "sparkdownloader | Bilibili, Douyin, Instagram, TikTok, X",
-        "description": "Бесплатный онлайн-инструмент для загрузки контента с Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok и X.",
-        "keywords": "Загрузчик онлайн-медиа, Загрузчик видео Bilibili, Загрузчик аудио Bilibili, Загрузчик видео Douyin, Загрузчик музыки Douyin, Загрузчик видео Telegram, Загрузчик видео Threads, Загрузчик изображений Threads, Загрузчик видео WeChat, Загрузчик видео Weibo, Загрузчик смешанного мультимедиа Weibo, Загрузчик видео Niconico, Загрузчик аудио Niconico, Загрузчик роликов Instagram, Загрузчик сообщений Instagram, Публикация изображений Instagram загрузчик, загрузчик видео Xiaohongshu, загрузчик заметок изображений Xiaohongshu, загрузчик видео TikTok, загрузчик видео X",
-        "ogTitle": "sparkdownloader | Бесплатный онлайн-инструмент",
-        "ogDescription": "Автоматически распознает ссылки и позволяет скачать видео, аудио или изображения.",
+        "title": "sparkdownloader | Загрузчик видео, аудио, изображений и HLS",
+        "description": "Бесплатный онлайн-загрузчик для Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, X, Reddit, Streamable, SoundCloud, Twitch, VK, OK.ru, Pinterest, Tumblr, Newgrounds и потоков HLS/M3U8.",
+        "keywords": "Загрузчик онлайн-медиа,онлайн загрузчик видео,HLS загрузчик,M3U8 загрузчик,загрузчик веб-видео,Загрузчик видео Bilibili,Загрузчик аудио Bilibili,Загрузчик видео Douyin,Загрузчик музыки Douyin,Загрузчик видео Telegram,Загрузчик видео Threads,Загрузчик изображений Threads,Загрузчик видео WeChat,Загрузчик видео Weibo,Загрузчик смешанного мультимедиа Weibo,Загрузчик видео Niconico,Загрузчик аудио Niconico,Загрузчик роликов Instagram,Загрузчик сообщений Instagram,Загрузчик изображений Instagram,загрузчик видео Xiaohongshu,загрузчик заметок изображений Xiaohongshu,загрузчик видео TikTok,загрузчик видео X,загрузчик видео Reddit,загрузчик Streamable,загрузчик SoundCloud,загрузчик Twitch,загрузчик видео VK,загрузчик видео OK.ru,загрузчик Pinterest,загрузчик Tumblr,загрузчик Newgrounds",
+        "ogTitle": "sparkdownloader | Бесплатный онлайн-загрузчик медиа",
+        "ogDescription": "Автоматически распознает ссылки на видео, аудио, изображения и HLS/M3U8, чтобы скачать медиа онлайн без регистрации.",
         "siteName": "sparkdownloader"
     },
     "common": {

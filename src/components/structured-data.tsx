@@ -13,10 +13,36 @@ interface StructuredDataProps {
     dict: Dictionary
 }
 
+type PlatformSupportEntry = {
+    name: string
+    summary: string
+}
+
+function buildPlatformSupportFeatureList(dict: Dictionary): string[] {
+    return Object.entries(dict.guide.platformSupport).flatMap(([key, value]) => {
+        if (
+            key === "title" ||
+            key === "comingSoon" ||
+            typeof value !== "object" ||
+            value === null ||
+            !("name" in value) ||
+            !("summary" in value)
+        ) {
+            return []
+        }
+
+        const entry = value as PlatformSupportEntry
+        return [`${entry.name}: ${entry.summary}`]
+    })
+}
+
 export function StructuredData({ locale, dict }: StructuredDataProps) {
     const localeUrl = buildLocaleUrl(locale)
     const seoLocale: keyof Dictionary['seo']['features'] = locale
-    const featureList = sanitizeStructuredDataTextList(dict.seo.features[seoLocale])
+    const featureList = sanitizeStructuredDataTextList([
+        ...dict.seo.features[seoLocale],
+        ...buildPlatformSupportFeatureList(dict),
+    ])
 
     const websiteSchema = {
         "@context": "https://schema.org",
@@ -60,7 +86,7 @@ export function StructuredData({ locale, dict }: StructuredDataProps) {
         "url": SITE_URL,
         "logo": `${SITE_URL}/icons/icon-512x512.png`,
         "sameAs": [
-            "https://github.com/lxw15337674/bilibili-audio-downloader",
+            "https://github.com/lxw15337674/galaxy-downloader",
         ],
         "contactPoint": [
             {

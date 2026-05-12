@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { createPortal } from 'react-dom'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
@@ -69,21 +69,29 @@ function ThemeIcon({ theme }: { theme: ThemeOption }) {
     return <Laptop className="h-4 w-4" />
 }
 
+function subscribeToHydration() {
+    return () => {}
+}
+
+function getClientSnapshot() {
+    return true
+}
+
+function getServerSnapshot() {
+    return false
+}
+
 export function ThemeSwitcher({ compact = false, fullWidth = false }: ThemeSwitcherProps) {
     const locale = useAppLocale()
     const labels = THEME_LABELS[locale]
     const [isOpen, setIsOpen] = useState(false)
-    const [mounted, setMounted] = useState(false)
+    const mounted = useSyncExternalStore(subscribeToHydration, getClientSnapshot, getServerSnapshot)
     const containerRef = useRef<HTMLDivElement>(null)
     const triggerRef = useRef<HTMLButtonElement>(null)
     const dropdownRef = useRef<HTMLDivElement>(null)
     const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition | null>(null)
     const { theme, setTheme } = useTheme()
     const currentTheme = (mounted ? theme : 'system') as ThemeOption
-
-    useEffect(() => {
-        setMounted(true)
-    }, [])
 
     const updateDropdownPosition = useCallback(() => {
         const trigger = triggerRef.current

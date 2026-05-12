@@ -120,11 +120,11 @@
         "installAction": "Install"
     },
     "metadata": {
-        "title": "sparkdownloader | Bilibili, Douyin, Instagram, TikTok, X",
-        "description": "Free online media downloader for Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X. Auto-detect links and download video, audio, or image posts.",
-        "keywords": "online media downloader,Bilibili video downloader,Bilibili audio downloader,Douyin video downloader,Douyin music downloader,Telegram video downloader,Threads video downloader,Threads image post downloader,WeChat video downloader,Weibo video downloader,Weibo mixed media downloader,Niconico video downloader,Niconico audio downloader,Instagram reels downloader,Instagram post downloader,Instagram image post downloader,Xiaohongshu video downloader,Xiaohongshu image note downloader,TikTok video downloader,X video downloader",
-        "ogTitle": "sparkdownloader | Free Online Tool",
-        "ogDescription": "Auto-detect links from Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, and X, then download video, audio, or image posts online.",
+        "title": "sparkdownloader | Online Video, Audio, Image, HLS Downloader",
+        "description": "Free online media downloader for Bilibili, Douyin, Telegram, Threads, WeChat, Weibo, Niconico, Instagram, Xiaohongshu, TikTok, X, Reddit, Streamable, SoundCloud, Twitch, VK, OK.ru, Pinterest, Tumblr, Newgrounds, and HLS/M3U8 streams.",
+        "keywords": "online media downloader,online video downloader,HLS downloader,M3U8 downloader,web video downloader,Bilibili video downloader,Bilibili audio downloader,Douyin video downloader,Douyin music downloader,Telegram video downloader,Threads video downloader,Threads image post downloader,WeChat video downloader,Weibo video downloader,Weibo mixed media downloader,Niconico video downloader,Niconico audio downloader,Instagram reels downloader,Instagram post downloader,Instagram image post downloader,Xiaohongshu video downloader,Xiaohongshu image note downloader,TikTok video downloader,X video downloader,Reddit video downloader,Streamable downloader,SoundCloud downloader,Twitch downloader,VK video downloader,OK.ru video downloader,Pinterest video downloader,Tumblr video downloader,Newgrounds downloader",
+        "ogTitle": "sparkdownloader | Free Online Media Downloader",
+        "ogDescription": "Auto-detect links from supported video, audio, image, and HLS/M3U8 sources, then download media online without registration.",
         "siteName": "sparkdownloader"
     },
     "common": {

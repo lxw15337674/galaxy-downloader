@@ -756,7 +756,7 @@ export function HlsBrowserDownloadPanel({
                 setDownloadLoading(false)
             }
         }
-    }, [dict.history.unknownTitle, dict.hlsDownload.downloadCompletedStatus, dict.hlsDownload.downloadFailedStatus, dict.hlsDownload.downloadingStatus, dict.hlsDownload.idleStatus, dict.hlsDownload.resolvingStatus, finishTask, initialRefererUrl, initialSourceUrl, initialTitle, startTask])
+    }, [dict.history.unknownTitle, dict.hlsDownload.downloadCompletedStatus, dict.hlsDownload.downloadFailedStatus, dict.hlsDownload.downloadingStatus, dict.hlsDownload.idleStatus, dict.hlsDownload.largeVideoBrowserLimitedStatus, dict.hlsDownload.resolvingStatus, finishTask, initialRefererUrl, initialSourceUrl, initialTitle, startTask])
 
     useEffect(() => {
         if (autorun && initialSourceUrl && !autorunTriggeredRef.current) {
